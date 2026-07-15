@@ -121,3 +121,52 @@ body.dark .custom-cursor { border-color: rgba(255,255,255,0.6); }
 .stat-number {
   font-variant-numeric: tabular-nums;
 }
+
+/* ---- Video hero ---- */
+#hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+#hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: #F8F9FA;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ---- Animasi bunga melayang ---- */
+#flower-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 2;
+  pointer-events: none;
+}
+.flower {
+  position: absolute;
+  bottom: -60px;
+  opacity: 0;
+  animation-name: flowerFloat;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes flowerFloat {
+  0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.85; }
+  50%  { transform: translateY(-55vh) translateX(25px) rotate(180deg); }
+  90%  { opacity: 0.85; }
+  100% { transform: translateY(-115vh) translateX(-25px) rotate(360deg); opacity: 0; }
+}
+
+/* Konten hero harus di atas video & bunga */
+#home > .relative.z-10 { position: relative; z-index: 3; }
