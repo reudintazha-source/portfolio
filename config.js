@@ -9,7 +9,7 @@ const SITE_CONFIG = {
   name: "Reudinta Zesha",
   location: "Tangerang",
   locationFlag: "🇮🇩",
-  role: "📊 Data Analyst",
+  role: "📊 Supply Chain & Analyst",
   email: "reudintazha@gmail.com",
   linkedin: "https://linkedin.com/in/reudinta-zesha/",
   available: true, // ganti ke false kalau lagi tidak available
