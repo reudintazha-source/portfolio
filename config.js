@@ -46,7 +46,7 @@ const SITE_CONFIG = {
     },
     {
       role: "Intern",
-      company: "Garudafood",
+      company: "PT Garudafood Putra Putri Jaya Tbk",
       period: "July 2025 — January 2026",
       description: "Menjalani magang dengan fokus pada proses operasional dan analisis data industri."
     }
