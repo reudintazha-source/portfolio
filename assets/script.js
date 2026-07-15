@@ -49,6 +49,20 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
+  // Experience (timeline, gampang ditambah dari config.js)
+  const experienceContainer = document.getElementById('experience-container');
+  if (experienceContainer && cfg.experience) {
+    experienceContainer.innerHTML = cfg.experience.map((exp, i) => `
+      <div class="relative pl-10 pb-10 ${i < cfg.experience.length - 1 ? 'border-l-2 border-gray-200 ml-2' : 'ml-2'}" data-aos="fade-up">
+        <span class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-indigo-600 border-4 border-white shadow"></span>
+        <p class="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-1">${exp.period}</p>
+        <h3 class="text-xl font-bold text-slate-900">${exp.role}</h3>
+        <p class="text-gray-500 font-medium mb-2">${exp.company}</p>
+        <p class="text-gray-600 leading-relaxed">${exp.description}</p>
+      </div>
+    `).join('');
+  }
+
   // Stats
   const statsContainer = document.getElementById('stats-container');
   if (statsContainer) {
@@ -58,6 +72,36 @@ document.addEventListener('DOMContentLoaded', () => {
         <p class="text-gray-500 mt-2 text-sm uppercase tracking-widest font-semibold">${s.label}</p>
       </div>
     `).join('');
+  }
+
+  /* ============ VIDEO HERO ============ */
+  const heroVideo = document.getElementById('hero-video');
+  const heroOverlay = document.getElementById('hero-overlay');
+  if (heroVideo && cfg.heroVideo && cfg.heroVideo.enabled) {
+    const source = document.createElement('source');
+    source.src = cfg.heroVideo.src;
+    source.type = 'video/mp4';
+    heroVideo.appendChild(source);
+    heroVideo.load();
+    if (heroOverlay) heroOverlay.style.opacity = cfg.heroVideo.overlayOpacity ?? 0.5;
+  } else if (heroVideo) {
+    heroVideo.style.display = 'none';
+  }
+
+  /* ============ ANIMASI BUNGA MELAYANG ============ */
+  const flowerField = document.getElementById('flower-field');
+  if (flowerField && cfg.flowerAnimation && cfg.flowerAnimation.enabled) {
+    const { emojis, count } = cfg.flowerAnimation;
+    for (let i = 0; i < count; i++) {
+      const flower = document.createElement('span');
+      flower.className = 'flower';
+      flower.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      flower.style.left = Math.random() * 100 + '%';
+      flower.style.fontSize = (16 + Math.random() * 14) + 'px';
+      flower.style.animationDuration = (10 + Math.random() * 10) + 's';
+      flower.style.animationDelay = (Math.random() * 10) + 's';
+      flowerField.appendChild(flower);
+    }
   }
 
   /* ============ CUSTOM CURSOR ============ */
@@ -186,14 +230,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalBody = document.getElementById('project-modal-body');
   const openModal = (project) => {
     if (!modal || !modalBody) return;
+    const hasDemo = project.demoUrl && project.demoUrl.trim() !== '';
     modalBody.innerHTML = `
       <img src="${project.image}" class="w-full aspect-video object-cover rounded-2xl mb-6" alt="${project.title}">
       <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">${project.category}</span>
       <h3 class="font-serif text-3xl font-bold text-slate-900 mt-4 mb-3">${project.title}</h3>
       <p class="text-gray-600 leading-relaxed mb-6">${project.description}</p>
-      <div class="flex flex-wrap gap-2">
+      <div class="flex flex-wrap gap-2 mb-6">
         ${project.tools.split(',').map(t => `<span class="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full border border-gray-200">${t.trim()}</span>`).join('')}
       </div>
+      ${hasDemo ? `
+        <a href="${project.demoUrl}" target="_blank" rel="noopener" class="btn-premium inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm mb-6">
+          Buka Demo Langsung
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+        </a>
+        <div class="rounded-2xl overflow-hidden border border-gray-200 bg-gray-50">
+          <div class="flex items-center gap-2 px-4 py-2 bg-gray-100 border-b border-gray-200 text-xs text-gray-500">
+            <i class="fa-solid fa-eye"></i> Live Preview
+          </div>
+          <iframe src="${project.demoUrl}" class="w-full h-[420px]" loading="lazy" title="Demo ${project.title}"></iframe>
+          <p class="text-xs text-gray-400 px-4 py-2 bg-gray-50">Kalau preview tidak muncul, situsnya kemungkinan memblokir tampilan embed — klik "Buka Demo Langsung" di atas.</p>
+        </div>
+      ` : `
+        <p class="text-sm text-gray-400 italic">Demo belum tersedia untuk project ini.</p>
+      `}
     `;
     modal.classList.remove('hidden-modal');
     document.body.style.overflow = 'hidden';
@@ -218,6 +278,11 @@ document.addEventListener('DOMContentLoaded', () => {
       card.innerHTML = `
         <div class="relative rounded-2xl overflow-hidden aspect-video bg-gray-100 group">
           <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          ${p.demoUrl && p.demoUrl.trim() !== '' ? `
+            <span class="absolute top-3 right-3 bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> Live Demo
+            </span>
+          ` : ''}
           <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <span class="bg-white/90 text-black px-5 py-2.5 rounded-full text-xs font-semibold shadow-lg backdrop-blur-sm">View Project</span>
           </div>
@@ -267,7 +332,8 @@ document.addEventListener('DOMContentLoaded', () => {
           category: row.c[1] ? row.c[1].v : 'Development',
           description: row.c[2] ? row.c[2].v : '',
           tools: row.c[3] ? row.c[3].v : '',
-          image: row.c[4] ? row.c[4].v : 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80'
+          image: row.c[4] ? row.c[4].v : 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+          demoUrl: row.c[5] ? row.c[5].v : ''
         }));
         renderProjects(projects.length ? projects : cfg.fallbackProjects);
       })
