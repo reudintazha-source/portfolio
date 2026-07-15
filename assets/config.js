@@ -9,7 +9,7 @@ const SITE_CONFIG = {
   name: "Zesha",
   location: "Tangerang",
   locationFlag: "🇮🇩",
-  role: "📊 Data Analyst",
+  role: "📊 Analyst & Supply Chain",
   email: "reudintazha@gmail.com",
   linkedin: "https://linkedin.com/in/reudinta-zesha/",
   available: true, // ganti ke false kalau lagi tidak available
@@ -20,8 +20,8 @@ const SITE_CONFIG = {
 
   // ---- STATS (angka yang muncul dengan animasi hitung) ----
   stats: [
-    { label: "Projects Built", value: 8, suffix: "+" },
-    { label: "Automation Scripts", value: 15, suffix: "+" },
+    { label: "Academic Projects Built", value: 3, suffix: "+" },
+    { label: "Automation Scripts & Analyst", value: 3, suffix: "+" },
     { label: "Hours Saved / Month", value: 40, suffix: "h" },
   ],
 
