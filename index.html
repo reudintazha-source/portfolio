@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="style.css">
 
     <script>
         tailwind.config = {
@@ -48,7 +48,16 @@
 
     <!-- HERO SECTION -->
     <section id="home" class="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
-        <div class="absolute right-0 bottom-0 w-full lg:w-3/5 h-full opacity-10 lg:opacity-30 pointer-events-none">
+        <!-- VIDEO BACKGROUND -->
+        <div id="hero-video-wrap">
+            <video id="hero-video" autoplay muted loop playsinline></video>
+            <div id="hero-overlay"></div>
+        </div>
+
+        <!-- ANIMASI BUNGA MELAYANG -->
+        <div id="flower-field"></div>
+
+        <div class="absolute right-0 bottom-0 w-full lg:w-3/5 h-full opacity-10 lg:opacity-30 pointer-events-none z-[3]">
             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full scale-110">
                 <path fill="#4F46E5" d="M39.9,-65.7C52.4,-57.3,63.7,-46.8,70.6,-33.7C77.5,-20.5,80.1,-4.7,77.3,10.2C74.6,25,66.6,38.9,56.1,49.8C45.6,60.8,32.7,68.8,18.5,72.7C4.3,76.6,-11.1,76.4,-25.1,71.5C-39.1,66.6,-51.7,56.9,-61.4,45C-71.1,33.1,-77.9,19,-79.3,4.4C-80.6,-10.1,-76.5,-25.1,-68.2,-37.6C-59.9,-50,-47.4,-59.9,-34.1,-67.7C-20.7,-75.4,-10.4,-81,2.1,-84.3C14.7,-87.6,27.5,-74,39.9,-65.7Z" transform="translate(100 100)" />
             </svg>
@@ -99,6 +108,19 @@
     <!-- STATS SECTION (baru, dengan animasi count-up) -->
     <section class="py-16 bg-white border-t border-gray-100">
         <div class="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10" id="stats-container"></div>
+    </section>
+
+    <!-- EXPERIENCE SECTION -->
+    <section id="experience" class="py-24 bg-white border-t border-gray-100">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="max-w-3xl mb-16">
+                <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 block mb-3">• Experience</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-slate-900 leading-tight font-bold">
+                    Journey so far
+                </h2>
+            </div>
+            <div id="experience-container"></div>
+        </div>
     </section>
 
     <!-- PORTFOLIO SECTION -->
@@ -164,6 +186,7 @@
     <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
         <div class="dock-nav flex items-center justify-between gap-1.5 p-2 rounded-full max-w-lg">
             <a href="#home" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Home</a>
+            <a href="#experience" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Experience</a>
             <a href="#projects" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Projects</a>
             <a href="#services" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Services</a>
             <a href="#contact" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Contact</a>
@@ -188,7 +211,7 @@
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="assets/config.js"></script>
-    <script src="assets/script.js"></script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
