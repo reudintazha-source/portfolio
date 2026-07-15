@@ -6,7 +6,7 @@
 
 const SITE_CONFIG = {
   // ---- IDENTITAS ----
-  name: "Zesha",
+  name: "Reudinta Zesha",
   location: "Tangerang",
   locationFlag: "🇮🇩",
   role: "📊 Data Analyst",
@@ -37,13 +37,13 @@ const SITE_CONFIG = {
     {
       role: "Inventory Analyst",
       company: "SPX Express",
-      period: "2024 — Sekarang",
-      description: "Mengelola IT asset management, operasional logistik, dan membangun tooling internal menggunakan Google Apps Script & Google Sheets."
+      period: "April 2026 — July 2026",
+      description: "Validated and processed 50+ IT asset return and repair shipments daily, ensuring shipment data accuracy and compliance with operational requirements before dispatch, operasional logistik, dan membangun tooling internal menggunakan Google Apps Script & Google Sheets."
     },
     {
       role: "Intern",
       company: "Garudafood",
-      period: "2023 — 2024",
+      period: "July 2025 — January 2026",
       description: "Menjalani magang dengan fokus pada proses operasional dan analisis data industri."
     }
     // Tambah pengalaman baru: copy blok di atas ({ ... }), tempel di bawah,
@@ -52,14 +52,14 @@ const SITE_CONFIG = {
 
   // ---- STATS (angka yang muncul dengan animasi hitung) ----
   stats: [
-    { label: "Projects Built", value: 8, suffix: "+" },
-    { label: "Automation Scripts", value: 15, suffix: "+" },
+    { label: "Projects Built", value: 3, suffix: "+" },
+    { label: "Automation Scripts", value: 4, suffix: "+" },
     { label: "Hours Saved / Month", value: 40, suffix: "h" },
   ],
 
   // ---- GOOGLE SHEETS UNTUK PROJECTS ----
   // Ganti ID di bawah ini dengan ID spreadsheet kamu
-  spreadsheetId: "MASUKKAN_SPREADSHEET_ID_ANDA_DISINI",
+  spreadsheetId: "1KeDxHrSWE7Gezt38I4l0I58sI2mKz_40BNbvzmdxpYE",
 
   // Data cadangan (fallback) kalau Google Sheets gagal / belum diisi
   fallbackProjects: [
