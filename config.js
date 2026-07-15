@@ -11,7 +11,7 @@ const SITE_CONFIG = {
   locationFlag: "🇮🇩",
   role: "📊 Supply Chain & Analyst",
   email: "reudintazha@gmail.com",
-  linkedin: "https://linkedin.com/in/reudinta-zesha/",
+  linkedin: "https://www.linkedin.com/in/reudinta-zesha/",
   available: true, // ganti ke false kalau lagi tidak available
 
   // ---- HERO SECTION ----
@@ -69,27 +69,27 @@ const SITE_CONFIG = {
   fallbackProjects: [
     {
       title: "IT Asset Tracking Dashboard",
-      category: "Web App",
-      description: "Dashboard multi-tab untuk tracking asset IT secara real-time, lengkap dengan filter, catatan editable, dan analitik lokasi.",
+      category: "Automation Tracker & Report",
+      description: "This system gives the team a single, reliable place to track IT assets in motion, automatically check that nothing falls through the cracks.",
       tools: "Google Apps Script, Google Sheets, JavaScript",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-      demoUrl: "" // isi link demo/deploy project kamu, kosongkan "" kalau belum ada
+      demoUrl: "https://script.google.com/macros/s/AKfycbynk4wj1p-FFbUXghESo-r7RG2_BYRdEjrmP5QQhZ_748OCyQIV1NadhaNK_mSgSQbT/exec" // isi link demo/deploy project kamu, kosongkan "" kalau belum ada
     },
     {
       title: "IT Asset Request & Return Form",
-      category: "Automation",
-      description: "Form otomatis dengan autocomplete facility/asset untuk pengajuan repair dan return asset IT.",
+      category: "Web Form",
+      description: "Developed a web-based request management system using Google Apps Script and Google Workspace to streamline IT asset repair and return submissions across facilities. The system replaces manual request forms with a standardized, validated, and trackable workflow.",
       tools: "Google Apps Script, HTML, CSS",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
-      demoUrl: ""
+      demoUrl: "https://script.google.com/macros/s/AKfycbyLGi-9oJsdmxEM2vxPTaYiK_fH4hs1DYdDTVKCxNXnaGtjGMdhXrN4HyhBY3zRMMdADg/exec"
     },
     {
-      title: "Data Cleaning Pipeline",
-      category: "Data Engineering",
-      description: "Skrip fuzzy-matching untuk membersihkan data Province/City yang berantakan di form responses.",
+      title: "Summary Tracker",
+      category: "Automation Tracker & Report",
+      description: "Report on overall performance — without anyone needing to touch a spreadsheet.",
       tools: "Google Apps Script, Regex",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-      demoUrl: ""
+      demoUrl: "https://script.google.com/macros/s/AKfycbynk4wj1p-FFbUXghESo-r7RG2_BYRdEjrmP5QQhZ_748OCyQIV1NadhaNK_mSgSQbT/exec?page=summary"
     }
   ],
 
