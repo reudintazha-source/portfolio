@@ -87,7 +87,7 @@ const SITE_CONFIG = {
       title: "Summary Tracker",
       category: "Automation Tracker & Report",
       description: "Report on overall performance — without anyone needing to touch a spreadsheet.",
-      tools: "Google Apps Script, Regex",
+      tools: "Google Apps Script, Regex,HTML",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
       demoUrl: "https://script.google.com/macros/s/AKfycbynk4wj1p-FFbUXghESo-r7RG2_BYRdEjrmP5QQhZ_748OCyQIV1NadhaNK_mSgSQbT/exec?page=summary"
     }
