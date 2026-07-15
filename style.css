@@ -1,0 +1,172 @@
+body {
+  background-color: #F8F9FA;
+  color: #1A1A1A;
+  cursor: none;
+}
+@media (max-width: 768px) {
+  body { cursor: auto; }
+  .custom-cursor, .cursor-dot { display: none !important; }
+}
+
+/* ---- Dark mode ---- */
+body.dark {
+  background-color: #0f0f10;
+  color: #eaeaea;
+}
+body.dark .bg-white { background-color: #17171a !important; }
+body.dark .bg-\[\#F8F9FA\] { background-color: #0f0f10 !important; }
+body.dark .text-slate-900 { color: #f4f4f5 !important; }
+body.dark .text-gray-600, body.dark .text-gray-500 { color: #a1a1aa !important; }
+body.dark .border-gray-100, body.dark .border-gray-200\/60, body.dark .border-gray-200 { border-color: #2a2a2e !important; }
+body.dark .btn-premium { background-color: #ffffff; color: #000000; }
+body.dark nav { background-color: rgba(15,15,16,0.8) !important; }
+
+/* ---- Custom cursor ---- */
+.custom-cursor {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(0,0,0,0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background 0.2s, border-color .3s;
+  mix-blend-mode: difference;
+}
+body.dark .custom-cursor { border-color: rgba(255,255,255,0.6); }
+.custom-cursor.hovering {
+  width: 60px;
+  height: 60px;
+  background: rgba(79,70,229,0.15);
+  border-color: transparent;
+}
+.cursor-dot {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: #4F46E5;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+/* ---- Scroll progress bar ---- */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #4F46E5, #818cf8);
+  z-index: 9998;
+  width: 0%;
+  transition: width 0.1s ease-out;
+}
+
+/* ---- Buttons ---- */
+.btn-premium {
+  background-color: #000000;
+  color: #FFFFFF;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+.btn-premium:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5);
+}
+
+.dock-nav {
+  background: rgba(40, 40, 40, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* ---- Typing effect cursor ---- */
+.typing-cursor::after {
+  content: '|';
+  animation: blink 0.9s step-start infinite;
+  color: #4F46E5;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ---- Magnetic hover for cards ---- */
+.tilt-card {
+  transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+/* ---- Modal ---- */
+#project-modal {
+  transition: opacity 0.25s ease;
+}
+#project-modal.hidden-modal {
+  opacity: 0;
+  pointer-events: none;
+}
+#project-modal .modal-box {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#project-modal.hidden-modal .modal-box {
+  transform: scale(0.92) translateY(20px);
+}
+
+/* ---- Back to top ---- */
+#back-to-top {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* ---- Stat count-up ---- */
+.stat-number {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Video hero ---- */
+#hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+#hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: #F8F9FA;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ---- Animasi bunga melayang ---- */
+#flower-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 2;
+  pointer-events: none;
+}
+.flower {
+  position: absolute;
+  bottom: -60px;
+  opacity: 0;
+  animation-name: flowerFloat;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes flowerFloat {
+  0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.85; }
+  50%  { transform: translateY(-55vh) translateX(25px) rotate(180deg); }
+  90%  { opacity: 0.85; }
+  100% { transform: translateY(-115vh) translateX(-25px) rotate(360deg); opacity: 0; }
+}
+
+/* Konten hero harus di atas video & bunga */
+#home > .relative.z-10 { position: relative; z-index: 3; }
