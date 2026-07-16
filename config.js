@@ -6,33 +6,29 @@
 
 const SITE_CONFIG = {
   // ---- IDENTITAS ----
-  name: " Reudinta Zesha",
+  name: "Reudinta Zesha",
   location: "Tangerang",
   locationFlag: "🇮🇩",
   role: "📊 Supply Chain & Analyst",
   email: "reudintazha@gmail.com",
   linkedin: "https://linkedin.com/in/reudinta-zesha/",
-  available: true, // ganti ke false kalau lagi tidak available
+  available: true,
 
-  // ---- HERO SECTION ----
-  heroWords: ["operational data", "messy spreadsheets", "raw logistics data"], // akan muncul bergantian (efek ketik)
+  heroWords: ["operational data", "messy spreadsheets", "raw logistics data"],
   heroSubtext: "I specialize in creating thoughtful and impactful systems, optimizing supply chain workflows, and translating raw data into robust business execution.",
 
-  // ---- VIDEO INTRO DI HERO (paling atas) ----
   heroVideo: {
-    enabled: true,          // ganti false kalau belum ada video / mau matiin
-    src: "video/intro.mp4", // taruh file video kamu di folder "video" dengan nama intro.mp4
-    overlayOpacity: 0.5,    // 0 = terang penuh, 1 = gelap penuh. Atur biar teks tetap kebaca
+    enabled: true,
+    src: "video/intro.mp4",
+    overlayOpacity: 0.5,
   },
 
-  // ---- ANIMASI BUNGA MELAYANG DI HERO ----
   flowerAnimation: {
     enabled: true,
-    emojis: ["🌸", "🌼", "🌺"], // ganti/tambah emoji bunga sesuka hati
-    count: 10,                  // jumlah bunga yang melayang
+    emojis: ["🌸", "🌼", "🌺"],
+    count: 10,
   },
 
-  // ---- EXPERIENCE (tinggal copy-paste blok { } untuk nambah baru) ----
   experience: [
     {
       role: "Inventory Analyst",
@@ -46,25 +42,16 @@ const SITE_CONFIG = {
       period: "July 2025 — January 2026",
       description: "Maintained and enhanced KPI dashboards for divisional management and 4 regional heads, enabling consistent monitoring of Sales Achievement, Distribution Coverage, Billing Rate, and Target Realization.\nBuilt automated incentive calculation templates with Advanced Excel, Pivot Tables, and OLAP for 2,000+ sales employees across 5 incentive schemes, significantly improving reporting efficiency and payout accuracy.\nConducted QGIS-based geospatial analysis of regional sales coverage outside Java, supporting territory expansion and distribution planning initiatives.\nGenerated weekly and monthly sales performance reports at both individual and regional levels to support operational decision-making."
     }
-    // Tambah pengalaman baru: copy blok di atas ({ ... }), tempel di bawah,
-    // jangan lupa tambah koma "," setelah kurung kurawal "}" kalau bukan yang terakhir,
-    // dan JANGAN PERNAH pencet Enter beneran di dalam tanda kutip, selalu pakai \n
   ],
 
-  // ---- STATS (angka yang muncul dengan animasi hitung) ----
-  // Kalau value-nya bukan angka (misal GPA), animasi hitung otomatis dimatikan, teksnya tampil apa adanya
   stats: [
     { label: "Bachelor of Industrial Engineering", value: "GPA 3.55/4.00", suffix: "" },
     { label: "Automation Scripts", value: 4, suffix: "+" },
     { label: "Hours Saved / Month", value: 40, suffix: "h" },
   ],
 
-  // ---- GOOGLE SHEETS UNTUK PROJECTS ----
-  // Ganti ID di bawah ini dengan ID spreadsheet kamu
   spreadsheetId: "MASUKKAN_SPREADSHEET_ID_ANDA_DISINI",
 
-  // Data cadangan (fallback) kalau Google Sheets gagal / belum diisi
-  // "metrics" = angka pencapaian project, pisahkan tiap poin pakai " | " (garis tegak)
  fallbackProjects: [
     {
       title: "IT Asset Tracking Dashboard",
@@ -122,7 +109,6 @@ const SITE_CONFIG = {
     }
   ],
 
-  // ---- SKILLS & TOOLS (muncul sebagai chip/badge di bagian Services) ----
   skills: [
     { name: "Google Apps Script", icon: "fa-code" },
     { name: "Google Sheets", icon: "fa-table" },
@@ -134,7 +120,6 @@ const SITE_CONFIG = {
     { name: "Pivot Tables & OLAP", icon: "fa-layer-group" }
   ],
 
-  // ---- SERVICES ----
   services: [
     {
       icon: "fa-chart-line",
@@ -148,7 +133,6 @@ const SITE_CONFIG = {
     }
   ],
 
-  // ---- WORKFLOW STEPS ----
   workflow: [
     { 
       number: "01", 
