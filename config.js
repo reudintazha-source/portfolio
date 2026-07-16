@@ -84,6 +84,15 @@ const SITE_CONFIG = {
       demoUrl: "https://script.google.com/macros/s/AKfycbyLGi-9oJsdmxEM2vxPTaYiK_fH4hs1DYdDTVKCxNXnaGtjGMdhXrN4HyhBY3zRMMdADg/exec",
       metrics: "60% Fewer Duplicate Entries | 25% Increased processing capacity | 50% Reduce Processing Time"
     },
+     {
+      title: "Summary Tracker",
+      category: "Automation Report",
+      description: "Report on overall performance — without anyone needing to touch a spreadsheet.",
+      tools: "Google Apps Script, HTML, CSS",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      demoUrl: "https://script.google.com/macros/s/AKfycbynk4wj1p-FFbUXghESo-r7RG2_BYRdEjrmP5QQhZ_748OCyQIV1NadhaNK_mSgSQbT/exec?page=summary",
+      metrics: "Auto Update Report | Automation Email Remainders"
+    },
     {
       title: "Summary Performance Salesman",
       category: "Spreadsheet Report",
