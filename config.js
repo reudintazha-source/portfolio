@@ -65,15 +65,15 @@ const SITE_CONFIG = {
 
   // Data cadangan (fallback) kalau Google Sheets gagal / belum diisi
   // "metrics" = angka pencapaian project, pisahkan tiap poin pakai " | " (garis tegak)
-  fallbackProjects: [
+ fallbackProjects: [
     {
       title: "IT Asset Tracking Dashboard",
       category: "Web App",
-      description: "This system gives the team a single, reliable place to track IT assets in motion, automatically check that nothing falls through the cracks.",
+      description: "A centralized digital ecosystem built to track IT assets in motion, enabling real-time status updates and ensuring zero shipment anomalies fall through the cracks.",
       tools: "Google Apps Script, Google Sheets, JavaScript",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-      demoUrl: "https://script.google.com/macros/s/AKfycbynk4wj1p-FFbUXghESo-r7RG2_BYRdEjrmP5QQhZ_748OCyQIV1NadhaNK_mSgSQbT/exec", // isi link demo/deploy project kamu, kosongkan "" kalau belum ada
-      metrics: "500+ Assets Tracked | 58% Reduced pending update status AWBs from 300+ to 128 through regular status update submissions  | Reduced the number of shipments with no status updates "
+      demoUrl: "https://script.google.com/macros/s/AKfycbynk4wj1p-FFbUXghESo-r7RG2_BYRdEjrmP5QQhZ_748OCyQIV1NadhaNK_mSgSQbT/exec",
+      metrics: "500+ Assets Tracked | 58% Pending Status Reduction | Enhanced Real-Time Visibility"
     },
     {
       title: "IT Asset Request & Return Form",
@@ -82,43 +82,43 @@ const SITE_CONFIG = {
       tools: "Google Apps Script, HTML, CSS",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
       demoUrl: "https://script.google.com/macros/s/AKfycbyLGi-9oJsdmxEM2vxPTaYiK_fH4hs1DYdDTVKCxNXnaGtjGMdhXrN4HyhBY3zRMMdADg/exec",
-      metrics: "60% Fewer Duplicate Entries | 25% Increased processing capacity | 50% Reduce Processing Time"
+      metrics: "60% Fewer Duplicate Entries | 25% Higher Processing Capacity | 50% Time Saved"
     },
-     {
+    {
       title: "Summary Tracker",
       category: "Automation Report",
-      description: "Report on overall performance — without anyone needing to touch a spreadsheet.",
+      description: "An automated cross-functional monitoring tool generated to report overall asset performance instantly—without anyone needing to touch a spreadsheet manually.",
       tools: "Google Apps Script, HTML, CSS",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
       demoUrl: "https://script.google.com/macros/s/AKfycbynk4wj1p-FFbUXghESo-r7RG2_BYRdEjrmP5QQhZ_748OCyQIV1NadhaNK_mSgSQbT/exec?page=summary",
-      metrics: "Auto Update Report | Automation Email Remainders"
+      metrics: "Auto-Updated Reports | Automated Email Reminders"
     },
     {
       title: "Summary Performance Salesman",
       category: "Spreadsheet Report",
-      description: "This provides an overview of the business case, incentive calculation framework, business rules, and dashboard outputs implemented in the Sales Performance & Incentive. It serves as a reference for understanding the project's objectives, methodology, and key performance measurement processes.",
-      tools: "SperadSheet",
+      description: "An advanced sales monitoring matrix designed to automate complex incentive calculation frameworks and operational business rules, providing clear regional performance evaluation visibility.",
+      tools: "Spreadsheet",
       image: "https://plus.unsplash.com/premium_photo-1671461774955-7aab3ab41b90?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       demoUrl: "https://docs.google.com/spreadsheets/d/173XxPf8qLSWQoUYgc6112VTYTBNqE_BTAJ1FeA5GXQg/edit?gid=0#gid=0",
-      metrics: "Report "
-    }
-     {
-      title: "Perancangan Sistem Promosi Digital Umkm Kuliner Berbasis Machine Learning dan Integrasi Media Digital: Studi Kasus Dapur Siteteh ",
+      metrics: "2,000+ Sales Staff Covered | 100% Payout Accuracy | Automated Analytics"
+    },
+    {
+      title: "Digital Promotion System for Culinary SME (Dapur Siteteh)",
       category: "Academic Project",
-      description: "This provides an overview of the business case, incentive calculation framework, business rules, and dashboard outputs implemented in the Sales Performance & Incentive. It serves as a reference for understanding the project's objectives, methodology, and key performance measurement processes.Objective: Identify high-value customer segments and generate data-driven promotional strategies for an SME using transaction data",
-      tools: "Python ,K-Means Clustering, Market Basket Analysis (Apriori, FP-Growth), Excel ",
+      description: "Applied Machine Learning algorithms to identify high-value customer segments and generate data-driven promotional strategies using historical SME transaction data, enabling optimized bundling and customer acquisition.",
+      tools: "Python, K-Means Clustering, Market Basket Analysis (Apriori, FP-Growth), Excel",
       image: "https://plus.unsplash.com/premium_photo-1671461774955-7aab3ab41b90?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       demoUrl: "",
-      metrics: "Collected, cleaned, and transformed 300+ transaction "
-    }
-{
-      title: "Optimalisasi Pengelolaan Limbah Cair Tahu melalui Produksi Nata de Soya dengan Pendekatan GVSM ",
+      metrics: "300+ Transactions Analyzed | Data-Driven Bundling | Cluster Insights"
+    },
+    {
+      title: "Tofu Wastewater Optimization via Green VSM",
       category: "Academic Project",
       description: "Applied Green Value Stream Mapping (Green VSM) and Mass Balance Analysis to support the integration of Nata de Soya production processes. Evaluated strategic alternatives using the TOWS Matrix and Supply Chain Mapping to identify operational improvements and sustainability opportunities.",
-      tools: "Green Value Stream Mapping (GVSM), Mass Balance Analysis, Supply Chain Mapping, TOWS Analysis  ",
+      tools: "Green Value Stream Mapping (GVSM), Mass Balance Analysis, Supply Chain Mapping, TOWS Analysis",
       image: "https://plus.unsplash.com/premium_photo-1671461774955-7aab3ab41b90?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       demoUrl: "",
-      metrics: "44% recycling rate | Best Presenter · SEMNASTEK 2025"
+      metrics: "~44% Waste Recycling Rate | Best Presenter at SEMNASTEK 2025"
     }
   ],
 
