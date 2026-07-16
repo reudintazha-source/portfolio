@@ -52,25 +52,45 @@ document.addEventListener('DOMContentLoaded', () => {
   // Experience (timeline, gampang ditambah dari config.js)
   const experienceContainer = document.getElementById('experience-container');
   if (experienceContainer && cfg.experience) {
-    experienceContainer.innerHTML = cfg.experience.map((exp, i) => `
+    experienceContainer.innerHTML = cfg.experience.map((exp, i) => {
+      const descHtml = exp.description.includes('\n')
+        ? `<ul class="space-y-2 mt-2">${exp.description.split('\n').filter(l => l.trim() !== '').map(line => `
+            <li class="flex gap-2 text-gray-600 leading-relaxed"><span class="text-indigo-500 mt-1">•</span><span>${line.trim()}</span></li>
+          `).join('')}</ul>`
+        : `<p class="text-gray-600 leading-relaxed">${exp.description}</p>`;
+      return `
       <div class="relative pl-10 pb-10 ${i < cfg.experience.length - 1 ? 'border-l-2 border-gray-200 ml-2' : 'ml-2'}" data-aos="fade-up">
         <span class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-indigo-600 border-4 border-white shadow"></span>
         <p class="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-1">${exp.period}</p>
         <h3 class="text-xl font-bold text-slate-900">${exp.role}</h3>
         <p class="text-gray-500 font-medium mb-2">${exp.company}</p>
-        <p class="text-gray-600 leading-relaxed">${exp.description}</p>
+        ${descHtml}
       </div>
-    `).join('');
+    `;
+    }).join('');
   }
 
   // Stats
   const statsContainer = document.getElementById('stats-container');
   if (statsContainer) {
-    statsContainer.innerHTML = cfg.stats.map(s => `
+    statsContainer.innerHTML = cfg.stats.map(s => {
+      const isNumeric = !isNaN(parseFloat(s.value)) && isFinite(s.value);
+      return `
       <div class="text-center" data-aos="fade-up">
-        <p class="stat-number text-5xl md:text-6xl font-bold font-serif text-slate-900" data-target="${s.value}" data-suffix="${s.suffix || ''}">0</p>
+        <p class="stat-number text-4xl md:text-6xl font-bold font-serif text-slate-900" data-target="${s.value}" data-suffix="${s.suffix || ''}" data-numeric="${isNumeric}">${isNumeric ? '0' : s.value}</p>
         <p class="text-gray-500 mt-2 text-sm uppercase tracking-widest font-semibold">${s.label}</p>
       </div>
+    `;
+    }).join('');
+  }
+
+  // Skills / Tools chips di section Services
+  const skillsContainer = document.getElementById('skills-container');
+  if (skillsContainer && cfg.skills) {
+    skillsContainer.innerHTML = cfg.skills.map(sk => `
+      <span class="inline-flex items-center gap-2 bg-white border border-gray-200/60 px-4 py-2.5 rounded-full text-sm font-medium text-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all">
+        <i class="fa-solid ${sk.icon} text-indigo-600"></i> ${sk.name}
+      </span>
     `).join('');
   }
 
@@ -194,7 +214,13 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const el = entry.target;
-        const target = parseInt(el.dataset.target, 10);
+        const isNumeric = el.dataset.numeric === 'true';
+        if (!isNumeric) {
+          // value bukan angka (misal "GPA 3.55/4.00"), tampilkan apa adanya tanpa animasi
+          statObserver.unobserve(el);
+          return;
+        }
+        const target = parseFloat(el.dataset.target);
         const suffix = el.dataset.suffix || '';
         let current = 0;
         const step = Math.max(1, Math.ceil(target / 60));
@@ -231,11 +257,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const openModal = (project) => {
     if (!modal || !modalBody) return;
     const hasDemo = project.demoUrl && project.demoUrl.trim() !== '';
+    const metricsHtml = project.metrics && project.metrics.trim() !== ''
+      ? `<div class="flex flex-wrap gap-2 mb-6">
+          ${project.metrics.split('|').map(m => `<span class="text-xs font-semibold bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">${m.trim()}</span>`).join('')}
+        </div>`
+      : '';
     modalBody.innerHTML = `
       <img src="${project.image}" class="w-full aspect-video object-cover rounded-2xl mb-6" alt="${project.title}">
       <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">${project.category}</span>
       <h3 class="font-serif text-3xl font-bold text-slate-900 mt-4 mb-3">${project.title}</h3>
-      <p class="text-gray-600 leading-relaxed mb-6">${project.description}</p>
+      <p class="text-gray-600 leading-relaxed mb-4">${project.description}</p>
+      ${metricsHtml}
       <div class="flex flex-wrap gap-2 mb-6">
         ${project.tools.split(',').map(t => `<span class="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full border border-gray-200">${t.trim()}</span>`).join('')}
       </div>
@@ -275,6 +307,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = document.createElement('div');
       card.className = 'bg-[#F8F9FA] border border-gray-200/60 rounded-[2rem] overflow-hidden p-6 space-y-6 tilt-card cursor-pointer';
       card.setAttribute('data-aos', 'fade-up');
+      const metricsHtml = p.metrics && p.metrics.trim() !== ''
+        ? `<div class="flex flex-wrap gap-2 pt-1">
+            ${p.metrics.split('|').map(m => `<span class="text-xs font-semibold bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">${m.trim()}</span>`).join('')}
+          </div>`
+        : '';
       card.innerHTML = `
         <div class="relative rounded-2xl overflow-hidden aspect-video bg-gray-100 group">
           <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -291,6 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">${p.category}</span>
           <h3 class="font-serif text-3xl font-bold text-slate-900">${p.title}</h3>
           <p class="text-gray-500 text-sm leading-relaxed line-clamp-3">${p.description}</p>
+          ${metricsHtml}
           <div class="pt-4 border-t border-gray-200 flex flex-wrap gap-2 items-center">
             <span class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Tools:</span>
             ${p.tools.split(',').map(tool => `<span class="text-xs bg-white text-gray-600 px-3 py-1 rounded-full border border-gray-200">${tool.trim()}</span>`).join('')}
@@ -333,7 +371,8 @@ document.addEventListener('DOMContentLoaded', () => {
           description: row.c[2] ? row.c[2].v : '',
           tools: row.c[3] ? row.c[3].v : '',
           image: row.c[4] ? row.c[4].v : 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
-          demoUrl: row.c[5] ? row.c[5].v : ''
+          demoUrl: row.c[5] ? row.c[5].v : '',
+          metrics: row.c[6] ? row.c[6].v : ''
         }));
         renderProjects(projects.length ? projects : cfg.fallbackProjects);
       })
