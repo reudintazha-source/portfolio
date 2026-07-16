@@ -38,17 +38,14 @@ const SITE_CONFIG = {
       role: "Inventory Analyst",
       company: "SPX Express",
       period: "April 2026 — July 2026",
-      description: "Validated and processed 50+ IT asset return and repair shipments daily, ensuring shipment data accuracy and compliance with operational requirements before dispatch,
-         Acted as the primary liaison for regional hubs in resolving shipment issues, including delayed movements, airport rejections, damaged packages, and other logistics-related escalations,
-, Developed and maintained an integrated asset tracking dashboard connecting Admin and IT operational data, enabling real-time monitoring of over 500+ asset shipments and faster identification of delivery status discrepancies, delays, and tracking anomalies, 
-     Developed a web-based asset request system using Google Apps Script and Google Sheets, reducing duplicate data entry and improving data accuracy through automated validation and master-data integration.
-     "
+      description: "Validated and processed 50+ IT asset return and repair shipments daily, ensuring shipment data accuracy and compliance with operational requirements before dispatch.\n Acted as the primary liaison for regional hubs in resolving shipment issues, including delayed movements, airport rejections, damaged packages, and other logistics-related escalations.\n Developed and maintained an integrated asset tracking dashboard connecting Admin and IT operational data, enabling real-time monitoring of over 500+ asset shipments and faster identification of delivery status discrepancies, delays, and tracking anomalies.\n Developed a web-based asset request system using Google Apps Script and Google Sheets, reducing duplicate data entry and improving data accuracy through automated validation and master-data integration."
     },
     {
       role: "Intern",
       company: "PT Garudafood Putra Putri Jaya Tbk",
       period: "July 2025 — January 2026",
-      description: "Menjalani magang dengan fokus pada proses operasional dan analisis data industri."
+      description: "Maintained and enhanced KPI dashboards for divisional management and 4 regional heads, enabling consistent monitoring of Sales Achievement, Distribution Coverage, Billing Rate, and Target Realization.\n Built automated incentive calculation templates with Advanced Excel, Pivot Tables, and OLAP for 2,000+ sales employees across 5 incentive schemes, significantly improving reporting efficiency and payout accuracy.\n Conducted QGIS-based geospatial analysis of regional sales coverage outside Java, supporting territory expansion and distribution planning initiatives.
+\n Generated weekly and monthly sales performance reports at both individual and regional levels to support operational decision-making."
     }
     // Tambah pengalaman baru: copy blok di atas ({ ... }), tempel di bawah,
     // jangan lupa tambah koma "," setelah kurung kurawal "}" kalau bukan yang terakhir
@@ -56,7 +53,7 @@ const SITE_CONFIG = {
 
   // ---- STATS (angka yang muncul dengan animasi hitung) ----
   stats: [
-    { label: "Projects Built", value: 3, suffix: "+" },
+    { label: "Bachelor of Industrial Engineering", value: "GPA 3.55/4.00", suffix: "+" },
     { label: "Automation Scripts", value: 4, suffix: "+" },
     { label: "Hours Saved / Month", value: 40, suffix: "h" },
   ],
