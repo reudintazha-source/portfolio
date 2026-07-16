@@ -85,13 +85,13 @@ const SITE_CONFIG = {
       metrics: "60% Fewer Duplicate Entries | 25% Increased processing capacity | 50% Reduce Processing Time"
     },
     {
-      title: "Summary Tracker",
-      category: "Automation Report",
-      description: "Report on overall performance — without anyone needing to touch a spreadsheet..",
+      title: "Summary Performance Salesman",
+      category: "Spreadsheet Report",
+      description: "This provides an overview of the business case, incentive calculation framework, business rules, and dashboard outputs implemented in the Sales Performance & Incentive. It serves as a reference for understanding the project's objectives, methodology, and key performance measurement processes.",
       tools: "Google Apps Script, Regex",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-      demoUrl: "https://script.google.com/macros/s/AKfycbynk4wj1p-FFbUXghESo-r7RG2_BYRdEjrmP5QQhZ_748OCyQIV1NadhaNK_mSgSQbT/exec?page=summary",
-      metrics: "Automat Update Report "
+      image: "https://plus.unsplash.com/premium_photo-1671461774955-7aab3ab41b90?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      demoUrl: "https://docs.google.com/spreadsheets/d/173XxPf8qLSWQoUYgc6112VTYTBNqE_BTAJ1FeA5GXQg/edit?gid=0#gid=0",
+      metrics: "Report "
     }
   ],
 
