@@ -54,13 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (experienceContainer && cfg.experience) {
     experienceContainer.innerHTML = cfg.experience.map((exp, i) => {
       const descHtml = exp.description.includes('\n')
-        ? `<ul class="space-y-2 mt-2">${exp.description.split('\n').filter(l => l.trim() !== '').map(line => `
-            <li class="flex gap-2 text-gray-600 leading-relaxed"><span class="text-indigo-500 mt-1">•</span><span>${line.trim()}</span></li>
+        ? `<ul class="space-y-2 mt-2">${exp.description.split('\n').filter(l => l.trim() !== '').map((line, li) => `
+            <li class="flex gap-2 text-gray-600 leading-relaxed" style="animation-delay:${0.3 + li * 0.12}s"><span class="text-indigo-500 mt-1">•</span><span>${line.trim()}</span></li>
           `).join('')}</ul>`
         : `<p class="text-gray-600 leading-relaxed">${exp.description}</p>`;
       return `
-      <div class="relative pl-10 pb-10 ${i < cfg.experience.length - 1 ? 'border-l-2 border-gray-200 ml-2' : 'ml-2'}" data-aos="fade-up">
-        <span class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-indigo-600 border-4 border-white shadow"></span>
+      <div class="exp-item relative pl-10 pb-10">
+        ${i < cfg.experience.length - 1 ? '<span class="exp-line absolute left-[-1px] top-4 bottom-0 w-[2px] bg-gray-200 ml-2"></span>' : ''}
+        <span class="exp-dot absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-indigo-600 border-4 border-white shadow ml-2"></span>
         <p class="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-1">${exp.period}</p>
         <h3 class="text-xl font-bold text-slate-900">${exp.role}</h3>
         <p class="text-gray-500 font-medium mb-2">${exp.company}</p>
@@ -68,6 +69,17 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
     }).join('');
+
+    // Scroll-reveal animasi untuk tiap item experience
+    const expObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, idx) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('exp-visible'), idx * 120);
+          expObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('#experience-container .exp-item').forEach(item => expObserver.observe(item));
   }
 
   // Stats
