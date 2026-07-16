@@ -170,3 +170,41 @@ body.dark .custom-cursor { border-color: rgba(255,255,255,0.6); }
 
 /* Konten hero harus di atas video & bunga */
 #home > .relative.z-10 { position: relative; z-index: 3; }
+
+/* ---- Animasi Experience Timeline ---- */
+#experience-container .exp-item {
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+#experience-container .exp-item.exp-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+#experience-container .exp-dot {
+  transform: scale(0);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
+}
+#experience-container .exp-item.exp-visible .exp-dot {
+  transform: scale(1);
+}
+#experience-container .exp-line {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1s ease 0.1s;
+}
+#experience-container .exp-item.exp-visible .exp-line {
+  transform: scaleY(1);
+}
+#experience-container .exp-item:hover .exp-dot {
+  transform: scale(1.3);
+  box-shadow: 0 0 0 6px rgba(79,70,229,0.15);
+}
+#experience-container ul li {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: expLiFade 0.5s ease forwards;
+}
+@keyframes expLiFade {
+  to { opacity: 1; transform: translateY(0); }
+}
