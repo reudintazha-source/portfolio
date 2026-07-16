@@ -97,10 +97,28 @@ const SITE_CONFIG = {
       title: "Summary Performance Salesman",
       category: "Spreadsheet Report",
       description: "This provides an overview of the business case, incentive calculation framework, business rules, and dashboard outputs implemented in the Sales Performance & Incentive. It serves as a reference for understanding the project's objectives, methodology, and key performance measurement processes.",
-      tools: "Google Apps Script, Regex",
+      tools: "SperadSheet",
       image: "https://plus.unsplash.com/premium_photo-1671461774955-7aab3ab41b90?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       demoUrl: "https://docs.google.com/spreadsheets/d/173XxPf8qLSWQoUYgc6112VTYTBNqE_BTAJ1FeA5GXQg/edit?gid=0#gid=0",
       metrics: "Report "
+    }
+     {
+      title: "Perancangan Sistem Promosi Digital Umkm Kuliner Berbasis Machine Learning dan Integrasi Media Digital: Studi Kasus Dapur Siteteh ",
+      category: "Academic Project",
+      description: "This provides an overview of the business case, incentive calculation framework, business rules, and dashboard outputs implemented in the Sales Performance & Incentive. It serves as a reference for understanding the project's objectives, methodology, and key performance measurement processes.Objective: Identify high-value customer segments and generate data-driven promotional strategies for an SME using transaction data",
+      tools: "Python ,K-Means Clustering, Market Basket Analysis (Apriori, FP-Growth), Excel ",
+      image: "https://plus.unsplash.com/premium_photo-1671461774955-7aab3ab41b90?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      demoUrl: "",
+      metrics: "Collected, cleaned, and transformed 300+ transaction "
+    }
+{
+      title: "Optimalisasi Pengelolaan Limbah Cair Tahu melalui Produksi Nata de Soya dengan Pendekatan GVSM ",
+      category: "Academic Project",
+      description: "Applied Green Value Stream Mapping (Green VSM) and Mass Balance Analysis to support the integration of Nata de Soya production processes. Evaluated strategic alternatives using the TOWS Matrix and Supply Chain Mapping to identify operational improvements and sustainability opportunities.",
+      tools: "Green Value Stream Mapping (GVSM), Mass Balance Analysis, Supply Chain Mapping, TOWS Analysis  ",
+      image: "https://plus.unsplash.com/premium_photo-1671461774955-7aab3ab41b90?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      demoUrl: "",
+      metrics: "44% recycling rate | Best Presenter · SEMNASTEK 2025"
     }
   ],
 
@@ -111,7 +129,7 @@ const SITE_CONFIG = {
     { name: "Advanced Excel", icon: "fa-file-excel" },
     { name: "Basic SQL", icon: "fa-database" },
     { name: "QGIS", icon: "fa-map-location-dot" },
-    { name: "Power BI", icon: "fa-chart-pie" },
+    { name: "Basic Power BI", icon: "fa-chart-pie" },
     { name: "Looker Studio", icon: "fa-js" },
     { name: "Pivot Tables & OLAP", icon: "fa-layer-group" }
   ],
