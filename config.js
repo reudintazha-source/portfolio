@@ -34,7 +34,7 @@ const SITE_CONFIG = {
       role: "Inventory Analyst",
       company: "SPX Express",
       period: "April 2026 — July 2026",
-      KeyJobDeskDescription: "Managed IT asset movements across 3,000+ operational sites, ensuring accurate asset tracking and smooth coordination with logistics vendors.\n Developed a web-based IT Asset Request System using Google Apps Script and Google Sheets, streamlining asset request workflows and reducing duplicate records.\n Built an operational dashboard to monitor 500+ IT asset movements, improving asset visibility and enabling faster operational decision-making."
+      description: "Managed IT asset movements across 3,000+ operational sites, coordinating with logistics vendors and warehouse head to monitor operational performance, resolve shipment discrepancies, and support efficient asset availability.\nProcessed and verified 50+ daily asset movements, identifying shipment discrepancies and supporting timely operational resolution.\nDeveloped a web-based IT asset request system using Google Apps Script and Google Sheets, streamlining assetallocation workflows and reducing duplicate records.\nDeveloped an operational dashboard to monitor 500+ IT asset movements, improving asset visibility and supporting operational performance monitoring."
     },
     {
       role: "Intern",
