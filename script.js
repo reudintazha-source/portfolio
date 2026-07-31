@@ -266,6 +266,46 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ============ PROJECT MODAL ============ */
   const modal = document.getElementById('project-modal');
   const modalBody = document.getElementById('project-modal-body');
+
+  // Ikon lampiran berdasarkan tipe file
+  const attachmentIcon = (type) => {
+    const map = {
+      pdf: 'fa-file-pdf',
+      doc: 'fa-file-word',
+      docx: 'fa-file-word',
+      sheet: 'fa-file-excel',
+      xlsx: 'fa-file-excel',
+      image: 'fa-file-image',
+      ppt: 'fa-file-powerpoint',
+      zip: 'fa-file-zipper'
+    };
+    return map[(type || '').toLowerCase()] || 'fa-file-lines';
+  };
+
+  const attachmentsHtml = (attachments) => {
+    if (!attachments || !attachments.length) return '';
+    const valid = attachments.filter(a => a.url && a.url.trim() !== '');
+    const pending = attachments.filter(a => !a.url || a.url.trim() === '');
+    return `
+      <div class="mb-6">
+        <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Lampiran</p>
+        <div class="flex flex-wrap gap-2.5">
+          ${valid.map(a => `
+            <a href="${a.url}" target="_blank" rel="noopener" class="attachment-chip">
+              <i class="fa-solid ${attachmentIcon(a.type)}"></i> ${a.name}
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-60"></i>
+            </a>
+          `).join('')}
+          ${pending.map(a => `
+            <span class="attachment-chip opacity-50 cursor-not-allowed" title="Link belum diisi di config.js">
+              <i class="fa-solid ${attachmentIcon(a.type)}"></i> ${a.name}
+            </span>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  };
+
   const openModal = (project) => {
     if (!modal || !modalBody) return;
     const hasDemo = project.demoUrl && project.demoUrl.trim() !== '';
@@ -283,6 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="flex flex-wrap gap-2 mb-6">
         ${project.tools.split(',').map(t => `<span class="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full border border-gray-200">${t.trim()}</span>`).join('')}
       </div>
+      ${attachmentsHtml(project.attachments)}
       ${hasDemo ? `
         <a href="${project.demoUrl}" target="_blank" rel="noopener" class="btn-premium inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm mb-6">
           Buka Demo Langsung
@@ -392,5 +433,147 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error(err);
         useFallback();
       });
+  }
+
+  /* ============ SKILL LAB — 3D COVERFLOW GALLERY ============ */
+  const coverflowTrack = document.getElementById('coverflow-track');
+  const coverflowDots = document.getElementById('coverflow-dots');
+  const coverflowPrev = document.getElementById('coverflow-prev');
+  const coverflowNext = document.getElementById('coverflow-next');
+  const labModal = document.getElementById('lab-modal');
+  const labModalBody = document.getElementById('lab-modal-body');
+
+  if (coverflowTrack && cfg.skillLab && cfg.skillLab.length) {
+    const items = cfg.skillLab;
+    let active = 0;
+    let cardEls = [];
+
+    const openLabModal = (item) => {
+      if (!labModal || !labModalBody) return;
+      const hasDemo = item.demoUrl && item.demoUrl.trim() !== '';
+      labModalBody.innerHTML = `
+        <div class="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-2xl mb-5">
+          <i class="fa-solid ${item.icon || 'fa-chart-simple'}"></i>
+        </div>
+        <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">${item.category}</span>
+        <h3 class="font-serif text-3xl font-bold text-slate-900 mt-4 mb-3">${item.title}</h3>
+        <p class="text-gray-600 leading-relaxed mb-4">${item.description}</p>
+        <div class="flex flex-wrap gap-2 mb-6">
+          ${item.tools.split(',').map(t => `<span class="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full border border-gray-200">${t.trim()}</span>`).join('')}
+        </div>
+        ${hasDemo ? `
+          <a href="${item.demoUrl}" target="_blank" rel="noopener" class="btn-premium inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm">
+            Buka Demo / Repo
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </a>
+        ` : `
+          <p class="text-sm text-gray-400 italic">Dummy project ini masih disiapkan — link demo/repo tinggal ditambahkan lewat "skillLab" di config.js.</p>
+        `}
+      `;
+      labModal.classList.remove('hidden-modal');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeLabModal = () => {
+      if (!labModal) return;
+      labModal.classList.add('hidden-modal');
+      document.body.style.overflow = '';
+    };
+    document.getElementById('lab-modal-close')?.addEventListener('click', closeLabModal);
+    labModal?.addEventListener('click', (e) => { if (e.target === labModal) closeLabModal(); });
+
+    const buildCards = () => {
+      coverflowTrack.innerHTML = '';
+      cardEls = items.map((item, i) => {
+        const card = document.createElement('div');
+        card.className = 'coverflow-card';
+        card.innerHTML = `
+          <div class="coverflow-card-inner">
+            <div>
+              <div class="coverflow-icon mb-4"><i class="fa-solid ${item.icon || 'fa-chart-simple'}"></i></div>
+              <span class="coverflow-tag">${item.category}</span>
+              <h3 class="mt-2">${item.title}</h3>
+            </div>
+            <div class="space-y-3">
+              <p>${item.description}</p>
+              <div class="coverflow-chips">
+                ${item.tools.split(',').map(t => `<span>${t.trim()}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+        card.addEventListener('click', () => {
+          if (i === active) {
+            openLabModal(item);
+          } else {
+            active = i;
+            render();
+          }
+        });
+        coverflowTrack.appendChild(card);
+        return card;
+      });
+    };
+
+    const buildDots = () => {
+      if (!coverflowDots) return;
+      coverflowDots.innerHTML = '';
+      items.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'coverflow-dot';
+        dot.setAttribute('aria-label', `Lihat item ${i + 1}`);
+        dot.addEventListener('click', () => { active = i; render(); });
+        coverflowDots.appendChild(dot);
+      });
+    };
+
+    const render = () => {
+      cardEls.forEach((card, i) => {
+        const offset = i - active;
+        const abs = Math.abs(offset);
+        const dir = offset === 0 ? 0 : (offset > 0 ? 1 : -1);
+        if (abs > 3) {
+          card.style.opacity = '0';
+          card.style.transform = `translateX(${offset * 60}px) scale(0.4)`;
+          card.style.zIndex = '0';
+          card.style.pointerEvents = 'none';
+        } else {
+          card.style.opacity = String(Math.max(1 - abs * 0.3, 0));
+          card.style.transform = `translateX(${offset * 130}px) translateZ(${-abs * 90}px) rotateY(${dir * -38}deg) scale(${1 - abs * 0.12})`;
+          card.style.zIndex = String(10 - abs);
+          card.style.pointerEvents = 'auto';
+        }
+        card.classList.toggle('is-active', i === active);
+      });
+      if (coverflowDots) {
+        [...coverflowDots.children].forEach((dot, i) => dot.classList.toggle('active', i === active));
+      }
+    };
+
+    const goPrev = () => { active = (active - 1 + items.length) % items.length; render(); };
+    const goNext = () => { active = (active + 1) % items.length; render(); };
+    coverflowPrev?.addEventListener('click', goPrev);
+    coverflowNext?.addEventListener('click', goNext);
+
+    // Dukungan swipe di layar sentuh
+    let touchStartX = 0;
+    coverflowTrack.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    coverflowTrack.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) { dx > 0 ? goPrev() : goNext(); }
+    }, { passive: true });
+
+    // Dukungan panah keyboard saat section terlihat
+    window.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      const rect = coverflowTrack.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!inView) return;
+      e.key === 'ArrowLeft' ? goPrev() : goNext();
+    });
+
+    buildCards();
+    buildDots();
+    render();
   }
 });
