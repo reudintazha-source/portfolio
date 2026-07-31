@@ -111,7 +111,7 @@
     </section>
 
     <!-- EXPERIENCE SECTION -->
-    <section id="experience" class="py-24 bg-white border-t border-gray-100">
+    <section id="experience" class="relative py-24 bg-white border-t border-gray-100 overflow-hidden">
         <div class="max-w-4xl mx-auto px-6">
             <div class="max-w-3xl mb-16">
                 <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 block mb-3">• Experience</span>
@@ -120,6 +120,62 @@
                 </h2>
             </div>
             <div id="experience-container"></div>
+        </div>
+
+        <!-- MASKOT KUCING HITAM -->
+        <div id="cat-mascot" class="hidden xl:block absolute select-none pointer-events-none" style="right: 4%; bottom: 8%;" aria-hidden="true">
+            <svg id="cat-svg" width="150" height="150" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+                <!-- bayangan -->
+                <ellipse cx="95" cy="178" rx="46" ry="7" fill="#000000" opacity="0.08"/>
+
+                <!-- EKOR (dianimasikan terpisah, digambar duluan supaya ada di belakang badan) -->
+                <g id="cat-tail" style="transform-origin: 118px 150px;">
+                    <path d="M118,150 C150,148 168,120 160,90 C154,66 132,58 122,66 C136,64 150,76 152,94 C156,118 140,138 116,140 Z" fill="#111214"/>
+                    <path d="M122,66 C126,60 136,58 143,63" fill="none" stroke="#111214" stroke-width="7" stroke-linecap="round"/>
+                </g>
+
+                <!-- BADAN -->
+                <ellipse cx="90" cy="150" rx="48" ry="34" fill="#16171a"/>
+
+                <!-- TELINGA -->
+                <path d="M55,95 L44,58 L78,84 Z" fill="#111214"/>
+                <path d="M112,95 L128,56 L92,82 Z" fill="#111214"/>
+                <path d="M59,90 L52,68 L73,84 Z" fill="#3a2a30"/>
+                <path d="M108,90 L119,66 L94,80 Z" fill="#3a2a30"/>
+
+                <!-- KEPALA -->
+                <circle cx="85" cy="108" r="42" fill="#16171a"/>
+
+                <!-- PIPI PUTIH LUCU -->
+                <ellipse cx="85" cy="128" rx="26" ry="14" fill="#232428"/>
+
+                <!-- MATA (berkedip lewat CSS) -->
+                <g id="cat-eyes">
+                    <ellipse cx="70" cy="106" rx="6.5" ry="8.5" fill="#eaeaea"/>
+                    <ellipse cx="100" cy="106" rx="6.5" ry="8.5" fill="#eaeaea"/>
+                    <circle cx="71" cy="108" r="3.2" fill="#111214"/>
+                    <circle cx="101" cy="108" r="3.2" fill="#111214"/>
+                    <circle cx="72.5" cy="105.5" r="1.1" fill="#ffffff"/>
+                    <circle cx="102.5" cy="105.5" r="1.1" fill="#ffffff"/>
+                </g>
+
+                <!-- HIDUNG & MULUT -->
+                <path d="M82,120 L88,120 L85,124 Z" fill="#e8879c"/>
+                <path d="M85,124 C85,129 79,131 75,128" fill="none" stroke="#c9c9cf" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M85,124 C85,129 91,131 95,128" fill="none" stroke="#c9c9cf" stroke-width="1.6" stroke-linecap="round"/>
+
+                <!-- KUMIS -->
+                <g stroke="#c9c9cf" stroke-width="1.3" stroke-linecap="round" opacity="0.75">
+                    <line x1="46" y1="112" x2="20" y2="106"/>
+                    <line x1="46" y1="119" x2="19" y2="119"/>
+                    <line x1="124" y1="112" x2="150" y2="106"/>
+                    <line x1="124" y1="119" x2="151" y2="119"/>
+                </g>
+
+                <!-- KAKI DEPAN -->
+                <ellipse cx="68" cy="176" rx="9" ry="13" fill="#111214"/>
+                <ellipse cx="106" cy="176" rx="9" ry="13" fill="#111214"/>
+            </svg>
         </div>
     </section>
 
@@ -136,6 +192,33 @@
 
             <div id="project-container" class="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <p class="text-center col-span-full text-gray-500 py-12">Memuat proyek...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILL LAB — 3D COVERFLOW GALLERY -->
+    <section id="lab" class="py-24 bg-[#0f0f10] border-t border-gray-100 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl mb-16">
+                <span class="text-xs font-bold uppercase tracking-widest text-indigo-400 block mb-3">• Skill Lab</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-white leading-tight font-bold">
+                    A playground for SQL, dashboards & data stories
+                </h2>
+                <p class="text-gray-400 mt-3">Kumpulan eksperimen &amp; dummy project untuk menunjukkan cara kerja dengan data. Geser atau klik kartu untuk menjelajah.</p>
+            </div>
+        </div>
+
+        <div id="coverflow" class="relative w-full">
+            <div id="coverflow-track" class="relative mx-auto" style="height: 380px; perspective: 1400px;"></div>
+
+            <div class="flex items-center justify-center gap-4 mt-10">
+                <button id="coverflow-prev" class="w-11 h-11 rounded-full border border-white/20 text-white flex items-center justify-center hover:bg-white/10 transition-colors">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <div id="coverflow-dots" class="flex items-center gap-2"></div>
+                <button id="coverflow-next" class="w-11 h-11 rounded-full border border-white/20 text-white flex items-center justify-center hover:bg-white/10 transition-colors">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -193,9 +276,9 @@
             <a href="#home" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Home</a>
             <a href="#experience" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Experience</a>
             <a href="#projects" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Projects</a>
+            <a href="#lab" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Lab</a>
             <a href="#services" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Services</a>
             <a href="#contact" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Contact</a>
-            <a href="mailto:reudintazha@gmail.com" class="bg-white/10 text-white text-sm font-semibold px-5 py-2.5 rounded-full border border-white/20 hover:bg-white/20 transition-all">Get Now</a>
         </div>
     </div>
 
@@ -211,6 +294,16 @@
                 <i class="fa-solid fa-xmark"></i>
             </button>
             <div id="project-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- LAB MODAL -->
+    <div id="lab-modal" class="hidden-modal fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <div class="modal-box bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-8 relative">
+            <button id="lab-modal-close" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="lab-modal-body"></div>
         </div>
     </div>
 
