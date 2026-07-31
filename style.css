@@ -98,17 +98,17 @@ body.dark .custom-cursor { border-color: rgba(255,255,255,0.6); }
 }
 
 /* ---- Modal ---- */
-#project-modal {
+#project-modal, #lab-modal {
   transition: opacity 0.25s ease;
 }
-#project-modal.hidden-modal {
+#project-modal.hidden-modal, #lab-modal.hidden-modal {
   opacity: 0;
   pointer-events: none;
 }
-#project-modal .modal-box {
+#project-modal .modal-box, #lab-modal .modal-box {
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-#project-modal.hidden-modal .modal-box {
+#project-modal.hidden-modal .modal-box, #lab-modal.hidden-modal .modal-box {
   transform: scale(0.92) translateY(20px);
 }
 
@@ -207,4 +207,169 @@ body.dark .custom-cursor { border-color: rgba(255,255,255,0.6); }
 }
 @keyframes expLiFade {
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   MASKOT KUCING HITAM (Experience section)
+   ============================================================ */
+#cat-mascot {
+  perspective: 700px;
+  z-index: 1;
+}
+#cat-svg {
+  transform-style: preserve-3d;
+  animation: catBob 3.6s ease-in-out infinite;
+}
+#cat-tail {
+  transform-box: view-box;
+  transform-origin: 118px 150px;
+  transform-style: preserve-3d;
+  animation: tailSwish 2.4s ease-in-out infinite;
+}
+#cat-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: catBlink 5.5s ease-in-out infinite;
+}
+
+@keyframes catBob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-6px) rotate(-1.5deg); }
+}
+@keyframes tailSwish {
+  0%, 100% { transform: rotate(-10deg) rotateY(10deg); }
+  50%      { transform: rotate(16deg) rotateY(-20deg); }
+}
+@keyframes catBlink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  93%           { transform: scaleY(0.08); }
+  96%           { transform: scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #cat-svg, #cat-tail, #cat-eyes { animation: none !important; }
+}
+@media (max-width: 1279px) {
+  #cat-mascot { display: none !important; }
+}
+
+/* ============================================================
+   SKILL LAB — 3D COVERFLOW GALLERY
+   ============================================================ */
+#coverflow-track {
+  transform-style: preserve-3d;
+}
+.coverflow-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 280px;
+  height: 380px;
+  margin-left: -140px;
+  border-radius: 1.75rem;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  transition: transform 0.6s cubic-bezier(.22,1,.36,1), opacity 0.6s ease;
+}
+.coverflow-card-inner {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.9rem;
+  border-radius: 1.75rem;
+  background: linear-gradient(160deg, #1d1d21 0%, #121214 100%);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #f4f4f5;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.45);
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+.coverflow-card.is-active .coverflow-card-inner {
+  border-color: rgba(129,140,248,0.55);
+  box-shadow: 0 30px 70px rgba(79,70,229,0.4);
+}
+.coverflow-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(129,140,248,0.12);
+  color: #a5b4fc;
+  font-size: 1.4rem;
+}
+.coverflow-card .coverflow-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #a5b4fc;
+}
+.coverflow-card h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.coverflow-card p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #a1a1aa;
+}
+.coverflow-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.coverflow-chips span {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #d4d4d8;
+}
+.coverflow-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.25);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+.coverflow-dot.active {
+  background: #818cf8;
+  width: 24px;
+}
+
+/* ============================================================
+   LAMPIRAN FILE PROYEK (attachments)
+   ============================================================ */
+.attachment-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+  transition: all 0.2s ease;
+}
+.attachment-chip:hover {
+  background: #EEF2FF;
+  border-color: #c7d2fe;
+  color: #4338ca;
+  transform: translateY(-2px);
+}
+.attachment-chip i {
+  color: #6366f1;
 }
