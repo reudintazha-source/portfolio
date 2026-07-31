@@ -52,6 +52,19 @@ const SITE_CONFIG = {
 
   spreadsheetId: "MASUKKAN_SPREADSHEET_ID_ANDA_DISINI",
 
+ // Setiap project sekarang bisa punya "attachments": lampiran file tambahan
+ // seperti flowchart, handbook/SOP, laporan PDF, dsb. Ini akan muncul sebagai
+ // tombol yang bisa diklik di dalam modal detail project.
+ //
+ // Cara isi:
+ //   attachments: [
+ //     { name: "Nama file yang ditampilkan", type: "pdf", url: "https://link-ke-file-kamu" }
+ //   ]
+ //
+ // "type" menentukan ikon yang muncul: pdf, doc, sheet, image, ppt, atau zip (default: file biasa).
+ // "url" bisa berupa link Google Drive (klik kanan file > Bagikan > Salin link),
+ // link GitHub, atau hosting lain. Kalau project belum ada lampiran, cukup hapus
+ // baris "attachments" atau biarkan array-nya kosong: attachments: []
  fallbackProjects: [
     {
       title: "IT Asset Tracking Dashboard",
@@ -60,7 +73,11 @@ const SITE_CONFIG = {
       tools: "Google Apps Script, Google Sheets, JavaScript",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
       demoUrl: "https://script.google.com/macros/s/AKfycbyVKn6KCRlxw5StXsXAaaR3ogn_Czy6wFAtThEsfxdkKpnGmbCvwevszVdt1Nar1E774w/exec",
-      metrics: "500+ Assets Tracked | 58% Pending Status Reduction | Enhanced Real-Time Visibility"
+      metrics: "500+ Assets Tracked | 58% Pending Status Reduction | Enhanced Real-Time Visibility",
+      attachments: [
+        { name: "Flowchart Proses Tracking", type: "pdf", url: "" },
+        { name: "Handbook / SOP Penggunaan", type: "pdf", url: "" }
+      ]
     },
     {
       title: "IT Asset Request & Return Form",
@@ -69,7 +86,8 @@ const SITE_CONFIG = {
       tools: "Google Apps Script, HTML, CSS",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
       demoUrl: "https://script.google.com/macros/s/AKfycbyLGi-9oJsdmxEM2vxPTaYiK_fH4hs1DYdDTVKCxNXnaGtjGMdhXrN4HyhBY3zRMMdADg/exec",
-      metrics: "60% Fewer Duplicate Entries | 25% Higher Processing Capacity | 50% Time Saved"
+      metrics: "60% Fewer Duplicate Entries | 25% Higher Processing Capacity | 50% Time Saved",
+      attachments: []
     },
     {
       title: "Summary Tracker",
@@ -78,7 +96,8 @@ const SITE_CONFIG = {
       tools: "Google Apps Script, HTML, CSS",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
       demoUrl: "https://script.google.com/macros/s/AKfycbyVKn6KCRlxw5StXsXAaaR3ogn_Czy6wFAtThEsfxdkKpnGmbCvwevszVdt1Nar1E774w/exec?page=summary",
-      metrics: "Auto-Updated Reports | Automated Email Reminders"
+      metrics: "Auto-Updated Reports | Automated Email Reminders",
+      attachments: []
     },
     {
       title: "Summary Performance Salesman",
@@ -87,7 +106,10 @@ const SITE_CONFIG = {
       tools: "Spreadsheet",
       image: "https://plus.unsplash.com/premium_photo-1671461774955-7aab3ab41b90?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       demoUrl: "https://docs.google.com/spreadsheets/d/173XxPf8qLSWQoUYgc6112VTYTBNqE_BTAJ1FeA5GXQg/edit?gid=0#gid=0",
-      metrics: "2,000+ Sales Staff Covered | 100% Payout Accuracy | Automated Analytics"
+      metrics: "2,000+ Sales Staff Covered | 100% Payout Accuracy | Automated Analytics",
+      attachments: [
+        { name: "Skema Perhitungan Insentif", type: "sheet", url: "" }
+      ]
     },
     {
       title: "Digital Promotion System for Culinary SME (Dapur Siteteh)",
@@ -96,7 +118,10 @@ const SITE_CONFIG = {
       tools: "Python, K-Means Clustering, Market Basket Analysis (Apriori, FP-Growth), Excel",
       image: "https://plus.unsplash.com/premium_photo-1671461774955-7aab3ab41b90?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       demoUrl: "",
-      metrics: "300+ Transactions Analyzed | Data-Driven Bundling | Cluster Insights"
+      metrics: "300+ Transactions Analyzed | Data-Driven Bundling | Cluster Insights",
+      attachments: [
+        { name: "Laporan Lengkap (PDF)", type: "pdf", url: "" }
+      ]
     },
     {
       title: "Tofu Wastewater Optimization via Green VSM",
@@ -105,7 +130,63 @@ const SITE_CONFIG = {
       tools: "Green Value Stream Mapping (GVSM), Mass Balance Analysis, Supply Chain Mapping, TOWS Analysis",
       image: "https://plus.unsplash.com/premium_photo-1671461774955-7aab3ab41b90?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       demoUrl: "",
-      metrics: "~44% Waste Recycling Rate | Best Presenter at SEMNASTEK 2025"
+      metrics: "~44% Waste Recycling Rate | Best Presenter at SEMNASTEK 2025",
+      attachments: [
+        { name: "Green VSM Flowchart", type: "pdf", url: "" },
+        { name: "Paper SEMNASTEK 2025", type: "pdf", url: "" }
+      ]
+    }
+  ],
+
+  // ---- SKILL LAB — 3D Coverflow Gallery (bagian "• Skill Lab") ----
+  // Ini section baru buat pamer dummy project / eksperimen SQL, dashboard,
+  // visualisasi data, dll di luar project kerjaan beneran. Tinggal ganti
+  // isi array ini kapan pun project dummy kamu sudah siap.
+  //
+  // "icon"  : nama ikon Font Awesome (tanpa "fa-solid"), contoh "fa-database"
+  // "tools" : dipisah koma, akan tampil sebagai chip kecil
+  // "demoUrl" (opsional) : link ke demo/repo, kalau ada akan muncul tombol
+  //                        "Buka Demo" di modal detail
+  skillLab: [
+    {
+      title: "SQL Sales Query Playground",
+      category: "SQL",
+      icon: "fa-database",
+      description: "Kumpulan query SQL (window functions, CTE, join bertingkat) untuk menjawab pertanyaan bisnis seperti top customer per region dan tren penjualan bulanan.",
+      tools: "PostgreSQL, CTE, Window Functions",
+      demoUrl: ""
+    },
+    {
+      title: "Sales Performance Dashboard",
+      category: "Visualization",
+      icon: "fa-chart-pie",
+      description: "Dashboard interaktif yang memvisualisasikan pencapaian penjualan, distribusi coverage, dan billing rate per region secara real-time.",
+      tools: "Looker Studio, Power BI, Google Sheets",
+      demoUrl: ""
+    },
+    {
+      title: "Inventory Anomaly Detector",
+      category: "Python",
+      icon: "fa-chart-line",
+      description: "Skrip Python sederhana untuk mendeteksi pergerakan aset/stok yang anomali dibanding rata-rata historisnya, lalu menandainya untuk ditinjau.",
+      tools: "Python, Pandas, Matplotlib",
+      demoUrl: ""
+    },
+    {
+      title: "Geospatial Coverage Map",
+      category: "GIS",
+      icon: "fa-map-location-dot",
+      description: "Pemetaan cakupan distribusi penjualan berbasis QGIS untuk mengidentifikasi wilayah yang belum tercover secara optimal.",
+      tools: "QGIS, Geospatial Analysis",
+      demoUrl: ""
+    },
+    {
+      title: "Automated Reporting Bot",
+      category: "Automation",
+      icon: "fa-robot",
+      description: "Google Apps Script yang menyusun & mengirim ringkasan laporan mingguan otomatis ke email tim setiap Senin pagi.",
+      tools: "Google Apps Script, Gmail API",
+      demoUrl: ""
     }
   ],
 
