@@ -158,34 +158,26 @@ const SITE_CONFIG = {
     },
     {
       title: "Sales Performance Dashboard",
-      category: "Visualization",
+      category: "Visualisasi",
       icon: "fa-chart-pie",
       description: "Dashboard interaktif yang memvisualisasikan pencapaian penjualan, distribusi coverage, dan billing rate per region secara real-time.",
       tools: "Looker Studio, Power BI, Google Sheets",
       demoUrl: ""
     },
     {
-      title: "Inventory Anomaly Detector",
-      category: "Python",
-      icon: "fa-chart-line",
-      description: "Skrip Python sederhana untuk mendeteksi pergerakan aset/stok yang anomali dibanding rata-rata historisnya, lalu menandainya untuk ditinjau.",
-      tools: "Python, Pandas, Matplotlib",
-      demoUrl: ""
-    },
-    {
-      title: "Geospatial Coverage Map",
-      category: "GIS",
-      icon: "fa-map-location-dot",
-      description: "Pemetaan cakupan distribusi penjualan berbasis QGIS untuk mengidentifikasi wilayah yang belum tercover secara optimal.",
-      tools: "QGIS, Geospatial Analysis",
+      title: "Automated Incentive Workbook",
+      category: "Excel",
+      icon: "fa-file-excel",
+      description: "Template Excel dengan Pivot Table, OLAP, dan formula lanjutan untuk menghitung insentif ribuan sales secara otomatis dan akurat.",
+      tools: "Advanced Excel, Pivot Tables, OLAP",
       demoUrl: ""
     },
     {
       title: "Automated Reporting Bot",
-      category: "Automation",
-      icon: "fa-robot",
+      category: "App Script",
+      icon: "fa-code",
       description: "Google Apps Script yang menyusun & mengirim ringkasan laporan mingguan otomatis ke email tim setiap Senin pagi.",
-      tools: "Google Apps Script, Gmail API",
+      tools: "Google Apps Script, Gmail API, Google Sheets",
       demoUrl: ""
     }
   ],
