@@ -125,56 +125,104 @@
         <!-- MASKOT KUCING HITAM -->
         <div id="cat-mascot" class="hidden xl:block absolute select-none pointer-events-none" style="right: 4%; bottom: 8%;" aria-hidden="true">
             <svg id="cat-svg" width="150" height="150" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+                <defs>
+                    <linearGradient id="catFurBody" x1="0.15" y1="0" x2="0.65" y2="1">
+                        <stop offset="0%" stop-color="#3d3d44"/>
+                        <stop offset="45%" stop-color="#18181b"/>
+                        <stop offset="100%" stop-color="#020203"/>
+                    </linearGradient>
+                    <linearGradient id="catFurHead" x1="0.2" y1="0" x2="0.7" y2="1">
+                        <stop offset="0%" stop-color="#48484f"/>
+                        <stop offset="45%" stop-color="#1a1a1d"/>
+                        <stop offset="100%" stop-color="#030304"/>
+                    </linearGradient>
+                    <linearGradient id="catEarOuter" x1="0" y1="0" x2="0.4" y2="1">
+                        <stop offset="0%" stop-color="#333338"/>
+                        <stop offset="100%" stop-color="#040405"/>
+                    </linearGradient>
+                    <linearGradient id="catEarInner" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#6b494f"/>
+                        <stop offset="100%" stop-color="#2a181c"/>
+                    </linearGradient>
+                    <radialGradient id="catEyeIris" cx="38%" cy="30%" r="80%">
+                        <stop offset="0%" stop-color="#ffedb8"/>
+                        <stop offset="45%" stop-color="#e8a53c"/>
+                        <stop offset="100%" stop-color="#7c4210"/>
+                    </radialGradient>
+                    <linearGradient id="catTailGrad" x1="0.1" y1="0.9" x2="0.85" y2="0.1">
+                        <stop offset="0%" stop-color="#050506"/>
+                        <stop offset="55%" stop-color="#1e1e22"/>
+                        <stop offset="100%" stop-color="#3c3c42"/>
+                    </linearGradient>
+                    <linearGradient id="catLegGrad" x1="0" y1="0" x2="0.3" y2="1">
+                        <stop offset="0%" stop-color="#2c2c31"/>
+                        <stop offset="100%" stop-color="#040405"/>
+                    </linearGradient>
+                </defs>
+
                 <!-- bayangan -->
-                <ellipse cx="95" cy="178" rx="46" ry="7" fill="#000000" opacity="0.08"/>
+                <ellipse cx="95" cy="178" rx="46" ry="7" fill="#000000" opacity="0.1"/>
 
                 <!-- EKOR (dianimasikan terpisah, digambar duluan supaya ada di belakang badan) -->
                 <g id="cat-tail" style="transform-origin: 118px 150px;">
-                    <path d="M118,150 C150,148 168,120 160,90 C154,66 132,58 122,66 C136,64 150,76 152,94 C156,118 140,138 116,140 Z" fill="#111214"/>
-                    <path d="M122,66 C126,60 136,58 143,63" fill="none" stroke="#111214" stroke-width="7" stroke-linecap="round"/>
-                </g>
-
-                <!-- BADAN -->
-                <ellipse cx="90" cy="150" rx="48" ry="34" fill="#16171a"/>
-
-                <!-- TELINGA -->
-                <path d="M55,95 L44,58 L78,84 Z" fill="#111214"/>
-                <path d="M112,95 L128,56 L92,82 Z" fill="#111214"/>
-                <path d="M59,90 L52,68 L73,84 Z" fill="#3a2a30"/>
-                <path d="M108,90 L119,66 L94,80 Z" fill="#3a2a30"/>
-
-                <!-- KEPALA -->
-                <circle cx="85" cy="108" r="42" fill="#16171a"/>
-
-                <!-- PIPI PUTIH LUCU -->
-                <ellipse cx="85" cy="128" rx="26" ry="14" fill="#232428"/>
-
-                <!-- MATA (berkedip lewat CSS) -->
-                <g id="cat-eyes">
-                    <ellipse cx="70" cy="106" rx="6.5" ry="8.5" fill="#eaeaea"/>
-                    <ellipse cx="100" cy="106" rx="6.5" ry="8.5" fill="#eaeaea"/>
-                    <circle cx="71" cy="108" r="3.2" fill="#111214"/>
-                    <circle cx="101" cy="108" r="3.2" fill="#111214"/>
-                    <circle cx="72.5" cy="105.5" r="1.1" fill="#ffffff"/>
-                    <circle cx="102.5" cy="105.5" r="1.1" fill="#ffffff"/>
-                </g>
-
-                <!-- HIDUNG & MULUT -->
-                <path d="M82,120 L88,120 L85,124 Z" fill="#e8879c"/>
-                <path d="M85,124 C85,129 79,131 75,128" fill="none" stroke="#c9c9cf" stroke-width="1.6" stroke-linecap="round"/>
-                <path d="M85,124 C85,129 91,131 95,128" fill="none" stroke="#c9c9cf" stroke-width="1.6" stroke-linecap="round"/>
-
-                <!-- KUMIS -->
-                <g stroke="#c9c9cf" stroke-width="1.3" stroke-linecap="round" opacity="0.75">
-                    <line x1="46" y1="112" x2="20" y2="106"/>
-                    <line x1="46" y1="119" x2="19" y2="119"/>
-                    <line x1="124" y1="112" x2="150" y2="106"/>
-                    <line x1="124" y1="119" x2="151" y2="119"/>
+                    <path d="M118,150 C150,148 168,120 160,90 C154,66 132,58 122,66 C136,64 150,76 152,94 C156,118 140,138 116,140 Z" fill="url(#catTailGrad)"/>
+                    <path d="M128,72 C138,80 146,94 148,108" fill="none" stroke="#4a4a52" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+                    <path d="M124,130 C134,126 142,116 145,104" fill="none" stroke="#4a4a52" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
                 </g>
 
                 <!-- KAKI DEPAN -->
-                <ellipse cx="68" cy="176" rx="9" ry="13" fill="#111214"/>
-                <ellipse cx="106" cy="176" rx="9" ry="13" fill="#111214"/>
+                <path d="M60,158 C54,158 50,163 50,170 L50,196 C50,203 55,208 62,208 C69,208 74,203 74,196 L74,168 C74,162 68,158 60,158 Z" fill="url(#catLegGrad)"/>
+                <path d="M114,158 C108,158 104,162 104,168 L104,196 C104,203 109,208 116,208 C123,208 128,203 128,196 L128,170 C128,163 124,158 118,158 Z" fill="url(#catLegGrad)"/>
+                <path d="M56,202 L56,196 M62,204 L62,197 M68,202 L68,196" stroke="#050506" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+                <path d="M110,202 L110,196 M116,204 L116,197 M122,202 L122,196" stroke="#050506" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+
+                <!-- BADAN -->
+                <ellipse cx="90" cy="150" rx="48" ry="34" fill="url(#catFurBody)"/>
+
+                <!-- TELINGA -->
+                <path d="M56,94 C48,78 43,60 47,42 C60,52 73,68 79,86 Z" fill="url(#catEarOuter)"/>
+                <path d="M113,94 C121,78 126,60 122,42 C109,52 96,68 90,86 Z" fill="url(#catEarOuter)"/>
+                <path d="M59,84 C54,71 52,58 55,46 C64,54 71,64 74,76 Z" fill="url(#catEarInner)"/>
+                <path d="M110,84 C115,71 117,58 114,46 C105,54 98,64 95,76 Z" fill="url(#catEarInner)"/>
+                <path d="M50,46 L44,36 M53,42 L48,33" stroke="#050506" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+                <path d="M119,46 L125,36 M116,42 L121,33" stroke="#050506" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+
+                <!-- KEPALA -->
+                <circle cx="85" cy="108" r="42" fill="url(#catFurHead)"/>
+
+                <!-- rahang bawah sedikit lebih terang -->
+                <path d="M55,118 C63,136 74,144 85,144 C96,144 107,136 115,118 C110,132 98,140 85,140 C72,140 60,132 55,118 Z" fill="#28282d" opacity="0.55"/>
+
+                <!-- MATA (berkedip lewat CSS, almond + iris amber + pupil vertikal) -->
+                <g id="cat-eyes">
+                    <path d="M62,104 C66,97 76,95 81,100 C77,108 68,111 63,108 C61,107 61,105 62,104 Z" fill="url(#catEyeIris)"/>
+                    <path d="M108,104 C104,97 94,95 89,100 C93,108 102,111 107,108 C109,107 109,105 108,104 Z" fill="url(#catEyeIris)"/>
+                    <rect x="69" y="97" width="2.2" height="11" rx="1.1" fill="#0a0a0a" transform="rotate(8 70 102)"/>
+                    <rect x="97.5" y="97" width="2.2" height="11" rx="1.1" fill="#0a0a0a" transform="rotate(-8 99 102)"/>
+                    <circle cx="66" cy="100" r="1" fill="#fff" opacity="0.9"/>
+                    <circle cx="104" cy="100" r="1" fill="#fff" opacity="0.9"/>
+                    <path d="M61,102 C67,94 78,92 82,98" fill="none" stroke="#050506" stroke-width="1.4" stroke-linecap="round"/>
+                    <path d="M109,102 C103,94 92,92 88,98" fill="none" stroke="#050506" stroke-width="1.4" stroke-linecap="round"/>
+                </g>
+
+                <!-- HIDUNG (bentuk leather kucing) -->
+                <path d="M81,118 C81,115.5 83,114 85,116 C87,114 89,115.5 89,118 C89,121 87,123 85,124.5 C83,123 81,121 81,118 Z" fill="#c97b8e"/>
+                <path d="M85,124.5 C85,129 80,132 74,130" fill="none" stroke="#54545c" stroke-width="1.3" stroke-linecap="round"/>
+                <path d="M85,124.5 C85,129 90,132 96,130" fill="none" stroke="#54545c" stroke-width="1.3" stroke-linecap="round"/>
+                <path d="M85,124.5 L85,127" stroke="#54545c" stroke-width="1.3" stroke-linecap="round"/>
+
+                <!-- KUMIS -->
+                <g stroke="#c9c9cf" stroke-width="1.1" stroke-linecap="round" opacity="0.55">
+                    <line x1="50" y1="112" x2="18" y2="105"/>
+                    <line x1="49" y1="118" x2="17" y2="119"/>
+                    <line x1="51" y1="124" x2="21" y2="132"/>
+                    <line x1="120" y1="112" x2="152" y2="105"/>
+                    <line x1="121" y1="118" x2="153" y2="119"/>
+                    <line x1="119" y1="124" x2="149" y2="132"/>
+                </g>
+
+                <!-- highlight tipis di atas kepala (kesan bulu mengkilap) -->
+                <path d="M62,80 C72,68 98,68 108,80" fill="none" stroke="#5a5a63" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
             </svg>
         </div>
     </section>
@@ -204,7 +252,7 @@
                 <h2 class="font-serif text-4xl md:text-5xl text-white leading-tight font-bold">
                     A playground for SQL, dashboards & data stories
                 </h2>
-                <p class="text-gray-400 mt-3">Kumpulan eksperimen &amp; dummy project untuk menunjukkan cara kerja dengan data. Geser atau klik kartu untuk menjelajah.</p>
+                <p class="text-gray-400 mt-3">Kumpulan dummy project seputar SQL, visualisasi, Excel, dan App Script untuk menunjukkan cara kerja dengan data. Geser atau klik kartu untuk menjelajah.</p>
             </div>
         </div>
 
