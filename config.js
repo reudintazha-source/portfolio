@@ -102,7 +102,7 @@ const SITE_CONFIG = {
       ],
       attachments: [
         { name: "Flowchart Proses Tracking", type: "pdf", url: "" },
-        { name: "Handbook / SOP Penggunaan", type: "pdf", url: "" }
+        { name: "ERD", type: "pdf", url: "https://drive.google.com/file/d/1PnksVVRAhri9lxDWypTK_bhyOzP5d1tq/view?usp=sharing" }
       ]
     },
     {
