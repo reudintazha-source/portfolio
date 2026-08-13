@@ -306,6 +306,25 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   };
 
+  // Daftar bullet point untuk "Action Taken" / "Business Impact" (dan daftar
+  // sejenis lainnya) di dalam modal detail project. accentClass mengatur
+  // warna titik bullet-nya (indigo untuk action, emerald untuk impact, dst).
+  const bulletListHtml = (label, items, accentClass = 'text-indigo-500') => {
+    if (!items || !items.length) return '';
+    return `
+      <div class="mb-6">
+        <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">${label}</p>
+        <ul class="space-y-2">
+          ${items.map(item => `
+            <li class="flex gap-2 text-gray-600 leading-relaxed">
+              <span class="${accentClass} mt-1">•</span><span>${item}</span>
+            </li>
+          `).join('')}
+        </ul>
+      </div>
+    `;
+  };
+
   const openModal = (project) => {
     if (!modal || !modalBody) return;
     const hasDemo = project.demoUrl && project.demoUrl.trim() !== '';
@@ -314,11 +333,15 @@ document.addEventListener('DOMContentLoaded', () => {
           ${project.metrics.split('|').map(m => `<span class="text-xs font-semibold bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">${m.trim()}</span>`).join('')}
         </div>`
       : '';
+    const actionsHtml = bulletListHtml('Action Taken', project.actionsTaken, 'text-indigo-500');
+    const impactHtml = bulletListHtml('Business Impact', project.businessImpact, 'text-emerald-500');
     modalBody.innerHTML = `
       <img src="${project.image}" class="w-full aspect-video object-cover rounded-2xl mb-6" alt="${project.title}">
       <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">${project.category}</span>
       <h3 class="font-serif text-3xl font-bold text-slate-900 mt-4 mb-3">${project.title}</h3>
-      <p class="text-gray-600 leading-relaxed mb-4">${project.description}</p>
+      <p class="text-gray-600 leading-relaxed mb-6">${project.description}</p>
+      ${actionsHtml}
+      ${impactHtml}
       ${metricsHtml}
       <div class="flex flex-wrap gap-2 mb-6">
         ${project.tools.split(',').map(t => `<span class="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full border border-gray-200">${t.trim()}</span>`).join('')}
