@@ -599,4 +599,49 @@ document.addEventListener('DOMContentLoaded', () => {
     buildDots();
     render();
   }
+
+  /* ============ MASKOT KUCING — IKUT ARAH KURSOR ============ */
+  // Badan kucing sedikit berputar (tilt) mengikuti posisi kursor di layar,
+  // dan bola matanya ikut melirik ke arah kursor seperti sedang menatap.
+  const catMascotEl = document.getElementById('cat-mascot');
+  const catRotateGroup = document.getElementById('cat-rotate-group');
+  const catPupils = document.querySelectorAll('.cat-pupil');
+
+  if (catMascotEl && catRotateGroup && catPupils.length) {
+    let lastMouseEvent = null;
+    let catTicking = false;
+
+    const updateCatLook = () => {
+      catTicking = false;
+      if (!lastMouseEvent) return;
+
+      const rect = catMascotEl.getBoundingClientRect();
+      // Kalau maskot lagi disembunyikan (misal di layar sempit), rect-nya 0 — skip.
+      if (rect.width === 0 && rect.height === 0) return;
+
+      const catCenterX = rect.left + rect.width / 2;
+      const catCenterY = rect.top + rect.height * 0.35; // kira-kira posisi kepala
+      const dx = lastMouseEvent.clientX - catCenterX;
+      const dy = lastMouseEvent.clientY - catCenterY;
+
+      // Badan/kepala berputar sedikit ke arah kursor, dibatasi supaya tetap lucu (tidak muter penuh)
+      const tilt = Math.max(-16, Math.min(16, dx / 35));
+      catRotateGroup.style.transform = `rotate(${tilt}deg)`;
+
+      // Bola mata melirik ke arah kursor di dalam kelopak matanya
+      const dist = Math.hypot(dx, dy) || 1;
+      const maxPupilShift = 4.5;
+      const px = (dx / dist) * maxPupilShift;
+      const py = (dy / dist) * maxPupilShift;
+      catPupils.forEach(p => { p.style.transform = `translate(${px}px, ${py}px)`; });
+    };
+
+    window.addEventListener('mousemove', (e) => {
+      lastMouseEvent = e;
+      if (!catTicking) {
+        catTicking = true;
+        requestAnimationFrame(updateCatLook);
+      }
+    });
+  }
 });
