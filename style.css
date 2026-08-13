@@ -220,9 +220,16 @@ body.dark .custom-cursor { border-color: rgba(255,255,255,0.6); }
   transform-style: preserve-3d;
   animation: catBob 3.6s ease-in-out infinite;
 }
+
+/* Grup ini yang "berputar" mengikuti posisi kursor di layar (diatur lewat
+   script.js). transform-origin & transform-box sudah diset inline di HTML
+   supaya presisi terhadap titik tengah kucing, di sini kita cuma tambahkan
+   transisi supaya gerakannya halus, bukan patah-patah. */
+#cat-rotate-group {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 #cat-tail {
-  transform-box: view-box;
-  transform-origin: 118px 150px;
   transform-style: preserve-3d;
   animation: tailSwish 2.4s ease-in-out infinite;
 }
@@ -232,13 +239,20 @@ body.dark .custom-cursor { border-color: rgba(255,255,255,0.6); }
   animation: catBlink 5.5s ease-in-out infinite;
 }
 
+/* Bola mata (pupil) kucing, ikut melirik ke arah kursor lewat script.js */
+.cat-pupil {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.15s ease-out;
+}
+
 @keyframes catBob {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50%      { transform: translateY(-6px) rotate(-1.5deg); }
 }
 @keyframes tailSwish {
-  0%, 100% { transform: rotate(-10deg) rotateY(10deg); }
-  50%      { transform: rotate(16deg) rotateY(-20deg); }
+  0%, 100% { transform: rotate(-10deg); }
+  50%      { transform: rotate(14deg); }
 }
 @keyframes catBlink {
   0%, 90%, 100% { transform: scaleY(1); }
@@ -246,7 +260,7 @@ body.dark .custom-cursor { border-color: rgba(255,255,255,0.6); }
   96%           { transform: scaleY(1); }
 }
 @media (prefers-reduced-motion: reduce) {
-  #cat-svg, #cat-tail, #cat-eyes { animation: none !important; }
+  #cat-svg, #cat-tail, #cat-eyes, #cat-rotate-group, .cat-pupil { animation: none !important; transition: none !important; }
 }
 @media (max-width: 1279px) {
   #cat-mascot { display: none !important; }
