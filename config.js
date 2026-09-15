@@ -21,6 +21,10 @@ const SITE_CONFIG = {
     enabled: true,
     src: "video/intro.mp4",
     overlayOpacity: 0.5,
+    // Volume suara video hero, 0 = diam, 1 = paling keras.
+    // Videonya tetap mulai dalam keadaan mute (aturan browser), user tinggal
+    // klik tombol "Nyalakan suara" di pojok kanan bawah hero.
+    volume: 0.6,
   },
 
   flowerAnimation: {
@@ -34,10 +38,10 @@ const SITE_CONFIG = {
       role: "Inventory Analyst",
       company: "SPX Express",
       period: "April 2026 — July 2026",
-      description: "Managed IT asset movements across 3,000+ operational sites, coordinating with logistics vendors and warehouse head to monitor operational performance, resolve shipment discrepancies, and support efficient asset availability.\nProcessed and verified 50+ daily asset movements, identifying shipment discrepancies and supporting timely operational resolution.\nDeveloped a web-based IT asset request system using Google Apps Script and Google Sheets, streamlining asset allocation workflows and reducing duplicate records.\nDeveloped an operational dashboard to monitor 500+ IT asset movements, improving asset visibility and supporting operational performance monitoring."
+      description: "Managed IT asset movements across 3,000+ operational sites, coordinating with logistics vendors and warehouse head to monitor operational performance, resolve shipment discrepancies, and support efficient asset availability.\nProcessed and verified 50+ daily asset movements, identifying shipment discrepancies and supporting timely operational resolution.\nDeveloped a web-based IT asset request system using Google Apps Script and Google Sheets, streamlining assetallocation workflows and reducing duplicate records.\nDeveloped an operational dashboard to monitor 500+ IT asset movements, improving asset visibility and supporting operational performance monitoring."
     },
     {
-      role: "Intern",
+      role: "Intern Distribution Development",
       company: "PT Garudafood Putra Putri Jaya Tbk",
       period: "July 2025 — January 2026",
       description: "Maintained and enhanced KPI dashboards for divisional management and 4 regional heads, enabling consistent monitoring of Sales Achievement, Distribution Coverage, Billing Rate, and Target Realization.\nBuilt automated incentive calculation templates with Advanced Excel, Pivot Tables, and OLAP for 2,000+ sales employees across 5 incentive schemes, significantly improving reporting efficiency and payout accuracy.\nConducted QGIS-based geospatial analysis of regional sales coverage outside Java, supporting territory expansion and distribution planning initiatives.\nGenerated weekly and monthly sales performance reports at both individual and regional levels to support operational decision-making."
@@ -52,36 +56,36 @@ const SITE_CONFIG = {
 
   spreadsheetId: "MASUKKAN_SPREADSHEET_ID_ANDA_DISINI",
 
-  // Setiap project sekarang bisa punya "attachments": lampiran file tambahan
-  // seperti flowchart, handbook/SOP, laporan PDF, dsb. Ini akan muncul sebagai
-  // tombol yang bisa diklik di dalam modal detail project.
-  //
-  // Cara isi:
-  //   attachments: [
-  //     { name: "Nama file yang ditampilkan", type: "pdf", url: "https://link-ke-file-kamu" }
-  //   ]
-  //
-  // "type" menentukan ikon yang muncul: pdf, doc, sheet, image, ppt, atau zip (default: file biasa).
-  // "url" bisa berupa link Google Drive (klik kanan file > Bagikan > Salin link),
-  // link GitHub, atau hosting lain. Kalau project belum ada lampiran, cukup hapus
-  // baris "attachments" atau biarkan array-nya kosong: attachments: []
-  //
-  // Setiap project juga sekarang bisa punya "actionsTaken" dan "businessImpact":
-  // dua daftar bullet point terpisah yang akan muncul di modal detail project,
-  // di bawah deskripsi singkat. Formatnya array of string, satu string = satu bullet.
-  //
-  //   actionsTaken: [
-  //     "Apa yang kamu kerjakan / langkah konkret yang diambil...",
-  //     "Langkah lainnya..."
-  //   ],
-  //   businessImpact: [
-  //     "Hasil / dampak bisnis yang terukur...",
-  //     "Dampak lainnya..."
-  //   ]
-  //
-  // Kalau salah satu (atau keduanya) tidak diisi / dihapus, modal akan tetap
-  // menampilkan "description" seperti biasa tanpa error.
-  fallbackProjects: [
+ // Setiap project sekarang bisa punya "attachments": lampiran file tambahan
+ // seperti flowchart, handbook/SOP, laporan PDF, dsb. Ini akan muncul sebagai
+ // tombol yang bisa diklik di dalam modal detail project.
+ //
+ // Cara isi:
+ //   attachments: [
+ //     { name: "Nama file yang ditampilkan", type: "pdf", url: "https://link-ke-file-kamu" }
+ //   ]
+ //
+ // "type" menentukan ikon yang muncul: pdf, doc, sheet, image, ppt, atau zip (default: file biasa).
+ // "url" bisa berupa link Google Drive (klik kanan file > Bagikan > Salin link),
+ // link GitHub, atau hosting lain. Kalau project belum ada lampiran, cukup hapus
+ // baris "attachments" atau biarkan array-nya kosong: attachments: []
+ //
+ // Setiap project juga sekarang bisa punya "actionsTaken" dan "businessImpact":
+ // dua daftar bullet point terpisah yang akan muncul di modal detail project,
+ // di bawah deskripsi singkat. Formatnya array of string, satu string = satu bullet.
+ //
+ //   actionsTaken: [
+ //     "Apa yang kamu kerjakan / langkah konkret yang diambil...",
+ //     "Langkah lainnya..."
+ //   ],
+ //   businessImpact: [
+ //     "Hasil / dampak bisnis yang terukur...",
+ //     "Dampak lainnya..."
+ //   ]
+ //
+ // Kalau salah satu (atau keduanya) tidak diisi / dihapus, modal akan tetap
+ // menampilkan "description" seperti biasa tanpa error.
+ fallbackProjects: [
     {
       title: "IT Asset Tracking Dashboard",
       category: "Automation",
@@ -91,18 +95,18 @@ const SITE_CONFIG = {
       demoUrl: "https://script.google.com/macros/s/AKfycbyVKn6KCRlxw5StXsXAaaR3ogn_Czy6wFAtThEsfxdkKpnGmbCvwevszVdt1Nar1E774w/exec",
       metrics: "500+ Assets Tracked | 58% Pending Status Reduction | Enhanced Real-Time Visibility",
       actionsTaken: [
-        "Designed and developed a web-based dashboard integrated with Google Sheets for real-time IT asset tracking",
+        "Built a centralized digital ecosystem to track IT assets in motion across 3,000+ operational sites",
         "Designed real-time status update workflows to catch shipment discrepancies before they became bottlenecks",
         "Integrated Google Apps Script with Google Sheets for live data synchronization and automated alerts"
       ],
       businessImpact: [
         "Tracked 500+ IT assets with full end-to-end visibility",
-        "Reduced pending AWB status updates by 58% (from 300+ to 128).",
+        "Reduced pending shipment status backlog by 58%",
         "Gave warehouse and logistics teams enhanced real-time visibility into asset movement"
       ],
       attachments: [
         { name: "Flowchart Proses Tracking", type: "pdf", url: "" },
-        { name: "ERD", type: "pdf", url: "https://drive.google.com/file/d/1PnksVVRAhri9lxDWypTK_bhyOzP5d1tq/view?usp=sharing" }
+        { name: "Handbook / SOP Penggunaan", type: "pdf", url: "" }
       ]
     },
     {
@@ -115,7 +119,7 @@ const SITE_CONFIG = {
       metrics: "60% Fewer Duplicate Entries | 25% Higher Processing Capacity | 50% Time Saved",
       actionsTaken: [
         "Built a web-based request management system with Google Apps Script and Google Workspace",
-        "Replaced manual google form-based request forms with a standardized, validated digital workflow",
+        "Replaced manual paper-based request forms with a standardized, validated digital workflow",
         "Added input validation rules to catch duplicate and incomplete submissions before they entered the queue"
       ],
       businessImpact: [
@@ -281,20 +285,20 @@ const SITE_CONFIG = {
   ],
 
   workflow: [
-    {
-      number: "01",
-      title: "Understand & Analyze",
-      description: "Deeply exploring operational bottlenecks, database structures, and mapping out system workflows."
+    { 
+      number: "01", 
+      title: "Understand & Analyze", 
+      description: "Deeply exploring operational bottlenecks, database structures, and mapping out system workflows." 
     },
-    {
-      number: "02",
-      title: "Develop & Automate",
-      description: "Building automation scripts, advanced formulas, and interactive visualizations to ensure data is management-ready."
+    { 
+      number: "02", 
+      title: "Develop & Automate", 
+      description: "Building automation scripts, advanced formulas, and interactive visualizations to ensure data is management-ready." 
     },
-    {
-      number: "03",
-      title: "Handover & Refine",
-      description: "Providing system documentation, team training, and continuous feature refinement to maintain peak performance."
+    { 
+      number: "03", 
+      title: "Handover & Refine", 
+      description: "Providing system documentation, team training, and continuous feature refinement to maintain peak performance." 
     }
   ],
 
