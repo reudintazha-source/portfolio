@@ -229,6 +229,59 @@ body.dark .custom-cursor { border-color: rgba(255,255,255,0.6); }
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Kepala + telinga dimiringkan sendiri, sedikit lebih besar dari badan,
+   supaya gerakannya terasa seperti kucing benaran yang menoleh penasaran. */
+#cat-head-tilt {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---- Tombol suara video hero ---- */
+#hero-sound-toggle {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 7.5rem;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+  color: #1a1a1a;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+#hero-sound-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.18);
+}
+#hero-sound-toggle.is-on {
+  background: #4F46E5;
+  border-color: #4F46E5;
+  color: #ffffff;
+}
+body.dark #hero-sound-toggle {
+  background: rgba(23, 23, 26, 0.85);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #f4f4f5;
+}
+body.dark #hero-sound-toggle.is-on {
+  background: #6366f1;
+  border-color: #6366f1;
+}
+@media (max-width: 768px) {
+  #hero-sound-toggle {
+    right: 1rem;
+    bottom: 6rem;
+    padding: 0.6rem 0.9rem;
+  }
+  #hero-sound-toggle .hero-sound-label { display: none; }
+}
+
 #cat-tail {
   transform-style: preserve-3d;
   animation: tailSwish 2.4s ease-in-out infinite;
@@ -271,6 +324,16 @@ body.dark .custom-cursor { border-color: rgba(255,255,255,0.6); }
    ============================================================ */
 #coverflow-track {
   transform-style: preserve-3d;
+}
+
+/* Wrapper yang digeser halus mengikuti posisi kursor (diatur di script.js).
+   Dipisah dari #coverflow-track supaya transform kartu 3D tidak bentrok. */
+#coverflow-stage {
+  position: relative;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 .coverflow-card {
   position: absolute;
