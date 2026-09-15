@@ -120,6 +120,48 @@ document.addEventListener('DOMContentLoaded', () => {
     heroVideo.style.display = 'none';
   }
 
+  /* ============ SUARA VIDEO HERO ============ */
+  // Semua browser modern memblokir video yang autoplay langsung bersuara.
+  // Jadi videonya tetap mulai dalam keadaan mute, lalu user bisa menyalakan
+  // suaranya lewat tombol ini (satu kali klik = izin dari user).
+  const soundToggle = document.getElementById('hero-sound-toggle');
+  if (soundToggle && heroVideo && cfg.heroVideo && cfg.heroVideo.enabled) {
+    soundToggle.classList.remove('hidden');
+
+    const paintSoundBtn = () => {
+      const on = !heroVideo.muted && heroVideo.volume > 0;
+      soundToggle.classList.toggle('is-on', on);
+      soundToggle.innerHTML = on
+        ? '<i class="fa-solid fa-volume-high"></i><span class="hero-sound-label">Matikan suara</span>'
+        : '<i class="fa-solid fa-volume-xmark"></i><span class="hero-sound-label">Nyalakan suara</span>';
+      soundToggle.setAttribute('aria-label', on ? 'Matikan suara video' : 'Nyalakan suara video');
+    };
+
+    heroVideo.volume = cfg.heroVideo.volume ?? 0.6;
+    paintSoundBtn();
+
+    soundToggle.addEventListener('click', () => {
+      heroVideo.muted = !heroVideo.muted;
+      if (!heroVideo.muted) {
+        heroVideo.volume = cfg.heroVideo.volume ?? 0.6;
+        // play() dipanggil ulang karena klik user = izin sah untuk audio
+        const p = heroVideo.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      }
+      paintSoundBtn();
+    });
+
+    // Kalau user scroll jauh dari hero, suaranya otomatis di-mute lagi
+    // supaya tidak mengganggu saat membaca section lain.
+    window.addEventListener('scroll', () => {
+      if (heroVideo.muted) return;
+      if (window.scrollY > window.innerHeight * 0.85) {
+        heroVideo.muted = true;
+        paintSoundBtn();
+      }
+    });
+  }
+
   /* ============ ANIMASI BUNGA MELAYANG ============ */
   const flowerField = document.getElementById('flower-field');
   if (flowerField && cfg.flowerAnimation && cfg.flowerAnimation.enabled) {
@@ -504,8 +546,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('lab-modal-close')?.addEventListener('click', closeLabModal);
     labModal?.addEventListener('click', (e) => { if (e.target === labModal) closeLabModal(); });
 
+    // Semua kartu ditaruh di dalam "stage" supaya stage-nya bisa digeser
+    // mengikuti kursor tanpa mengganggu transform 3D milik tiap kartu.
+    let coverflowStage = null;
+
     const buildCards = () => {
       coverflowTrack.innerHTML = '';
+      coverflowStage = document.createElement('div');
+      coverflowStage.id = 'coverflow-stage';
+      coverflowTrack.appendChild(coverflowStage);
       cardEls = items.map((item, i) => {
         const card = document.createElement('div');
         card.className = 'coverflow-card';
@@ -532,7 +581,7 @@ document.addEventListener('DOMContentLoaded', () => {
             render();
           }
         });
-        coverflowTrack.appendChild(card);
+        coverflowStage.appendChild(card);
         return card;
       });
     };
@@ -598,6 +647,42 @@ document.addEventListener('DOMContentLoaded', () => {
     buildCards();
     buildDots();
     render();
+
+    /* ---- Skill Lab bergeser mengikuti kursor ---- */
+    // Saat kursor bergerak di atas section Lab, seluruh galeri ikut bergeser
+    // & memiringkan sedikit (parallax), jadi terasa hidup dan "3D beneran".
+    const labSection = document.getElementById('lab');
+    if (labSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let labTicking = false;
+      let labEvt = null;
+
+      const updateLabDrift = () => {
+        labTicking = false;
+        if (!labEvt || !coverflowStage) return;
+        const rect = labSection.getBoundingClientRect();
+        // rasio -1 (kiri/atas) sampai 1 (kanan/bawah)
+        const rx = ((labEvt.clientX - rect.left) / rect.width - 0.5) * 2;
+        const ry = ((labEvt.clientY - rect.top) / rect.height - 0.5) * 2;
+        const shiftX = Math.max(-1, Math.min(1, rx)) * 42;
+        const rotY = Math.max(-1, Math.min(1, rx)) * 7;
+        const rotX = Math.max(-1, Math.min(1, ry)) * -5;
+        coverflowStage.style.transform =
+          `translateX(${shiftX}px) rotateY(${rotY}deg) rotateX(${rotX}deg)`;
+      };
+
+      labSection.addEventListener('mousemove', (e) => {
+        labEvt = e;
+        if (!labTicking) {
+          labTicking = true;
+          requestAnimationFrame(updateLabDrift);
+        }
+      });
+
+      // Balik ke posisi netral saat kursor keluar dari section
+      labSection.addEventListener('mouseleave', () => {
+        if (coverflowStage) coverflowStage.style.transform = 'translateX(0) rotateY(0deg) rotateX(0deg)';
+      });
+    }
   }
 
   /* ============ MASKOT KUCING — IKUT ARAH KURSOR ============ */
@@ -605,6 +690,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // dan bola matanya ikut melirik ke arah kursor seperti sedang menatap.
   const catMascotEl = document.getElementById('cat-mascot');
   const catRotateGroup = document.getElementById('cat-rotate-group');
+  const catHeadTilt = document.getElementById('cat-head-tilt');
   const catPupils = document.querySelectorAll('.cat-pupil');
 
   if (catMascotEl && catRotateGroup && catPupils.length) {
@@ -624,9 +710,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const dx = lastMouseEvent.clientX - catCenterX;
       const dy = lastMouseEvent.clientY - catCenterY;
 
-      // Badan/kepala berputar sedikit ke arah kursor, dibatasi supaya tetap lucu (tidak muter penuh)
-      const tilt = Math.max(-16, Math.min(16, dx / 35));
+      // Badan berputar sedikit ke arah kursor, dibatasi supaya tetap lucu (tidak muter penuh)
+      const tilt = Math.max(-14, Math.min(14, dx / 40));
       catRotateGroup.style.transform = `rotate(${tilt}deg)`;
+
+      // Kepala menoleh lebih jauh dari badan + ikut naik-turun sedikit,
+      // jadi terasa seperti kucing benaran yang memiringkan kepala penasaran.
+      if (catHeadTilt) {
+        const headTilt = Math.max(-18, Math.min(18, dx / 22));
+        const headShiftY = Math.max(-5, Math.min(5, dy / 30));
+        catHeadTilt.style.transform = `rotate(${headTilt}deg) translateY(${headShiftY}px)`;
+      }
 
       // Bola mata melirik ke arah kursor di dalam kelopak matanya
       const dist = Math.hypot(dx, dy) || 1;
