@@ -264,9 +264,9 @@ const SITE_CONFIG = {
     { name: "Google Apps Script", icon: "fa-code" },
     { name: "Google Sheets", icon: "fa-table" },
     { name: "Advanced Excel", icon: "fa-file-excel" },
-    { name: "Basic SQL", icon: "fa-database" },
+    { name: "Intermediate SQL", icon: "fa-database" },
     { name: "QGIS", icon: "fa-map-location-dot" },
-    { name: "Basic Power BI", icon: "fa-chart-pie" },
+    { name: "Intermediate Power BI", icon: "fa-chart-pie" },
     { name: "Looker Studio", icon: "fa-js" },
     { name: "Pivot Tables & OLAP", icon: "fa-layer-group" }
   ],
