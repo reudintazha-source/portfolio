@@ -54,6 +54,14 @@
             <div id="hero-overlay"></div>
         </div>
 
+        <!-- TOMBOL SUARA VIDEO HERO.
+             Browser melarang video autoplay langsung bersuara, jadi video tetap
+             mulai dalam keadaan mute dan user menyalakan suara lewat tombol ini. -->
+        <button id="hero-sound-toggle" class="hidden" type="button" aria-label="Nyalakan suara video">
+            <i class="fa-solid fa-volume-xmark"></i>
+            <span class="hero-sound-label">Nyalakan suara</span>
+        </button>
+
         <!-- ANIMASI BUNGA MELAYANG -->
         <div id="flower-field"></div>
 
@@ -122,98 +130,119 @@
             <div id="experience-container"></div>
         </div>
 
-        <!-- MASKOT KUCING HITAM -->
+        <!-- MASKOT KUCING (fluffy, mengikuti kursor) -->
         <div id="cat-mascot" class="hidden xl:block absolute select-none pointer-events-none" style="right: 4%; bottom: 6%;" aria-hidden="true">
-            <svg id="cat-svg" width="150" height="165" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
-                <defs>
-                    <linearGradient id="catBodyGrad" x1="0.2" y1="0" x2="0.7" y2="1">
-                        <stop offset="0%" stop-color="#3a3a40"/>
-                        <stop offset="50%" stop-color="#161618"/>
-                        <stop offset="100%" stop-color="#020203"/>
-                    </linearGradient>
-                    <linearGradient id="catHeadGrad" x1="0.2" y1="0" x2="0.7" y2="1">
-                        <stop offset="0%" stop-color="#424248"/>
-                        <stop offset="50%" stop-color="#1a1a1d"/>
-                        <stop offset="100%" stop-color="#030304"/>
-                    </linearGradient>
-                    <radialGradient id="catEyeGlow" cx="35%" cy="30%" r="75%">
-                        <stop offset="0%" stop-color="#fff6d0"/>
-                        <stop offset="55%" stop-color="#ffd23c"/>
-                        <stop offset="100%" stop-color="#f5a623"/>
-                    </radialGradient>
-                </defs>
-
-                <!-- bayangan -->
-                <ellipse cx="100" cy="212" rx="52" ry="7" fill="#000000" opacity="0.12"/>
-
-                <!-- SEMUA BAGIAN KUCING ADA DI DALAM GRUP INI SUPAYA BISA
-                     DIPUTAR BERSAMA MENGIKUTI ARAH KURSOR (lihat script.js) -->
-                <g id="cat-rotate-group" style="transform-box: view-box; transform-origin: 100px 120px;">
-
-                    <!-- EKOR (dianimasikan terpisah, digambar duluan supaya ada di belakang badan) -->
-                    <g id="cat-tail" style="transform-box: view-box; transform-origin: 62px 178px;">
-                        <path d="M62,178 C22,180 4,150 14,120 C21,98 44,92 54,104 C46,104 32,113 28,132 C24,152 38,168 66,166 Z" fill="url(#catBodyGrad)"/>
-                        <path d="M30,138 C36,124 46,114 56,110" fill="none" stroke="#4a4a52" stroke-width="1.2" stroke-linecap="round" opacity="0.45"/>
-                    </g>
-
-                    <!-- BADAN -->
-                    <path d="M100,118 C72,118 56,144 59,170 C62,196 76,216 100,219 C124,216 138,196 141,170 C144,144 128,118 100,118 Z" fill="url(#catBodyGrad)"/>
-
-                    <!-- KAKI DEPAN -->
-                    <ellipse cx="83" cy="209" rx="13" ry="9" fill="url(#catBodyGrad)"/>
-                    <ellipse cx="117" cy="209" rx="13" ry="9" fill="url(#catBodyGrad)"/>
-                    <path d="M76,211 L76,204 M83,212 L83,204 M90,211 L90,204" stroke="#050506" stroke-width="1.1" stroke-linecap="round" opacity="0.55"/>
-                    <path d="M110,211 L110,204 M117,212 L117,204 M124,211 L124,204" stroke="#050506" stroke-width="1.1" stroke-linecap="round" opacity="0.55"/>
-
-                    <!-- TELINGA -->
-                    <path d="M55,58 Q38,25 44,4 Q68,14 84,50 Z" fill="url(#catHeadGrad)"/>
-                    <path d="M145,58 Q162,25 156,4 Q132,14 116,50 Z" fill="url(#catHeadGrad)"/>
-                    <path d="M57,50 Q46,26 49,12 Q64,20 74,44 Z" fill="#f2a672"/>
-                    <path d="M143,50 Q154,26 151,12 Q136,20 126,44 Z" fill="#f2a672"/>
-
-                    <!-- JAMBUL / TUFT BULU DI ATAS KEPALA -->
-                    <path d="M86,38 L90,16 L95,35" fill="none" stroke="#1a1a1d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M95,34 L100,12 L105,34" fill="none" stroke="#1a1a1d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M105,35 L110,16 L114,38" fill="none" stroke="#1a1a1d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-
-                    <!-- KEPALA -->
-                    <circle cx="100" cy="98" r="58" fill="url(#catHeadGrad)"/>
-
-                    <!-- KUMIS -->
-                    <g stroke="#d4d4d8" stroke-width="1.3" stroke-linecap="round" opacity="0.7">
-                        <line x1="48" y1="108" x2="10" y2="100"/>
-                        <line x1="46" y1="115" x2="8" y2="116"/>
-                        <line x1="48" y1="122" x2="12" y2="132"/>
-                        <line x1="152" y1="108" x2="190" y2="100"/>
-                        <line x1="154" y1="115" x2="192" y2="116"/>
-                        <line x1="152" y1="122" x2="188" y2="132"/>
-                    </g>
-
-                    <!-- MATA (berkedip lewat CSS; bola mata "cat-pupil" ikut melirik ke kursor) -->
-                    <g id="cat-eyes">
-                        <ellipse cx="78" cy="102" rx="21" ry="25" fill="url(#catEyeGlow)"/>
-                        <ellipse cx="122" cy="102" rx="21" ry="25" fill="url(#catEyeGlow)"/>
-                        <path d="M55,92 C63,80 78,78 88,86" fill="none" stroke="#1a1a1d" stroke-width="2.4" stroke-linecap="round"/>
-                        <path d="M145,92 C137,80 122,78 112,86" fill="none" stroke="#1a1a1d" stroke-width="2.4" stroke-linecap="round"/>
-                        <circle class="cat-pupil" cx="78" cy="104" r="10" fill="#0a0a0a"/>
-                        <circle class="cat-pupil" cx="122" cy="104" r="10" fill="#0a0a0a"/>
-                        <circle cx="73" cy="99" r="3.2" fill="#ffffff" opacity="0.95"/>
-                        <circle cx="117" cy="99" r="3.2" fill="#ffffff" opacity="0.95"/>
-                        <circle cx="82" cy="110" r="1.6" fill="#ffffff" opacity="0.6"/>
-                        <circle cx="126" cy="110" r="1.6" fill="#ffffff" opacity="0.6"/>
-                    </g>
-
-                    <!-- HIDUNG -->
-                    <path d="M94,126 C94,122 97,120 100,123 C103,120 106,122 106,126 C106,130 102,133 100,135 C98,133 94,130 94,126 Z" fill="#f4a6b8"/>
-
-                    <!-- MULUT -->
-                    <path d="M100,135 C100,140 94,142 89,140" fill="none" stroke="#1a1a1d" stroke-width="1.6" stroke-linecap="round"/>
-                    <path d="M100,135 C100,140 106,142 111,140" fill="none" stroke="#1a1a1d" stroke-width="1.6" stroke-linecap="round"/>
-                    <path d="M99,135 L101,135 L100,141 Z" fill="#f4a6b8"/>
-
-                </g>
-            </svg>
+            <svg id="cat-svg" width="165" height="175" viewBox="0 0 200 210" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+      <defs>
+        <radialGradient id="cFurHead" cx="38%" cy="30%" r="78%">
+          <stop offset="0%" stop-color="#5c5c66"/>
+          <stop offset="45%" stop-color="#2e2e35"/>
+          <stop offset="100%" stop-color="#0b0b0e"/>
+        </radialGradient>
+        <radialGradient id="cFurBody" cx="35%" cy="25%" r="80%">
+          <stop offset="0%" stop-color="#4a4a54"/>
+          <stop offset="50%" stop-color="#252529"/>
+          <stop offset="100%" stop-color="#08080a"/>
+        </radialGradient>
+        <radialGradient id="cEye" cx="34%" cy="28%" r="80%">
+          <stop offset="0%" stop-color="#ffe9a8"/>
+          <stop offset="42%" stop-color="#ffc224"/>
+          <stop offset="100%" stop-color="#d98404"/>
+        </radialGradient>
+        <linearGradient id="cEarIn" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4a3238"/>
+          <stop offset="100%" stop-color="#171013"/>
+        </linearGradient>
+        <filter id="cSoft" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="1.6"/>
+        </filter>
+        <filter id="cFuzz" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="7" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+    
+      <ellipse cx="100" cy="200" rx="54" ry="7" fill="#000" opacity="0.13"/>
+    
+      <g id="cat-rotate-group">
+    
+        <!-- EKOR -->
+        <g id="cat-tail">
+          <path d="M58,168 C20,172 6,142 16,114 C24,92 46,86 56,98 C47,99 34,108 30,126 C26,146 34,160 62,158 Z" fill="url(#cFurBody)" filter="url(#cFuzz)"/>
+        </g>
+    
+        <!-- BADAN berbulu -->
+        <path d="M100,112 C70,112 54,140 57,168 C60,192 77,206 100,208 C123,206 140,192 143,168 C146,140 130,112 100,112 Z"
+              fill="url(#cFurBody)" filter="url(#cFuzz)"/>
+    
+        <!-- KEPALA + TELINGA dalam satu grup supaya bisa dimiringkan bareng -->
+        <g id="cat-head-tilt" style="transform-box: view-box; transform-origin: 100px 100px;">
+    
+        <!-- TELINGA -->
+        <path d="M44,70 C34,44 32,22 40,8 C58,20 74,40 82,58 Z" fill="url(#cFurHead)" filter="url(#cFuzz)"/>
+        <path d="M156,70 C166,44 168,22 160,8 C142,20 126,40 118,58 Z" fill="url(#cFurHead)" filter="url(#cFuzz)"/>
+        <path d="M47,62 C40,42 39,26 44,17 C56,27 67,42 73,56 Z" fill="url(#cEarIn)" opacity="0.9"/>
+        <path d="M153,62 C160,42 161,26 156,17 C144,27 133,42 127,56 Z" fill="url(#cEarIn)" opacity="0.9"/>
+        <!-- rumbai bulu di telinga -->
+        <g stroke="#6a6a75" stroke-width="1" stroke-linecap="round" opacity="0.55">
+          <path d="M48,50 L38,40 M52,44 L43,33 M56,38 L49,28"/>
+          <path d="M152,50 L162,40 M148,44 L157,33 M144,38 L151,28"/>
+        </g>
+    
+        <!-- KEPALA besar & bulat, dengan siluet bulu bergerigi -->
+        <path d="M100,32
+                 C112,30 118,24 126,30 C134,27 138,34 145,38
+                 C152,44 160,48 160,58 C166,65 168,72 166,82
+                 C170,90 170,98 165,106 C167,115 163,122 157,127
+                 C156,136 150,141 142,143 C137,150 129,152 121,150
+                 C114,155 106,156 100,152 C94,156 86,155 79,150
+                 C71,152 63,150 58,143 C50,141 44,136 43,127
+                 C37,122 33,115 35,106 C30,98 30,90 34,82
+                 C32,72 34,65 40,58 C40,48 48,44 55,38
+                 C62,34 66,27 74,30 C82,24 88,30 100,32 Z"
+              fill="url(#cFurHead)" filter="url(#cFuzz)"/>
+    
+        <!-- pipi berbulu (tekstur tepi) -->
+        <g stroke="#55555f" stroke-width="0.9" stroke-linecap="round" opacity="0.35">
+          <path d="M44,96 L34,92 M45,104 L34,103 M47,112 L37,115 M51,120 L42,126"/>
+          <path d="M156,96 L166,92 M155,104 L166,103 M153,112 L163,115 M149,120 L158,126"/>
+          <path d="M100,32 L100,22 M88,34 L85,24 M112,34 L115,24"/>
+        </g>
+    
+        <!-- KUMIS panjang melengkung -->
+        <g stroke="#dcdce2" stroke-width="1.1" stroke-linecap="round" fill="none" opacity="0.75">
+          <path d="M52,96 C34,86 20,70 14,52"/>
+          <path d="M50,104 C30,98 14,88 4,74"/>
+          <path d="M51,113 C32,114 16,112 2,104"/>
+          <path d="M148,96 C166,86 180,70 186,52"/>
+          <path d="M150,104 C170,98 186,88 196,74"/>
+          <path d="M149,113 C168,114 184,112 198,104"/>
+        </g>
+    
+        <!-- MATA besar kuning -->
+        <g id="cat-eyes">
+          <ellipse cx="76" cy="94" rx="20" ry="23" fill="#000" opacity="0.5" filter="url(#cSoft)"/>
+          <ellipse cx="124" cy="94" rx="20" ry="23" fill="#000" opacity="0.5" filter="url(#cSoft)"/>
+          <ellipse cx="76" cy="94" rx="18" ry="21" fill="url(#cEye)"/>
+          <ellipse cx="124" cy="94" rx="18" ry="21" fill="url(#cEye)"/>
+          <ellipse class="cat-pupil" cx="76" cy="96" rx="8.5" ry="10.5" fill="#100c05"/>
+          <ellipse class="cat-pupil" cx="124" cy="96" rx="8.5" ry="10.5" fill="#100c05"/>
+          <circle cx="70" cy="87" r="4.6" fill="#fff" opacity="0.97"/>
+          <circle cx="118" cy="87" r="4.6" fill="#fff" opacity="0.97"/>
+          <circle cx="82" cy="103" r="2" fill="#fff" opacity="0.5"/>
+          <circle cx="130" cy="103" r="2" fill="#fff" opacity="0.5"/>
+        </g>
+    
+        <!-- HIDUNG kecil + mulut mungil -->
+        <path d="M95,116 C95,112.5 97.5,111 100,113.5 C102.5,111 105,112.5 105,116 C105,119.5 102,122 100,124 C98,122 95,119.5 95,116 Z" fill="#8a5560"/>
+        <path d="M100,124 C100,128 96,130 92,128.5" fill="none" stroke="#141418" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M100,124 C100,128 104,130 108,128.5" fill="none" stroke="#141418" stroke-width="1.5" stroke-linecap="round"/>
+        </g>
+    
+      </g>
+    </svg>
         </div>
+
     </section>
 
     <!-- PORTFOLIO SECTION -->
