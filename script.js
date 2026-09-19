@@ -106,6 +106,59 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
+  /* ============ TAB SECTION WORK (Case Studies / Lab) ============ */
+  // Case Studies selalu jadi panel aktif pertama saat halaman dibuka.
+  const workTabs = document.querySelectorAll('.work-tab');
+  const workPanels = {
+    case: document.getElementById('panel-case'),
+    lab: document.getElementById('panel-lab')
+  };
+  if (workTabs.length) {
+    workTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        workTabs.forEach(t => {
+          const on = t === tab;
+          t.classList.toggle('is-active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        Object.entries(workPanels).forEach(([key, panel]) => {
+          if (panel) panel.classList.toggle('is-active', key === target);
+        });
+        AOS.refresh();
+      });
+    });
+  }
+
+  /* ============ DOCK AUTO-HIDE SAAT SCROLL KE BAWAH ============ */
+  // Supaya dock tidak menutupi judul/tanggal di section seperti Experience.
+  const dockWrap = document.getElementById('dock-wrap');
+  if (dockWrap) {
+    let lastScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      const goingDown = y > lastScrollY;
+      // Selalu tampil di bagian paling atas halaman
+      if (y < 120) {
+        dockWrap.classList.remove('dock-hidden');
+      } else if (Math.abs(y - lastScrollY) > 6) {
+        dockWrap.classList.toggle('dock-hidden', goingDown);
+      }
+      lastScrollY = y;
+    }, { passive: true });
+  }
+
+  /* ============ LINK CV ============ */
+  const cvLinks = document.querySelectorAll('.js-cv');
+  if (cvLinks.length) {
+    if (cfg.cvUrl && cfg.cvUrl.trim() !== '') {
+      cvLinks.forEach(el => { el.href = cfg.cvUrl; });
+    } else {
+      // Kalau CV belum diisi, tombolnya disembunyikan — bukan ditampilkan mati.
+      cvLinks.forEach(el => { el.style.display = 'none'; });
+    }
+  }
+
   /* ============ VIDEO HERO ============ */
   const heroVideo = document.getElementById('hero-video');
   const heroOverlay = document.getElementById('hero-overlay');
@@ -326,8 +379,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const attachmentsHtml = (attachments) => {
     if (!attachments || !attachments.length) return '';
+    // Lampiran yang URL-nya belum diisi TIDAK dirender sama sekali.
+    // Tombol mati + tooltip internal bikin proyek terkesan belum selesai
+    // dan membocorkan catatan developer ke pengunjung.
     const valid = attachments.filter(a => a.url && a.url.trim() !== '');
-    const pending = attachments.filter(a => !a.url || a.url.trim() === '');
+    if (!valid.length) return '';
     return `
       <div class="mb-6">
         <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Lampiran</p>
@@ -337,11 +393,6 @@ document.addEventListener('DOMContentLoaded', () => {
               <i class="fa-solid ${attachmentIcon(a.type)}"></i> ${a.name}
               <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-60"></i>
             </a>
-          `).join('')}
-          ${pending.map(a => `
-            <span class="attachment-chip opacity-50 cursor-not-allowed" title="Link belum diisi di config.js">
-              <i class="fa-solid ${attachmentIcon(a.type)}"></i> ${a.name}
-            </span>
           `).join('')}
         </div>
       </div>
@@ -401,9 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <iframe src="${project.demoUrl}" class="w-full h-[420px]" loading="lazy" title="Demo ${project.title}"></iframe>
           <p class="text-xs text-gray-400 px-4 py-2 bg-gray-50">Kalau preview tidak muncul, situsnya kemungkinan memblokir tampilan embed — klik "Buka Demo Langsung" di atas.</p>
         </div>
-      ` : `
-        <p class="text-sm text-gray-400 italic">Demo belum tersedia untuk project ini.</p>
-      `}
+      ` : ''}
     `;
     modal.classList.remove('hidden-modal');
     document.body.style.overflow = 'hidden';
@@ -531,9 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Buka Demo / Repo
             <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
           </a>
-        ` : `
-          <p class="text-sm text-gray-400 italic">Dummy project ini masih disiapkan — link demo/repo tinggal ditambahkan lewat "skillLab" di config.js.</p>
-        `}
+        ` : ''}
       `;
       labModal.classList.remove('hidden-modal');
       document.body.style.overflow = 'hidden';
@@ -651,7 +698,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ---- Skill Lab bergeser mengikuti kursor ---- */
     // Saat kursor bergerak di atas section Lab, seluruh galeri ikut bergeser
     // & memiringkan sedikit (parallax), jadi terasa hidup dan "3D beneran".
-    const labSection = document.getElementById('lab');
+    const labSection = document.getElementById('panel-lab');
     if (labSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       let labTicking = false;
       let labEvt = null;
