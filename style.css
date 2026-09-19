@@ -76,11 +76,94 @@ body.dark .custom-cursor { border-color: rgba(255,255,255,0.6); }
   box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5);
 }
 
+/* Tombol sekunder (Download CV) — hadir tanpa menyaingi CTA utama */
+.btn-secondary {
+  background-color: transparent;
+  color: #1a1a1a;
+  border: 1.5px solid rgba(0, 0, 0, 0.18);
+  transition: all 0.3s ease;
+}
+.btn-secondary:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.03);
+}
+body.dark .btn-secondary {
+  color: #f4f4f5;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+body.dark .btn-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ---- Ilustrasi blob hero: hanya sisi kanan + memudar ke kiri ---- */
+#hero-blob {
+  width: 46%;
+  opacity: 0.18;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 45%, #000 100%);
+          mask-image: linear-gradient(to right, transparent 0%, #000 45%, #000 100%);
+}
+
+/* ---- Tab di section Work ---- */
+.work-tab {
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280;
+  transition: all 0.25s ease;
+}
+.work-tab:hover {
+  border-color: rgba(0, 0, 0, 0.35);
+  color: #1a1a1a;
+}
+.work-tab.is-active {
+  background: #111113;
+  border-color: #111113;
+  color: #ffffff;
+}
+body.dark .work-tab { border-color: rgba(255,255,255,0.18); color: #a1a1aa; }
+body.dark .work-tab:hover { border-color: rgba(255,255,255,0.5); color: #f4f4f5; }
+body.dark .work-tab.is-active { background: #ffffff; border-color: #ffffff; color: #111113; }
+
+.work-panel { display: none; }
+.work-panel.is-active {
+  display: block;
+  animation: workPanelIn 0.45s ease both;
+}
+@keyframes workPanelIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .dock-nav {
   background: rgba(40, 40, 40, 0.85);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* Dock mengambang menyembunyikan diri saat user scroll ke bawah supaya tidak
+   menutupi konten (dulu judul & tanggal di Experience ketutup), lalu muncul
+   lagi begitu user scroll ke atas. */
+#dock-wrap {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+}
+#dock-wrap.dock-hidden {
+  transform: translate(-50%, 160%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Ruang aman di bawah tiap section supaya baris terakhir tidak tertutup dock. */
+section, footer {
+  padding-bottom: 120px;
+}
+@media (max-width: 768px) {
+  section, footer { padding-bottom: 140px; }
 }
 
 /* ---- Typing effect cursor ---- */
@@ -414,12 +497,13 @@ body.dark #hero-sound-toggle.is-on {
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.18);
   transition: all 0.3s ease;
   cursor: pointer;
   border: none;
   padding: 0;
 }
+body.dark .coverflow-dot { background: rgba(255,255,255,0.25); }
 .coverflow-dot.active {
   background: #818cf8;
   width: 24px;
