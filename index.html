@@ -33,7 +33,7 @@
 
     <!-- FIXED TOP BAR -->
     <nav class="fixed top-0 left-0 w-full z-40 px-6 py-5 flex justify-between items-center bg-[#F8F9FA]/80 backdrop-blur-md transition-colors">
-        <a href="#" class="js-name font-logo text-3xl md:text-4xl text-black font-semibold tracking-wide">Zesha</a>
+        <a href="#" class="js-name font-serif text-2xl md:text-3xl text-black font-bold tracking-tight">Zesha</a>
 
         <div class="flex items-center gap-3">
             <div id="avail-badge" class="items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 px-3.5 py-1.5 rounded-full hidden md:flex">
@@ -65,7 +65,9 @@
         <!-- ANIMASI BUNGA MELAYANG -->
         <div id="flower-field"></div>
 
-        <div class="absolute right-0 bottom-0 w-full lg:w-3/5 h-full opacity-10 lg:opacity-30 pointer-events-none z-[3]">
+        <!-- Ilustrasi dekoratif: dikunci ke sisi kanan + gradient fade, supaya
+             kolom teks di kiri tetap bersih dan mudah dibaca. -->
+        <div id="hero-blob" class="absolute right-0 bottom-0 h-full pointer-events-none z-[3] hidden lg:block">
             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full scale-110">
                 <path fill="#4F46E5" d="M39.9,-65.7C52.4,-57.3,63.7,-46.8,70.6,-33.7C77.5,-20.5,80.1,-4.7,77.3,10.2C74.6,25,66.6,38.9,56.1,49.8C45.6,60.8,32.7,68.8,18.5,72.7C4.3,76.6,-11.1,76.4,-25.1,71.5C-39.1,66.6,-51.7,56.9,-61.4,45C-71.1,33.1,-77.9,19,-79.3,4.4C-80.6,-10.1,-76.5,-25.1,-68.2,-37.6C-59.9,-50,-47.4,-59.9,-34.1,-67.7C-20.7,-75.4,-10.4,-81,2.1,-84.3C14.7,-87.6,27.5,-74,39.9,-65.7Z" transform="translate(100 100)" />
             </svg>
@@ -74,27 +76,30 @@
         <div class="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
             <div class="lg:col-span-7 space-y-8">
                 <div class="space-y-3" data-aos="fade-up">
-                    <p class="text-xl md:text-2xl text-gray-500 font-medium">Hey, I'm <span class="js-name text-black font-semibold">Zesha</span></p>
+                    <p class="text-sm md:text-base text-gray-500 font-medium flex flex-wrap items-center gap-2">
+                        <span>Hey, I'm <span class="js-name text-black font-semibold">Zesha</span></span>
+                        <span class="text-gray-300">/</span>
+                        <span class="js-role"></span>
+                        <span class="text-gray-300">/</span>
+                        <span class="js-location-flag"></span>
+                    </p>
                     <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl text-slate-900 leading-[1.1] font-semibold tracking-tight">
                         I turn fragmented <br>
-                        <span class="inline-flex items-center gap-2 flex-wrap">
-                            <span id="typing-word" class="typing-cursor text-indigo-600"></span>
-                            <span class="inline-block px-3 py-1 rounded-full border border-black/10 bg-white shadow-sm text-xs md:text-sm font-sans font-normal tracking-normal text-gray-500 js-role">📊 Data Analyst</span>
-                        </span>
-                        <br>Living in
-                        <span class="inline-flex items-center gap-2">
-                            <span class="inline-block px-3 py-1 rounded-full border border-black/10 bg-white shadow-sm text-xs md:text-sm font-sans font-normal tracking-normal text-gray-500 js-location-flag">🇮🇩 Tangerang</span>
-                            <span class="js-location">Tangerang</span>
-                        </span>
+                        <span id="typing-word" class="typing-cursor text-indigo-600"></span>
+                        <br>into decisions people act on.
                     </h1>
                 </div>
 
                 <p class="js-hero-subtext text-gray-600 text-lg md:text-xl max-w-xl leading-relaxed" data-aos="fade-up" data-aos-delay="100"></p>
 
-                <div data-aos="fade-up" data-aos-delay="200" class="pt-2">
-                    <a href="mailto:reudintazha@gmail.com" class="js-email btn-premium inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base">
-                        Get In Touch Today
-                        <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                <div data-aos="fade-up" data-aos-delay="200" class="pt-2 flex flex-wrap items-center gap-4">
+                    <a href="#work" class="btn-premium inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base">
+                        Lihat Case Studies
+                        <i class="fa-solid fa-arrow-right text-sm"></i>
+                    </a>
+                    <a href="#" class="js-cv btn-secondary inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base" target="_blank" rel="noopener">
+                        Download CV
+                        <i class="fa-solid fa-arrow-down text-sm"></i>
                     </a>
                 </div>
             </div>
@@ -246,50 +251,58 @@
     </section>
 
     <!-- PORTFOLIO SECTION -->
-    <section id="projects" class="py-24 bg-white border-t border-gray-100">
+    <!-- WORK — Case Studies + Lab digabung jadi satu section dengan tab.
+         Case Studies selalu jadi tab aktif pertama; Lab tidak pernah tampil duluan. -->
+    <section id="work" class="py-24 bg-white border-t border-gray-100 overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="max-w-3xl mb-16">
-                <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 block mb-3">• My Projects</span>
+            <div class="max-w-3xl mb-10">
+                <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 block mb-3">• Work</span>
                 <h2 class="font-serif text-4xl md:text-5xl text-slate-900 leading-tight font-bold">
-                    The designs that turn vision into a bold reality
+                    Systems I built, and the problems they solved
                 </h2>
-                <p class="text-gray-500 mt-3">Klik salah satu card untuk lihat detail proyek.</p>
             </div>
 
-            <div id="project-container" class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <p class="text-center col-span-full text-gray-500 py-12">Memuat proyek...</p>
+            <!-- TAB SWITCHER -->
+            <div id="work-tabs" class="flex flex-wrap items-center gap-2 mb-12" role="tablist">
+                <button class="work-tab is-active" data-tab="case" role="tab" aria-selected="true" aria-controls="panel-case">
+                    Case Studies
+                </button>
+                <button class="work-tab" data-tab="lab" role="tab" aria-selected="false" aria-controls="panel-lab">
+                    Lab &amp; Experiments
+                </button>
+            </div>
+        </div>
+
+        <!-- PANEL: CASE STUDIES (default aktif) -->
+        <div id="panel-case" class="work-panel is-active" role="tabpanel">
+            <div class="max-w-7xl mx-auto px-6">
+                <p class="text-gray-500 mb-10 max-w-2xl">Proyek nyata di lingkungan operasional — klik salah satu card untuk melihat action taken dan business impact-nya.</p>
+                <div id="project-container" class="grid grid-cols-1 md:grid-cols-2 gap-10"></div>
+            </div>
+        </div>
+
+        <!-- PANEL: LAB & EXPERIMENTS -->
+        <div id="panel-lab" class="work-panel" role="tabpanel">
+            <div class="max-w-7xl mx-auto px-6">
+                <p class="text-gray-500 mb-10 max-w-2xl">Eksplorasi mandiri seputar SQL, visualisasi, dan otomasi. Geser atau klik kartu untuk menjelajah.</p>
+            </div>
+
+            <div id="coverflow" class="relative w-full">
+                <div id="coverflow-track" class="relative mx-auto" style="height: 380px; perspective: 1400px;"></div>
+
+                <div class="flex items-center justify-center gap-4 mt-10">
+                    <button id="coverflow-prev" class="w-11 h-11 rounded-full border border-gray-300 text-slate-700 flex items-center justify-center hover:bg-gray-100 transition-colors">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div id="coverflow-dots" class="flex items-center gap-2"></div>
+                    <button id="coverflow-next" class="w-11 h-11 rounded-full border border-gray-300 text-slate-700 flex items-center justify-center hover:bg-gray-100 transition-colors">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- SKILL LAB — 3D COVERFLOW GALLERY -->
-    <section id="lab" class="py-24 bg-[#0f0f10] border-t border-gray-100 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="max-w-3xl mb-16">
-                <span class="text-xs font-bold uppercase tracking-widest text-indigo-400 block mb-3">• Skill Lab</span>
-                <h2 class="font-serif text-4xl md:text-5xl text-white leading-tight font-bold">
-                    A playground for SQL, dashboards & data stories
-                </h2>
-                <p class="text-gray-400 mt-3">Kumpulan dummy project seputar SQL, visualisasi, Excel, dan App Script untuk menunjukkan cara kerja dengan data. Geser atau klik kartu untuk menjelajah.</p>
-            </div>
-        </div>
-
-        <div id="coverflow" class="relative w-full">
-            <div id="coverflow-track" class="relative mx-auto" style="height: 380px; perspective: 1400px;"></div>
-
-            <div class="flex items-center justify-center gap-4 mt-10">
-                <button id="coverflow-prev" class="w-11 h-11 rounded-full border border-white/20 text-white flex items-center justify-center hover:bg-white/10 transition-colors">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
-                <div id="coverflow-dots" class="flex items-center gap-2"></div>
-                <button id="coverflow-next" class="w-11 h-11 rounded-full border border-white/20 text-white flex items-center justify-center hover:bg-white/10 transition-colors">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- SERVICES -->
     <section id="services" class="py-24 bg-[#F8F9FA] border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-6">
             <div class="max-w-3xl mb-16">
@@ -337,12 +350,11 @@
     </footer>
 
     <!-- DOCK NAVIGATION -->
-    <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+    <div id="dock-wrap" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
         <div class="dock-nav flex items-center justify-between gap-1.5 p-2 rounded-full max-w-lg">
             <a href="#home" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Home</a>
             <a href="#experience" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Experience</a>
-            <a href="#projects" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Projects</a>
-            <a href="#lab" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Lab</a>
+            <a href="#work" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Work</a>
             <a href="#services" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Services</a>
             <a href="#contact" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Contact</a>
         </div>
