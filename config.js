@@ -12,6 +12,11 @@ const SITE_CONFIG = {
   role: "📊 Supply Chain & Analyst",
   email: "reudintazha@gmail.com",
   linkedin: "https://linkedin.com/in/reudinta-zesha/",
+
+  // Link CV untuk tombol "Download CV" di hero.
+  // Isi dengan link Google Drive / PDF kamu. Kalau dibiarkan kosong,
+  // tombolnya otomatis disembunyikan (bukan tampil dalam keadaan mati).
+  cvUrl: "",
   available: true,
 
   heroWords: ["operational data", "messy spreadsheets", "raw logistics data"],
@@ -41,7 +46,7 @@ const SITE_CONFIG = {
       description: "Managed IT asset movements across 3,000+ operational sites, coordinating with logistics vendors and warehouse head to monitor operational performance, resolve shipment discrepancies, and support efficient asset availability.\nProcessed and verified 50+ daily asset movements, identifying shipment discrepancies and supporting timely operational resolution.\nDeveloped a web-based IT asset request system using Google Apps Script and Google Sheets, streamlining assetallocation workflows and reducing duplicate records.\nDeveloped an operational dashboard to monitor 500+ IT asset movements, improving asset visibility and supporting operational performance monitoring."
     },
     {
-      role: "Intern Distribution Development",
+      role: "Intern",
       company: "PT Garudafood Putra Putri Jaya Tbk",
       period: "July 2025 — January 2026",
       description: "Maintained and enhanced KPI dashboards for divisional management and 4 regional heads, enabling consistent monitoring of Sales Achievement, Distribution Coverage, Billing Rate, and Target Realization.\nBuilt automated incentive calculation templates with Advanced Excel, Pivot Tables, and OLAP for 2,000+ sales employees across 5 incentive schemes, significantly improving reporting efficiency and payout accuracy.\nConducted QGIS-based geospatial analysis of regional sales coverage outside Java, supporting territory expansion and distribution planning initiatives.\nGenerated weekly and monthly sales performance reports at both individual and regional levels to support operational decision-making."
@@ -85,13 +90,18 @@ const SITE_CONFIG = {
  //
  // Kalau salah satu (atau keduanya) tidak diisi / dihapus, modal akan tetap
  // menampilkan "description" seperti biasa tanpa error.
+ // LANGKAH TERAKHIR YANG MASIH PERLU KAMU KERJAKAN SENDIRI:
+ // ganti "image" di bawah dari stock photo Unsplash jadi SCREENSHOT ASLI
+ // dashboard/tools buatanmu. Screenshot asli jauh lebih meyakinkan buat
+ // recruiter daripada foto stok generik. Caranya: taruh file gambar di
+ // folder "images/", lalu tulis image: "images/nama-file.png"
  fallbackProjects: [
     {
       title: "IT Asset Tracking Dashboard",
       category: "Automation",
       description: "A centralized digital ecosystem built to track IT assets in motion, enabling real-time status updates and ensuring zero shipment anomalies fall through the cracks.",
       tools: "Google Apps Script, Google Sheets, JavaScript",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+      image: https://drive.google.com/file/d/1QqNjHmNDAMNPQHofgZgg0cHCfedguYTN/view?usp=sharing",
       demoUrl: "https://script.google.com/macros/s/AKfycbyVKn6KCRlxw5StXsXAaaR3ogn_Czy6wFAtThEsfxdkKpnGmbCvwevszVdt1Nar1E774w/exec",
       metrics: "500+ Assets Tracked | 58% Pending Status Reduction | Enhanced Real-Time Visibility",
       actionsTaken: [
@@ -127,14 +137,16 @@ const SITE_CONFIG = {
         "Increased processing capacity by 25%",
         "Saved the team 50% of the time previously spent on manual processing"
       ],
-      attachments: []
+      attachments: [
+         { name :"UML sistem web request",tpe :"Diagram", url: "https://drive.google.com/file/d/1WJ0fcVOwK0X1GxlDOahV2ZH_JUu3MJdh/view?usp=sharing"
+      ]
     },
     {
       title: "Summary Tracker",
       category: "Automation Report",
       description: "An automated cross-functional monitoring tool generated to report overall asset performance instantly—without anyone needing to touch a spreadsheet manually.",
       tools: "Google Apps Script, HTML, CSS",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      image: "https://drive.google.com/file/d/1x0egIBulg4WIMMO3SivxGkWz44DXnhga/view?usp=sharing",
       demoUrl: "https://script.google.com/macros/s/AKfycbyVKn6KCRlxw5StXsXAaaR3ogn_Czy6wFAtThEsfxdkKpnGmbCvwevszVdt1Nar1E774w/exec?page=summary",
       metrics: "Auto-Updated Reports | Automated Email Reminders",
       actionsTaken: [
@@ -263,10 +275,10 @@ const SITE_CONFIG = {
   skills: [
     { name: "Google Apps Script", icon: "fa-code" },
     { name: "Google Sheets", icon: "fa-table" },
-    { name: "Advanced Excel", icon: "fa-file-excel" },
-    { name: "Intermediate SQL", icon: "fa-database" },
+    { name: "Excel", icon: "fa-file-excel" },
+    { name: "SQL", icon: "fa-database" },
     { name: "QGIS", icon: "fa-map-location-dot" },
-    { name: "Intermediate Power BI", icon: "fa-chart-pie" },
+    { name: "Power BI", icon: "fa-chart-pie" },
     { name: "Looker Studio", icon: "fa-js" },
     { name: "Pivot Tables & OLAP", icon: "fa-layer-group" }
   ],
