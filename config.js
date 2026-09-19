@@ -152,7 +152,9 @@ const SITE_CONFIG = {
       // Sebelumnya: kurung kurawal penutup "}" untuk objek ini hilang,
       // dan key "type" salah ketik jadi "tpe" — keduanya sudah dibetulkan.
       attachments: [
-        { name: "UML Sistem Web Request", type: "image", url: "https://drive.google.com/file/d/1WJ0fcVOwK0X1GxlDOahV2ZH_JUu3MJdh/view?usp=sharing" }
+        { name: "ERD", type: "image", url: "https://drive.google.com/file/d/1WJ0fcVOwK0X1GxlDOahV2ZH_JUu3MJdh/view?usp=sharing" }'
+          { name: "Use Case", type: "image", url: "https://drive.google.com/file/d/1WJ0fcVOwK0X1GxlDOahV2ZH_JUu3MJdh/view?usp=sharing" },
+          { name: "Sequance", type: "image", url: "https://drive.google.com/file/d/1WJ0fcVOwK0X1GxlDOahV2ZH_JUu3MJdh/view?usp=sharing" }
       ]
     },
     {
