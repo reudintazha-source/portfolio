@@ -3,19 +3,25 @@
    Ganti teks di bawah ini sesuka hati, TIDAK PERLU sentuh
    file index.html atau script.js sama sekali.
 
-   PENTING SOAL LINK GOOGLE DRIVE:
-   - Untuk "image" (dipakai sebagai gambar di dalam tag <img>), link share
-     biasa (yang formatnya .../view?usp=sharing) TIDAK BISA dipakai langsung
-     — itu halaman HTML, bukan file gambar mentah, jadi gambarnya tidak
-     akan tampil. Harus diubah ke format:
-         https://drive.google.com/uc?export=view&id=FILE_ID
-     (FILE_ID diambil dari bagian .../d/FILE_ID/view... di link share-nya)
+   PENTING SOAL LINK GOOGLE DRIVE (untuk gambar):
+   - Google Drive SERING memblokir hotlink gambar untuk pengunjung anonim
+     (muncul halaman peringatan, atau tiba-tiba berhenti tampil setelah
+     dilihat banyak orang / kena limit kuota harian per file). Ini masalah
+     dari sisi Google, bukan bug di website ini.
+   - Format yang dipakai sekarang: https://lh3.googleusercontent.com/d/FILE_ID
+     (FILE_ID diambil dari .../d/FILE_ID/view... di link share Drive-nya).
+     Ini jauh lebih stabil daripada format "uc?export=view", tapi TETAP
+     tidak 100% dijamin oleh Google kapan saja.
+   - SOLUSI PALING STABIL (disarankan, terutama karena kamu sudah pakai
+     GitHub): download gambarnya, taruh di folder "images/" di repo GitHub
+     kamu, commit & push, lalu ganti "image" di bawah jadi path lokal biasa,
+     contoh: image: "images/dashboard-tracking.png"
+     Cara ini tidak bergantung sama sekali pada Google Drive.
+   - Pastikan juga file di Drive kamu sudah di-set "Anyone with the link"
+     (bukan "Restricted"), kalau tidak gambarnya pasti gagal untuk orang lain.
    - Untuk "url" di dalam "attachments" (link lampiran yang diklik lalu
-     dibuka di tab baru), link share biasa .../view?usp=sharing JUSTRU
-     yang benar dipakai — jangan diubah.
-   - Pastikan juga file di Google Drive kamu sudah di-set "Anyone with the
-     link" (bukan "Restricted"), kalau tidak gambarnya tetap gagal dimuat
-     untuk orang lain.
+     dibuka di tab baru, BUKAN ditampilkan sebagai <img>), link share biasa
+     .../view?usp=sharing tetap yang benar dipakai — jangan diubah.
    ============================================================ */
 
 const SITE_CONFIG = {
@@ -113,7 +119,12 @@ const SITE_CONFIG = {
       // Sebelumnya: tanda kutip pembuka di depan "https" hilang, dan link
       // masih format "view" (halaman HTML) — sekarang dikonversi ke format
       // gambar langsung supaya benar-benar tampil sebagai foto.
-      image: "https://drive.google.com/uc?export=view&id=1QqNjHmNDAMNPQHofgZgg0cHCfedguYTN",
+      // Format "uc?export=view" sering diblokir Google untuk akses publik/anonim
+      // (muncul halaman peringatan, atau kena limit kuota). Diganti ke format
+      // lh3.googleusercontent.com yang jauh lebih stabil untuk hotlink gambar.
+      // KALAU MASIH TIDAK MUNCUL: upload file ini ke folder "images/" di repo
+      // GitHub kamu, lalu ganti baris ini jadi image: "images/nama-file.png"
+      image: "https://lh3.googleusercontent.com/d/1QqNjHmNDAMNPQHofgZgg0cHCfedguYTN",
       demoUrl: "https://script.google.com/macros/s/AKfycbyVKn6KCRlxw5StXsXAaaR3ogn_Czy6wFAtThEsfxdkKpnGmbCvwevszVdt1Nar1E774w/exec",
       metrics: "500+ Assets Tracked | 58% Pending Status Reduction | Enhanced Real-Time Visibility",
       actionsTaken: [
@@ -152,9 +163,7 @@ const SITE_CONFIG = {
       // Sebelumnya: kurung kurawal penutup "}" untuk objek ini hilang,
       // dan key "type" salah ketik jadi "tpe" — keduanya sudah dibetulkan.
       attachments: [
-        { name: "ERD", type: "image", url: "https://drive.google.com/file/d/1WJ0fcVOwK0X1GxlDOahV2ZH_JUu3MJdh/view?usp=sharing" }'
-          { name: "Use Case", type: "image", url: "https://drive.google.com/file/d/1WJ0fcVOwK0X1GxlDOahV2ZH_JUu3MJdh/view?usp=sharing" },
-          { name: "Sequance", type: "image", url: "https://drive.google.com/file/d/1WJ0fcVOwK0X1GxlDOahV2ZH_JUu3MJdh/view?usp=sharing" }
+        { name: "UML Sistem Web Request", type: "image", url: "https://drive.google.com/file/d/1WJ0fcVOwK0X1GxlDOahV2ZH_JUu3MJdh/view?usp=sharing" }
       ]
     },
     {
@@ -163,7 +172,9 @@ const SITE_CONFIG = {
       description: "An automated cross-functional monitoring tool generated to report overall asset performance instantly—without anyone needing to touch a spreadsheet manually.",
       tools: "Google Apps Script, HTML, CSS",
       // Sama seperti di atas: dikonversi dari link "view" ke format gambar langsung.
-      image: "https://drive.google.com/uc?export=view&id=1x0egIBulg4WIMMO3SivxGkWz44DXnhga",
+      // Sama seperti di atas: format lh3.googleusercontent.com lebih stabil
+      // daripada uc?export=view. Kalau masih gagal, upload ke folder images/.
+      image: "https://lh3.googleusercontent.com/d/1x0egIBulg4WIMMO3SivxGkWz44DXnhga",
       demoUrl: "https://script.google.com/macros/s/AKfycbyVKn6KCRlxw5StXsXAaaR3ogn_Czy6wFAtThEsfxdkKpnGmbCvwevszVdt1Nar1E774w/exec?page=summary",
       metrics: "Auto-Updated Reports | Automated Email Reminders",
       actionsTaken: [
