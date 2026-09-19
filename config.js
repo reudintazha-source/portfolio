@@ -2,6 +2,20 @@
    FILE INI ISINYA SEMUA KONTEN YANG BISA KAMU EDIT
    Ganti teks di bawah ini sesuka hati, TIDAK PERLU sentuh
    file index.html atau script.js sama sekali.
+
+   PENTING SOAL LINK GOOGLE DRIVE:
+   - Untuk "image" (dipakai sebagai gambar di dalam tag <img>), link share
+     biasa (yang formatnya .../view?usp=sharing) TIDAK BISA dipakai langsung
+     — itu halaman HTML, bukan file gambar mentah, jadi gambarnya tidak
+     akan tampil. Harus diubah ke format:
+         https://drive.google.com/uc?export=view&id=FILE_ID
+     (FILE_ID diambil dari bagian .../d/FILE_ID/view... di link share-nya)
+   - Untuk "url" di dalam "attachments" (link lampiran yang diklik lalu
+     dibuka di tab baru), link share biasa .../view?usp=sharing JUSTRU
+     yang benar dipakai — jangan diubah.
+   - Pastikan juga file di Google Drive kamu sudah di-set "Anyone with the
+     link" (bukan "Restricted"), kalau tidak gambarnya tetap gagal dimuat
+     untuk orang lain.
    ============================================================ */
 
 const SITE_CONFIG = {
@@ -71,7 +85,7 @@ const SITE_CONFIG = {
  //   ]
  //
  // "type" menentukan ikon yang muncul: pdf, doc, sheet, image, ppt, atau zip (default: file biasa).
- // "url" bisa berupa link Google Drive (klik kanan file > Bagikan > Salin link),
+ // "url" bisa berupa link Google Drive share biasa (klik kanan file > Bagikan > Salin link),
  // link GitHub, atau hosting lain. Kalau project belum ada lampiran, cukup hapus
  // baris "attachments" atau biarkan array-nya kosong: attachments: []
  //
@@ -90,18 +104,16 @@ const SITE_CONFIG = {
  //
  // Kalau salah satu (atau keduanya) tidak diisi / dihapus, modal akan tetap
  // menampilkan "description" seperti biasa tanpa error.
- // LANGKAH TERAKHIR YANG MASIH PERLU KAMU KERJAKAN SENDIRI:
- // ganti "image" di bawah dari stock photo Unsplash jadi SCREENSHOT ASLI
- // dashboard/tools buatanmu. Screenshot asli jauh lebih meyakinkan buat
- // recruiter daripada foto stok generik. Caranya: taruh file gambar di
- // folder "images/", lalu tulis image: "images/nama-file.png"
  fallbackProjects: [
     {
       title: "IT Asset Tracking Dashboard",
       category: "Automation",
       description: "A centralized digital ecosystem built to track IT assets in motion, enabling real-time status updates and ensuring zero shipment anomalies fall through the cracks.",
       tools: "Google Apps Script, Google Sheets, JavaScript",
-      image: https://drive.google.com/file/d/1QqNjHmNDAMNPQHofgZgg0cHCfedguYTN/view?usp=sharing",
+      // Sebelumnya: tanda kutip pembuka di depan "https" hilang, dan link
+      // masih format "view" (halaman HTML) — sekarang dikonversi ke format
+      // gambar langsung supaya benar-benar tampil sebagai foto.
+      image: "https://drive.google.com/uc?export=view&id=1QqNjHmNDAMNPQHofgZgg0cHCfedguYTN",
       demoUrl: "https://script.google.com/macros/s/AKfycbyVKn6KCRlxw5StXsXAaaR3ogn_Czy6wFAtThEsfxdkKpnGmbCvwevszVdt1Nar1E774w/exec",
       metrics: "500+ Assets Tracked | 58% Pending Status Reduction | Enhanced Real-Time Visibility",
       actionsTaken: [
@@ -137,8 +149,10 @@ const SITE_CONFIG = {
         "Increased processing capacity by 25%",
         "Saved the team 50% of the time previously spent on manual processing"
       ],
+      // Sebelumnya: kurung kurawal penutup "}" untuk objek ini hilang,
+      // dan key "type" salah ketik jadi "tpe" — keduanya sudah dibetulkan.
       attachments: [
-         { name :"UML sistem web request",tpe :"Diagram", url: "https://drive.google.com/file/d/1WJ0fcVOwK0X1GxlDOahV2ZH_JUu3MJdh/view?usp=sharing"
+        { name: "UML Sistem Web Request", type: "image", url: "https://drive.google.com/file/d/1WJ0fcVOwK0X1GxlDOahV2ZH_JUu3MJdh/view?usp=sharing" }
       ]
     },
     {
@@ -146,7 +160,8 @@ const SITE_CONFIG = {
       category: "Automation Report",
       description: "An automated cross-functional monitoring tool generated to report overall asset performance instantly—without anyone needing to touch a spreadsheet manually.",
       tools: "Google Apps Script, HTML, CSS",
-      image: "https://drive.google.com/file/d/1x0egIBulg4WIMMO3SivxGkWz44DXnhga/view?usp=sharing",
+      // Sama seperti di atas: dikonversi dari link "view" ke format gambar langsung.
+      image: "https://drive.google.com/uc?export=view&id=1x0egIBulg4WIMMO3SivxGkWz44DXnhga",
       demoUrl: "https://script.google.com/macros/s/AKfycbyVKn6KCRlxw5StXsXAaaR3ogn_Czy6wFAtThEsfxdkKpnGmbCvwevszVdt1Nar1E774w/exec?page=summary",
       metrics: "Auto-Updated Reports | Automated Email Reminders",
       actionsTaken: [
