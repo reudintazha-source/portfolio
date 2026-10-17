@@ -19,22 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     availBadge.style.display = cfg.available ? 'flex' : 'none';
   }
 
-  // Services
-  const servicesContainer = document.getElementById('services-container');
-  if (servicesContainer) {
-    servicesContainer.innerHTML = cfg.services.map((s, i) => `
-      <div class="bg-white p-10 rounded-3xl border border-gray-200/60 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow tilt-card" data-aos="fade-up" data-aos-delay="${i * 100}">
-        <div class="space-y-4">
-          <div class="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl">
-            <i class="fa-solid ${s.icon}"></i>
-          </div>
-          <h3 class="text-2xl font-bold font-serif text-slate-900">${s.title}</h3>
-          <p class="text-gray-600 leading-relaxed">${s.description}</p>
-        </div>
-      </div>
-    `).join('');
-  }
-
   // Workflow
   const workflowContainer = document.getElementById('workflow-container');
   if (workflowContainer) {
@@ -96,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
   }
 
-  // Skills / Tools chips di section Services
+  // Skills / Tools chips di section Skills
   const skillsContainer = document.getElementById('skills-container');
   if (skillsContainer && cfg.skills) {
     skillsContainer.innerHTML = cfg.skills.map(sk => `
@@ -377,16 +361,16 @@ document.addEventListener('DOMContentLoaded', () => {
     return map[(type || '').toLowerCase()] || 'fa-file-lines';
   };
 
-  const attachmentsHtml = (attachments) => {
+  const attachmentsHtml = (attachments, label = 'Lampiran') => {
     if (!attachments || !attachments.length) return '';
     // Lampiran yang URL-nya belum diisi TIDAK dirender sama sekali.
     // Tombol mati + tooltip internal bikin proyek terkesan belum selesai
     // dan membocorkan catatan developer ke pengunjung.
-    const valid = attachments.filter(a => a.url && a.url.trim() !== '');
+    const valid = attachments.filter(a => a && a.url && a.url.trim() !== '');
     if (!valid.length) return '';
     return `
       <div class="mb-6">
-        <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Lampiran</p>
+        <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">${label}</p>
         <div class="flex flex-wrap gap-2.5">
           ${valid.map(a => `
             <a href="${a.url}" target="_blank" rel="noopener" class="attachment-chip">
@@ -429,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const actionsHtml = bulletListHtml('Action Taken', project.actionsTaken, 'text-indigo-500');
     const impactHtml = bulletListHtml('Business Impact', project.businessImpact, 'text-emerald-500');
     modalBody.innerHTML = `
-      <img src="${project.image}" class="w-full aspect-video object-cover rounded-2xl mb-6" alt="${project.title}">
+      <img src="${project.image}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 225%22><rect width=%22400%22 height=%22225%22 fill=%22%23e5e7eb%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%239ca3af%22>Preview belum tersedia</text></svg>';" class="w-full aspect-video object-cover rounded-2xl mb-6" alt="${project.title}">
       <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">${project.category}</span>
       <h3 class="font-serif text-3xl font-bold text-slate-900 mt-4 mb-3">${project.title}</h3>
       <p class="text-gray-600 leading-relaxed mb-6">${project.description}</p>
@@ -481,7 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
         : '';
       card.innerHTML = `
         <div class="relative rounded-2xl overflow-hidden aspect-video bg-gray-100 group">
-          <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 225%22><rect width=%22400%22 height=%22225%22 fill=%22%23e5e7eb%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%239ca3af%22>Preview belum tersedia</text></svg>';" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           ${p.demoUrl && p.demoUrl.trim() !== '' ? `
             <span class="absolute top-3 right-3 bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full flex items-center gap-1">
               <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> Live Demo
@@ -549,6 +533,92 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
+  /* ============ SERTIFIKAT KURSUS ============ */
+  // Section #certificates tersembunyi (class "hidden") dan baru ditampilkan
+  // kalau ada minimal satu sertifikat bertitle di config.js.
+  const certSection = document.getElementById('certificates');
+  const certContainer = document.getElementById('certificates-container');
+  if (certSection && certContainer) {
+    const certs = (cfg.certificates || []).filter(c => c && c.title && c.title.trim() !== '');
+    if (certs.length) {
+      certContainer.innerHTML = certs.map((c, i) => {
+        const hasUrl = c.url && c.url.trim() !== '';
+        const meta = [c.issuer, c.date].filter(v => v && String(v).trim() !== '').join(' · ');
+        return `
+          <div class="bg-[#F8F9FA] border border-gray-200/60 rounded-3xl p-7 flex flex-col gap-4" data-aos="fade-up" data-aos-delay="${(i % 2) * 100}">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0 w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl">
+                <i class="fa-solid fa-award"></i>
+              </div>
+              <div class="min-w-0">
+                <h3 class="font-serif text-xl font-bold text-slate-900 leading-snug">${c.title}</h3>
+                ${meta ? `<p class="text-xs font-semibold uppercase tracking-wider text-indigo-600 mt-1">${meta}</p>` : ''}
+              </div>
+            </div>
+            ${c.description && c.description.trim() !== '' ? `<p class="text-gray-600 text-sm leading-relaxed">${c.description}</p>` : ''}
+            ${hasUrl ? `
+              <div class="pt-1">
+                <a href="${c.url}" target="_blank" rel="noopener" class="attachment-chip">
+                  <i class="fa-solid fa-file-pdf"></i> Lihat Sertifikat
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-60"></i>
+                </a>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+      certSection.classList.remove('hidden');
+      AOS.refresh();
+    }
+  }
+
+  /* ============ EMBED VIDEO UNTUK LAB ============ */
+  // Mengubah link video biasa jadi pemutar yang bisa langsung ditonton di
+  // dalam modal. Mengembalikan '' kalau link kosong, supaya bagian video
+  // tidak tampil sama sekali.
+  const labVideoHtml = (rawUrl, title) => {
+    const url = (rawUrl || '').trim();
+    if (!url) return '';
+    const frame = (src) => `
+      <div class="mb-6">
+        <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Video Pengerjaan</p>
+        <div class="lab-video rounded-2xl overflow-hidden border border-gray-200 bg-black aspect-video">
+          <iframe src="${src}" class="w-full h-full" title="Video ${title}" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+        </div>
+      </div>`;
+    let m;
+    // YouTube (watch?v=, youtu.be, shorts, embed)
+    if ((m = url.match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/))) {
+      return frame(`https://www.youtube.com/embed/${m[1]}?rel=0`);
+    }
+    // Google Drive (.../file/d/ID/view -> .../preview)
+    if ((m = url.match(/drive\.google\.com\/file\/d\/([\w-]+)/))) {
+      return frame(`https://drive.google.com/file/d/${m[1]}/preview`);
+    }
+    // Loom
+    if ((m = url.match(/loom\.com\/(?:share|embed)\/(\w+)/))) {
+      return frame(`https://www.loom.com/embed/${m[1]}`);
+    }
+    // File video langsung (mis. "video/sql-demo.mp4" di repo)
+    if (/\.(mp4|webm|ogv|mov)(\?.*)?$/i.test(url)) {
+      return `
+        <div class="mb-6">
+          <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Video Pengerjaan</p>
+          <div class="lab-video rounded-2xl overflow-hidden border border-gray-200 bg-black">
+            <video src="${url}" class="w-full" controls preload="metadata" playsinline></video>
+          </div>
+        </div>`;
+    }
+    // Format lain: tampilkan sebagai tombol link biasa
+    return `
+      <div class="mb-6">
+        <a href="${url}" target="_blank" rel="noopener" class="attachment-chip">
+          <i class="fa-solid fa-circle-play"></i> Tonton Video Pengerjaan
+          <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-60"></i>
+        </a>
+      </div>`;
+  };
+
   /* ============ SKILL LAB — 3D COVERFLOW GALLERY ============ */
   const coverflowTrack = document.getElementById('coverflow-track');
   const coverflowDots = document.getElementById('coverflow-dots');
@@ -575,9 +645,11 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="flex flex-wrap gap-2 mb-6">
           ${item.tools.split(',').map(t => `<span class="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full border border-gray-200">${t.trim()}</span>`).join('')}
         </div>
+        ${labVideoHtml(item.videoUrl, item.title)}
+        ${attachmentsHtml((item.pdfs || []).map(p => ({ type: 'pdf', ...p })), 'Dokumen Pendukung')}
         ${hasDemo ? `
           <a href="${item.demoUrl}" target="_blank" rel="noopener" class="btn-premium inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm">
-            Buka Demo / Repo
+            ${item.demoLabel && item.demoLabel.trim() !== '' ? item.demoLabel : 'Buka Demo / Repo'}
             <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
           </a>
         ` : ''}
@@ -589,6 +661,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!labModal) return;
       labModal.classList.add('hidden-modal');
       document.body.style.overflow = '';
+      // Hentikan video yang sedang diputar supaya suaranya tidak lanjut
+      // berbunyi setelah modal ditutup.
+      if (labModalBody) {
+        labModalBody.querySelectorAll('video').forEach(v => v.pause());
+        labModalBody.querySelectorAll('iframe').forEach(f => { f.src = 'about:blank'; });
+      }
     };
     document.getElementById('lab-modal-close')?.addEventListener('click', closeLabModal);
     labModal?.addEventListener('click', (e) => { if (e.target === labModal) closeLabModal(); });
@@ -609,7 +687,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="coverflow-card-inner">
             <div>
               <div class="coverflow-icon mb-4"><i class="fa-solid ${item.icon || 'fa-chart-simple'}"></i></div>
-              <span class="coverflow-tag">${item.category}</span>
+              <span class="coverflow-tag">${item.category}${item.videoUrl && item.videoUrl.trim() !== '' ? ' &nbsp;<i class="fa-solid fa-circle-play" title="Ada video pengerjaan"></i>' : ''}</span>
               <h3 class="mt-2">${item.title}</h3>
             </div>
             <div class="space-y-3">
@@ -699,7 +777,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Saat kursor bergerak di atas section Lab, seluruh galeri ikut bergeser
     // & memiringkan sedikit (parallax), jadi terasa hidup dan "3D beneran".
     const labSection = document.getElementById('panel-lab');
-    if (labSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // matchMedia dijaga: kalau tidak tersedia, jangan sampai error-nya
+    // menghentikan sisa script (animasi kucing dsb ada setelah blok ini).
+    const prefersReducedMotion = typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false;
+    if (labSection && !prefersReducedMotion) {
       let labTicking = false;
       let labEvt = null;
 
