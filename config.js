@@ -1,31 +1,41 @@
-/* ============================================================
-   FILE INI ISINYA SEMUA KONTEN YANG BISA KAMU EDIT
-   Ganti teks di bawah ini sesuka hati, TIDAK PERLU sentuh
-   file index.html atau script.js sama sekali.
+/* ==========================================================================
+   CONFIG.JS — SEMUA KONTEN WEBSITE ADA DI SINI
+   --------------------------------------------------------------------------
+   Kamu cukup mengedit file ini. TIDAK PERLU menyentuh index.html / script.js.
 
-   PENTING SOAL LINK GOOGLE DRIVE (untuk gambar):
-   - Google Drive SERING memblokir hotlink gambar untuk pengunjung anonim
-     (muncul halaman peringatan, atau tiba-tiba berhenti tampil setelah
-     dilihat banyak orang / kena limit kuota harian per file). Ini masalah
-     dari sisi Google, bukan bug di website ini.
-   - Format yang dipakai sekarang: https://lh3.googleusercontent.com/d/FILE_ID
-     (FILE_ID diambil dari .../d/FILE_ID/view... di link share Drive-nya).
-     Ini jauh lebih stabil daripada format "uc?export=view", tapi TETAP
-     tidak 100% dijamin oleh Google kapan saja.
-   - SOLUSI PALING STABIL (disarankan, terutama karena kamu sudah pakai
-     GitHub): download gambarnya, taruh di folder "images/" di repo GitHub
-     kamu, commit & push, lalu ganti "image" di bawah jadi path lokal biasa,
-     contoh: image: "images/dashboard-tracking.png"
-     Cara ini tidak bergantung sama sekali pada Google Drive.
-   - Pastikan juga file di Drive kamu sudah di-set "Anyone with the link"
-     (bukan "Restricted"), kalau tidak gambarnya pasti gagal untuk orang lain.
-   - Untuk "url" di dalam "attachments" (link lampiran yang diklik lalu
-     dibuka di tab baru, BUKAN ditampilkan sebagai <img>), link share biasa
-     .../view?usp=sharing tetap yang benar dipakai — jangan diubah.
-   ============================================================ */
+   DAFTAR ISI (cari dengan Ctrl+F pada judul bagian):
+     1. IDENTITAS            nama, role, email, CV
+     2. HERO                 teks berganti, video latar, animasi bunga
+     3. EXPERIENCE           riwayat kerja
+     4. STATS                angka ringkas
+     5. PROJECTS             case study (tab "Case Studies")
+     6. LAB & EXPERIMENTS    eksperimen + video + PDF + demo (tab "Lab")
+     7. CERTIFICATES         sertifikat kursus online
+     8. SKILLS / WORKFLOW / FOOTER
+
+   ATURAN EMAS
+   - Teks selalu di dalam tanda kutip "seperti ini".
+   - Setiap baris/item dipisah KOMA di akhir, kecuali item paling terakhir.
+   - Field OPSIONAL yang dikosongkan ("" atau []) TIDAK akan ditampilkan
+     di website. Jadi tidak ada tombol mati atau tulisan "belum tersedia".
+
+   TENTANG LINK
+   - Link Google Drive harus diset "Anyone with the link".
+   - Link file (PDF, lampiran, dokumen): pakai link share biasa
+       https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+   - Link GAMBAR dari Drive: pakai format
+       https://lh3.googleusercontent.com/d/FILE_ID
+     Kalau masih tidak muncul, cara paling stabil adalah menaruh gambar
+     di folder "images/" di repo GitHub, lalu tulis: image: "images/nama.png"
+   - File di repo GitHub (video, PDF, xlsx) cukup ditulis path-nya,
+     contoh: "video/sql-demo.mp4". Batas GitHub 100 MB per file.
+   ========================================================================== */
 
 const SITE_CONFIG = {
-  // ---- IDENTITAS ----
+
+  /* ======================================================================
+     1. IDENTITAS
+     ====================================================================== */
   name: "Reudinta Zesha",
   location: "Tangerang",
   locationFlag: "🇮🇩",
@@ -33,23 +43,26 @@ const SITE_CONFIG = {
   email: "reudintazha@gmail.com",
   linkedin: "https://linkedin.com/in/reudinta-zesha/",
 
-  // Link CV untuk tombol "Download CV" di hero.
-  // Isi dengan link Google Drive / PDF kamu. Kalau dibiarkan kosong,
-  // tombolnya otomatis disembunyikan (bukan tampil dalam keadaan mati).
+  // Link CV untuk tombol "Download CV". Kosong = tombol disembunyikan.
   cvUrl: "",
+
+  // true = tampil status "Available for work"
   available: true,
 
+
+  /* ======================================================================
+     2. HERO (halaman paling atas)
+     ====================================================================== */
   heroWords: ["operational data", "messy spreadsheets", "raw logistics data"],
   heroSubtext: "I specialize in creating thoughtful and impactful systems, optimizing supply chain workflows, and translating raw data into robust business execution.",
 
   heroVideo: {
     enabled: true,
-    src: "video/intro.mp4",
-    overlayOpacity: 0.5,
-    // Volume suara video hero, 0 = diam, 1 = paling keras.
-    // Videonya tetap mulai dalam keadaan mute (aturan browser), user tinggal
-    // klik tombol "Nyalakan suara" di pojok kanan bawah hero.
-    volume: 0.6,
+    src: "video/intro.mp4",   // file harus benar-benar ada di repo
+    overlayOpacity: 0.5,      // 0 = terang, 1 = gelap
+    volume: 0.6,              // 0 = diam, 1 = paling keras
+    // Video selalu mulai mute (aturan browser). Pengunjung menyalakan
+    // suara lewat tombol di pojok kanan bawah hero.
   },
 
   flowerAnimation: {
@@ -58,72 +71,80 @@ const SITE_CONFIG = {
     count: 10,
   },
 
+
+  /* ======================================================================
+     3. EXPERIENCE
+     Satu kalimat = satu elemen array (nanti tampil sebagai baris sendiri).
+     ====================================================================== */
   experience: [
     {
       role: "Inventory Analyst",
       company: "SPX Express",
       period: "April 2026 — July 2026",
-      description: "Managed IT asset movements across 3,000+ operational sites, coordinating with logistics vendors and warehouse head to monitor operational performance, resolve shipment discrepancies, and support efficient asset availability.\nProcessed and verified 50+ daily asset movements, identifying shipment discrepancies and supporting timely operational resolution.\nDeveloped a web-based IT asset request system using Google Apps Script and Google Sheets, streamlining assetallocation workflows and reducing duplicate records.\nDeveloped an operational dashboard to monitor 500+ IT asset movements, improving asset visibility and supporting operational performance monitoring."
+      description: [
+        "Managed IT asset movements across 3,000+ operational sites, coordinating with logistics vendors and warehouse head to monitor operational performance, resolve shipment discrepancies, and support efficient asset availability.",
+        "Processed and verified 50+ daily asset movements, identifying shipment discrepancies and supporting timely operational resolution.",
+        "Developed a web-based IT asset request system using Google Apps Script and Google Sheets, streamlining asset allocation workflows and reducing duplicate records.",
+        "Developed an operational dashboard to monitor 500+ IT asset movements, improving asset visibility and supporting operational performance monitoring."
+      ].join("\n")
     },
     {
       role: "Intern Support Distribution Development",
       company: "PT Garudafood Putra Putri Jaya Tbk",
       period: "July 2025 — January 2026",
-      description: "Maintained and enhanced KPI dashboards for divisional management and 4 regional heads, enabling consistent monitoring of Sales Achievement, Distribution Coverage, Billing Rate, and Target Realization.\nBuilt automated incentive calculation templates with Advanced Excel, Pivot Tables, and OLAP for 2,000+ sales employees across 5 incentive schemes, significantly improving reporting efficiency and payout accuracy.\nConducted QGIS-based geospatial analysis of regional sales coverage outside Java, supporting territory expansion and distribution planning initiatives.\nGenerated weekly and monthly sales performance reports at both individual and regional levels to support operational decision-making."
+      description: [
+        "Maintained and enhanced KPI dashboards for divisional management and 4 regional heads, enabling consistent monitoring of Sales Achievement, Distribution Coverage, Billing Rate, and Target Realization.",
+        "Built automated incentive calculation templates with Advanced Excel, Pivot Tables, and OLAP for 2,000+ sales employees across 5 incentive schemes, significantly improving reporting efficiency and payout accuracy.",
+        "Conducted QGIS-based geospatial analysis of regional sales coverage outside Java, supporting territory expansion and distribution planning initiatives.",
+        "Generated weekly and monthly sales performance reports at both individual and regional levels to support operational decision-making."
+      ].join("\n")
     }
   ],
 
+
+  /* ======================================================================
+     4. STATS
+     ====================================================================== */
   stats: [
     { label: "Bachelor of Industrial Engineering", value: "GPA 3.55/4.00", suffix: "" },
-    { label: "Automation Scripts", value: 4, suffix: "+" },
-    { label: "Hours Saved / Month", value: 40, suffix: "h" },
+    { label: "Automation Scripts",                 value: 4,              suffix: "+" },
+    { label: "Hours Saved / Month",                value: 40,             suffix: "h" },
   ],
 
   spreadsheetId: "MASUKKAN_SPREADSHEET_ID_ANDA_DISINI",
 
- // Setiap project sekarang bisa punya "attachments": lampiran file tambahan
- // seperti flowchart, handbook/SOP, laporan PDF, dsb. Ini akan muncul sebagai
- // tombol yang bisa diklik di dalam modal detail project.
- //
- // Cara isi:
- //   attachments: [
- //     { name: "Nama file yang ditampilkan", type: "pdf", url: "https://link-ke-file-kamu" }
- //   ]
- //
- // "type" menentukan ikon yang muncul: pdf, doc, sheet, image, ppt, atau zip (default: file biasa).
- // "url" bisa berupa link Google Drive share biasa (klik kanan file > Bagikan > Salin link),
- // link GitHub, atau hosting lain. Kalau project belum ada lampiran, cukup hapus
- // baris "attachments" atau biarkan array-nya kosong: attachments: []
- //
- // Setiap project juga sekarang bisa punya "actionsTaken" dan "businessImpact":
- // dua daftar bullet point terpisah yang akan muncul di modal detail project,
- // di bawah deskripsi singkat. Formatnya array of string, satu string = satu bullet.
- //
- //   actionsTaken: [
- //     "Apa yang kamu kerjakan / langkah konkret yang diambil...",
- //     "Langkah lainnya..."
- //   ],
- //   businessImpact: [
- //     "Hasil / dampak bisnis yang terukur...",
- //     "Dampak lainnya..."
- //   ]
- //
- // Kalau salah satu (atau keduanya) tidak diisi / dihapus, modal akan tetap
- // menampilkan "description" seperti biasa tanpa error.
- fallbackProjects: [
+
+  /* ======================================================================
+     5. PROJECTS (tab "Case Studies")
+     ----------------------------------------------------------------------
+     Template satu project (salin lalu isi):
+
+       {
+         title: "",
+         category: "",
+         description: "",
+         tools: "Tool 1, Tool 2",        // dipisah koma -> jadi chip
+         image: "",                      // lihat aturan link gambar di atas
+         demoUrl: "",                    // kosong = tombol demo tidak tampil
+         metrics: "Angka 1 | Angka 2",   // dipisah tanda |
+         actionsTaken:   ["bullet 1", "bullet 2"],   // "Action Taken"
+         businessImpact: ["bullet 1", "bullet 2"],   // "Business Impact"
+         attachments: [                  // lampiran PDF/dokumen (opsional)
+           { name: "Nama tampil", type: "pdf", url: "https://..." }
+         ]
+       },
+
+     type lampiran: pdf, doc, sheet, image, ppt, zip.
+     Lampiran dengan url "" otomatis tidak ditampilkan.
+     ====================================================================== */
+  fallbackProjects: [
+
+    // ---------- Project 1 ----------
     {
       title: "IT Asset Tracking Dashboard",
       category: "Automation",
       description: "A centralized digital ecosystem built to track IT assets in motion, enabling real-time status updates and ensuring zero shipment anomalies fall through the cracks.",
       tools: "Google Apps Script, Google Sheets, JavaScript",
-      // Sebelumnya: tanda kutip pembuka di depan "https" hilang, dan link
-      // masih format "view" (halaman HTML) — sekarang dikonversi ke format
-      // gambar langsung supaya benar-benar tampil sebagai foto.
-      // Format "uc?export=view" sering diblokir Google untuk akses publik/anonim
-      // (muncul halaman peringatan, atau kena limit kuota). Diganti ke format
-      // lh3.googleusercontent.com yang jauh lebih stabil untuk hotlink gambar.
-      // KALAU MASIH TIDAK MUNCUL: upload file ini ke folder "images/" di repo
-      // GitHub kamu, lalu ganti baris ini jadi image: "images/nama-file.png"
       image: "https://lh3.googleusercontent.com/d/1QqNjHmNDAMNPQHofgZgg0cHCfedguYTN",
       demoUrl: "https://script.google.com/macros/s/AKfycbyVKn6KCRlxw5StXsXAaaR3ogn_Czy6wFAtThEsfxdkKpnGmbCvwevszVdt1Nar1E774w/exec",
       metrics: "500+ Assets Tracked | 58% Pending Status Reduction | Enhanced Real-Time Visibility",
@@ -138,10 +159,12 @@ const SITE_CONFIG = {
         "Gave warehouse and logistics teams enhanced real-time visibility into asset movement"
       ],
       attachments: [
-        { name: "Flowchart Proses Tracking", type: "pdf", url: "" },
-        { name: "Handbook / SOP Penggunaan", type: "pdf", url: "" }
+        { name: "Flowchart Proses Tracking",  type: "pdf", url: "" },
+        { name: "Handbook / SOP Penggunaan",  type: "pdf", url: "" }
       ]
     },
+
+    // ---------- Project 2 ----------
     {
       title: "IT Asset Request & Return Form",
       category: "Web App",
@@ -160,20 +183,17 @@ const SITE_CONFIG = {
         "Increased processing capacity by 25%",
         "Saved the team 50% of the time previously spent on manual processing"
       ],
-      // Sebelumnya: kurung kurawal penutup "}" untuk objek ini hilang,
-      // dan key "type" salah ketik jadi "tpe" — keduanya sudah dibetulkan.
       attachments: [
         { name: "UML Sistem Web Request", type: "image", url: "https://drive.google.com/file/d/1WJ0fcVOwK0X1GxlDOahV2ZH_JUu3MJdh/view?usp=sharing" }
       ]
     },
+
+    // ---------- Project 3 ----------
     {
       title: "Summary Tracker",
       category: "Automation Report",
       description: "An automated cross-functional monitoring tool generated to report overall asset performance instantly—without anyone needing to touch a spreadsheet manually.",
       tools: "Google Apps Script, HTML, CSS",
-      // Sama seperti di atas: dikonversi dari link "view" ke format gambar langsung.
-      // Sama seperti di atas: format lh3.googleusercontent.com lebih stabil
-      // daripada uc?export=view. Kalau masih gagal, upload ke folder images/.
       image: "https://lh3.googleusercontent.com/d/1x0egIBulg4WIMMO3SivxGkWz44DXnhga",
       demoUrl: "https://script.google.com/macros/s/AKfycbyVKn6KCRlxw5StXsXAaaR3ogn_Czy6wFAtThEsfxdkKpnGmbCvwevszVdt1Nar1E774w/exec?page=summary",
       metrics: "Auto-Updated Reports | Automated Email Reminders",
@@ -188,6 +208,8 @@ const SITE_CONFIG = {
       ],
       attachments: []
     },
+
+    // ---------- Project 4 ----------
     {
       title: "Summary Performance Salesman",
       category: "Spreadsheet Report",
@@ -210,6 +232,8 @@ const SITE_CONFIG = {
         { name: "Skema Perhitungan Insentif", type: "sheet", url: "" }
       ]
     },
+
+    // ---------- Project 5 ----------
     {
       title: "Digital Promotion System for Culinary SME (Dapur Siteteh)",
       category: "Academic Project",
@@ -232,6 +256,8 @@ const SITE_CONFIG = {
         { name: "Laporan Lengkap (PDF)", type: "pdf", url: "" }
       ]
     },
+
+    // ---------- Project 6 ----------
     {
       title: "Tofu Wastewater Optimization via Green VSM",
       category: "Academic Project",
@@ -250,95 +276,169 @@ const SITE_CONFIG = {
         "Recognized as Best Presenter at SEMNASTEK 2025"
       ],
       attachments: [
-        { name: "Green VSM Flowchart", type: "pdf", url: "" },
+        { name: "Green VSM Flowchart",  type: "pdf", url: "" },
         { name: "Paper SEMNASTEK 2025", type: "pdf", url: "" }
       ]
     }
   ],
 
-  // ---- SKILL LAB — 3D Coverflow Gallery (bagian "• Skill Lab") ----
-  // Ini section baru buat pamer dummy project / eksperimen SQL, dashboard,
-  // visualisasi data, dll di luar project kerjaan beneran. Tinggal ganti
-  // isi array ini kapan pun project dummy kamu sudah siap.
-  //
-  // "icon"  : nama ikon Font Awesome (tanpa "fa-solid"), contoh "fa-database"
-  // "tools" : dipisah koma, akan tampil sebagai chip kecil
-  // "demoUrl" (opsional) : link ke demo/repo, kalau ada akan muncul tombol
-  //                        "Buka Demo" di modal detail
+
+  /* ======================================================================
+     6. LAB & EXPERIMENTS (tab "Lab", galeri 3D)
+     ----------------------------------------------------------------------
+     Template satu eksperimen (salin lalu isi):
+
+       {
+         title: "",
+         category: "",                 // label kecil, mis. "SQL"
+         icon: "fa-database",          // ikon Font Awesome
+         description: "",
+         tools: "Tool 1, Tool 2",      // dipisah koma -> jadi chip
+
+         // ---- SEMUA DI BAWAH INI OPSIONAL (kosong = tidak tampil) ----
+         videoUrl: "",                 // video pengerjaan (lihat format di bawah)
+         pdfs: [],                     // 1-2 PDF pendukung
+         demoUrl: "",                  // file / link demo yang bisa dibuka
+         demoLabel: ""                 // teks tombol demo (default "Buka Demo / Repo")
+       },
+
+     videoUrl yang didukung:
+       - YouTube (watch / youtu.be / shorts)  -> paling disarankan, set "Unlisted"
+       - Google Drive  .../file/d/FILE_ID/view...
+       - Loom          https://www.loom.com/share/...
+       - File langsung "video/sql-demo.mp4"   (maks 100 MB di GitHub)
+
+     pdfs, contoh:
+       pdfs: [
+         { name: "Kumpulan Query SQL", url: "https://drive.google.com/file/d/FILE_ID/view?usp=sharing" },
+         { name: "Penjelasan Hasil",   url: "pdf/hasil.pdf" }
+       ],
+
+     demoUrl, contoh:
+       demoUrl: "files/sales-demo.xlsx",     // file di repo
+       demoUrl: "https://github.com/akun/repo-sql",
+     ====================================================================== */
   skillLab: [
+
+    // ---------- Lab 1 ----------
     {
       title: "SQL Sales Query Playground",
       category: "SQL",
       icon: "fa-database",
       description: "Kumpulan query SQL (window functions, CTE, join bertingkat) untuk menjawab pertanyaan bisnis seperti top customer per region dan tren penjualan bulanan.",
       tools: "PostgreSQL, CTE, Window Functions",
-      demoUrl: ""
+      videoUrl: "",
+      pdfs: [],
+      demoUrl: "",
+      demoLabel: ""
     },
+
+    // ---------- Lab 2 ----------
     {
       title: "Sales Performance Dashboard",
       category: "Visualisasi",
       icon: "fa-chart-pie",
       description: "Dashboard interaktif yang memvisualisasikan pencapaian penjualan, distribusi coverage, dan billing rate per region secara real-time.",
       tools: "Looker Studio, Power BI, Google Sheets",
-      demoUrl: ""
+      videoUrl: "",
+      pdfs: [],
+      demoUrl: "",
+      demoLabel: ""
     },
+
+    // ---------- Lab 3 ----------
     {
       title: "Automated Incentive Workbook",
       category: "Excel",
       icon: "fa-file-excel",
       description: "Template Excel dengan Pivot Table, OLAP, dan formula lanjutan untuk menghitung insentif ribuan sales secara otomatis dan akurat.",
       tools: "Advanced Excel, Pivot Tables, OLAP",
-      demoUrl: ""
+      videoUrl: "",
+      pdfs: [],
+      demoUrl: "",
+      demoLabel: ""
     },
+
+    // ---------- Lab 4 ----------
     {
       title: "Automated Reporting Bot",
       category: "App Script",
       icon: "fa-code",
       description: "Google Apps Script yang menyusun & mengirim ringkasan laporan mingguan otomatis ke email tim setiap Senin pagi.",
       tools: "Google Apps Script, Gmail API, Google Sheets",
-      demoUrl: ""
+      videoUrl: "",
+      pdfs: [],
+      demoUrl: "",
+      demoLabel: ""
     }
   ],
 
+
+  /* ======================================================================
+     7. CERTIFICATES (sertifikat kursus online)
+     ----------------------------------------------------------------------
+     Selama array ini kosong, section "Certificates" TIDAK muncul di website.
+     Begitu ada minimal satu sertifikat, section otomatis tampil.
+
+     Template satu sertifikat (hapus // lalu isi, taruh di dalam [ ]):
+
+       {
+         title: "Nama Sertifikat",                  // WAJIB
+         issuer: "Penyelenggara",                   // opsional
+         date: "Agustus 2026",                      // opsional
+         description: "Apa yang dipelajari.",       // opsional
+         url: "https://drive.google.com/file/d/FILE_ID/view?usp=sharing"
+              // link PDF sertifikat. Kosong = kartu tanpa tombol.
+              // Boleh path di repo: "certificates/nama-file.pdf"
+       },
+     ====================================================================== */
+  certificates: [
+    {
+      title: "CSCMP Supply Chain Foundations:The Essentials Professional Certificate",
+      issuer: "the Council of Supply Chain Management Professionals",
+      date: "October 2026",
+      description: "the Council of Supply Chain Management Professionals (CSCMP) a number of certifications and foundational exams.  CSCMP supply chain foundation exam on LinkedIn",
+      url: "https://drive.google.com/file/d/1gkjPny7_cWtGQs-wMzRAS-X8IWuZQDGg/view?usp=sharing"
+    },
+    {
+      title: "Business Analysis: Essential Tools and Techniques 2021",
+      issuer: "IIBA International Institute of Business Analysis",
+      date: "October 2026",
+      description: "Business Analysis course with IIBA (Global association defines standards for the business analysis profession. It certifies individuals at all career stages and provides resources for teams, academics, and trainers)",
+      url: "https://www.linkedin.com/learning/certificates/1fd5ab0f235eb0b007f44365b950766bf087e89f5bf419742a15ecea774889ed?trk=share_certificate"
+    }
+  ],
+
+
+  /* ======================================================================
+     8. SKILLS · WORKFLOW · FOOTER
+     ====================================================================== */
   skills: [
-    { name: "Google Apps Script", icon: "fa-code" },
-    { name: "Google Sheets", icon: "fa-table" },
-    { name: "Excel", icon: "fa-file-excel" },
-    { name: "SQL", icon: "fa-database" },
-    { name: "QGIS", icon: "fa-map-location-dot" },
-    { name: "Power BI", icon: "fa-chart-pie" },
-    { name: "Looker Studio", icon: "fa-js" },
+    { name: "Google Apps Script",  icon: "fa-code" },
+    { name: "Google Sheets",       icon: "fa-table" },
+    { name: "Excel",               icon: "fa-file-excel" },
+    { name: "SQL",                 icon: "fa-database" },
+    { name: "QGIS",                icon: "fa-map-location-dot" },
+    { name: "Power BI",            icon: "fa-chart-pie" },
+    { name: "Looker Studio",       icon: "fa-chart-column" },
     { name: "Pivot Tables & OLAP", icon: "fa-layer-group" }
   ],
 
-  services: [
-    {
-      icon: "fa-chart-line",
-      title: "Data Analytics & BI",
-      description: "Designing KPI dashboards, automated data integration, and geospatial analysis to drive operational distribution efficiency."
-    },
-    {
-      icon: "fa-gears",
-      title: "Systems & Automation",
-      description: "Automating operational systems using Google Apps Script, Excel VBA, and relational database management."
-    }
-  ],
-
   workflow: [
-    { 
-      number: "01", 
-      title: "Understand & Analyze", 
-      description: "Deeply exploring operational bottlenecks, database structures, and mapping out system workflows." 
+    {
+      number: "01",
+      title: "Understand & Analyze",
+      description: "Deeply exploring operational bottlenecks, database structures, and mapping out system workflows."
     },
-    { 
-      number: "02", 
-      title: "Develop & Automate", 
-      description: "Building automation scripts, advanced formulas, and interactive visualizations to ensure data is management-ready." 
+    {
+      number: "02",
+      title: "Develop & Automate",
+      description: "Building automation scripts, advanced formulas, and interactive visualizations to ensure data is management-ready."
     },
-    { 
-      number: "03", 
-      title: "Handover & Refine", 
-      description: "Providing system documentation, team training, and continuous feature refinement to maintain peak performance." 
+    {
+      number: "03",
+      title: "Handover & Refine",
+      description: "Providing system documentation, team training, and continuous feature refinement to maintain peak performance."
     }
   ],
 
