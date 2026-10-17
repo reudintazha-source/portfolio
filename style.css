@@ -158,12 +158,15 @@ body.dark .work-tab.is-active { background: #ffffff; border-color: #ffffff; colo
   pointer-events: none;
 }
 
-/* Ruang aman di bawah tiap section supaya baris terakhir tidak tertutup dock. */
-section, footer {
-  padding-bottom: 120px;
+/* Ruang aman di bawah tiap section supaya baris terakhir tidak tertutup dock.
+   Pakai !important karena Tailwind (py-24) memakai class, yang spesifisitasnya
+   mengalahkan selector elemen biasa. Hero dikecualikan supaya video latar &
+   komposisi tengahnya tidak bergeser. */
+section:not(#home), footer {
+  padding-bottom: 120px !important;
 }
 @media (max-width: 768px) {
-  section, footer { padding-bottom: 140px; }
+  section:not(#home), footer { padding-bottom: 140px !important; }
 }
 
 /* ---- Typing effect cursor ---- */
