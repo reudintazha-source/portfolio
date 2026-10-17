@@ -303,20 +303,27 @@
         </div>
     </section>
 
-    <section id="services" class="py-24 bg-[#F8F9FA] border-t border-gray-100">
+    <!-- CERTIFICATES — sertifikat kursus online (link PDF + judul + deskripsi).
+         Tersembunyi otomatis kalau "certificates" di config.js masih kosong. -->
+    <section id="certificates" class="hidden py-24 bg-white border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-6">
             <div class="max-w-3xl mb-16">
-                <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 block mb-3">• Services</span>
+                <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 block mb-3">• Certificates</span>
                 <h2 class="font-serif text-4xl md:text-5xl text-slate-900 leading-tight font-bold">
-                    Premium services designed for impact
+                    Courses I completed along the way
                 </h2>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="services-container"></div>
+            <div id="certificates-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        </div>
+    </section>
 
-            <div class="mt-14">
-                <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Skills & Tools</p>
-                <div class="flex flex-wrap gap-3" id="skills-container"></div>
+    <section id="skills" class="py-24 bg-[#F8F9FA] border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl mb-10">
+                <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 block mb-3">• Skills & Tools</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-slate-900 leading-tight font-bold">Tools I work with</h2>
             </div>
+            <div class="flex flex-wrap gap-3" id="skills-container"></div>
         </div>
     </section>
 
@@ -355,7 +362,7 @@
             <a href="#home" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Home</a>
             <a href="#experience" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Experience</a>
             <a href="#work" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Work</a>
-            <a href="#services" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Services</a>
+            <a href="#skills" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Skills</a>
             <a href="#contact" class="text-gray-300 hover:text-white text-sm font-medium px-4 py-2.5 rounded-full hover:bg-white/10 transition-all">Contact</a>
         </div>
     </div>
