@@ -335,27 +335,27 @@ const SITE_CONFIG = {
 
     // ---------- Lab 2 ----------
     {
-      title: "Sales Performance Dashboard",
+      title: "Telecomunication Monthly vs Annualy Churn Dashboard",
       category: "Visualisasi",
       icon: "fa-chart-pie",
-      description: "Dashboard interaktif yang memvisualisasikan pencapaian penjualan, distribusi coverage, dan billing rate per region secara real-time.",
-      tools: "Looker Studio, Power BI, Google Sheets",
+      description: "Dashboard Menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
+      tools: "Power BI, Csv",
       videoUrl: "",
       pdfs: [],
-      demoUrl: "",
+      demoUrl: "https://drive.google.com/file/d/1IMI1_2sdafz5xRkisLutxY8vEkCawx8G/view?usp=sharing",
       demoLabel: ""
     },
 
     // ---------- Lab 3 ----------
     {
-      title: "Automated Incentive Workbook",
+      title: "Telecomunication Monthly vs Annualy Churn Dashboard",
       category: "Excel",
       icon: "fa-file-excel",
-      description: "Template Excel dengan Pivot Table, OLAP, dan formula lanjutan untuk menghitung insentif ribuan sales secara otomatis dan akurat.",
-      tools: "Advanced Excel, Pivot Tables, OLAP",
+      description: "Dashboard Menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
+      tools: "Advanced Excel, Pivot Tables, Csv",
       videoUrl: "",
       pdfs: [],
-      demoUrl: "",
+      demoUrl: "https://docs.google.com/spreadsheets/d/1DROvsHS1Kj56gOho3KvCfK_5JL0o5g5s/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true",
       demoLabel: ""
     },
 
