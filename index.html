@@ -94,7 +94,7 @@
 
                 <div data-aos="fade-up" data-aos-delay="200" class="pt-2 flex flex-wrap items-center gap-4">
                     <a href="#work" class="btn-premium inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base">
-                        Lihat Case Studies
+                        Lihat Karya Saya
                         <i class="fa-solid fa-arrow-right text-sm"></i>
                     </a>
                     <a href="#" class="js-cv btn-secondary inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-base" target="_blank" rel="noopener">
@@ -251,8 +251,8 @@
     </section>
 
     <!-- PORTFOLIO SECTION -->
-    <!-- WORK — Case Studies + Lab digabung jadi satu section dengan tab.
-         Case Studies selalu jadi tab aktif pertama; Lab tidak pernah tampil duluan. -->
+    <!-- WORK — Real Project + Case Study digabung jadi satu section dengan tab.
+         Real Project selalu jadi tab aktif pertama. -->
     <section id="work" class="py-24 bg-white border-t border-gray-100 overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
             <div class="max-w-3xl mb-10">
@@ -265,15 +265,15 @@
             <!-- TAB SWITCHER -->
             <div id="work-tabs" class="flex flex-wrap items-center gap-2 mb-12" role="tablist">
                 <button class="work-tab is-active" data-tab="case" role="tab" aria-selected="true" aria-controls="panel-case">
-                    Case Studies
+                    Real Project
                 </button>
                 <button class="work-tab" data-tab="lab" role="tab" aria-selected="false" aria-controls="panel-lab">
-                    Lab &amp; Experiments
+                    Case Study
                 </button>
             </div>
         </div>
 
-        <!-- PANEL: CASE STUDIES (default aktif) -->
+        <!-- PANEL: REAL PROJECT (default aktif) -->
         <div id="panel-case" class="work-panel is-active" role="tabpanel">
             <div class="max-w-7xl mx-auto px-6">
                 <p class="text-gray-500 mb-10 max-w-2xl">Proyek nyata di lingkungan operasional — klik salah satu card untuk melihat action taken dan business impact-nya.</p>
@@ -281,24 +281,11 @@
             </div>
         </div>
 
-        <!-- PANEL: LAB & EXPERIMENTS -->
+        <!-- PANEL: CASE STUDY (analisis mandiri: SQL, Power BI, Excel, App Script) -->
         <div id="panel-lab" class="work-panel" role="tabpanel">
             <div class="max-w-7xl mx-auto px-6">
-                <p class="text-gray-500 mb-10 max-w-2xl">Eksplorasi mandiri seputar SQL, visualisasi, dan otomasi. Geser atau klik kartu untuk menjelajah.</p>
-            </div>
-
-            <div id="coverflow" class="relative w-full">
-                <div id="coverflow-track" class="relative mx-auto" style="height: 380px; perspective: 1400px;"></div>
-
-                <div class="flex items-center justify-center gap-4 mt-10">
-                    <button id="coverflow-prev" class="w-11 h-11 rounded-full border border-gray-300 text-slate-700 flex items-center justify-center hover:bg-gray-100 transition-colors">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
-                    <div id="coverflow-dots" class="flex items-center gap-2"></div>
-                    <button id="coverflow-next" class="w-11 h-11 rounded-full border border-gray-300 text-slate-700 flex items-center justify-center hover:bg-gray-100 transition-colors">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
-                </div>
+                <p class="text-gray-500 mb-10 max-w-2xl">Analisis dan dashboard mandiri — klik card untuk melihat demo, video pengerjaan, serta presentasi / PDF-nya.</p>
+                <div id="casestudy-container" class="grid grid-cols-1 md:grid-cols-2 gap-10"></div>
             </div>
         </div>
     </section>
@@ -384,7 +371,7 @@
 
     <!-- LAB MODAL -->
     <div id="lab-modal" class="hidden-modal fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-        <div class="modal-box bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-8 relative">
+        <div class="modal-box bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-8 relative">
             <button id="lab-modal-close" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center">
                 <i class="fa-solid fa-xmark"></i>
             </button>
