@@ -577,3 +577,26 @@ button.attachment-chip { cursor: pointer; }
   background: rgba(255,255,255,0.15); color: #fff; display: flex; align-items: center; justify-content: center;
 }
 body.dark .shot-grid img, body.dark .exp-photo { border-color: rgba(255,255,255,0.12); }
+
+/* ---- Preview isi demo langsung di kartu Case Study ---- */
+.cs-preview { position: absolute; inset: 0; overflow: hidden; background: #fff; }
+.cs-preview iframe {
+  position: absolute; top: 0; left: 0; width: 200%; height: 200%;
+  transform: scale(0.5); transform-origin: top left;
+  border: 0; pointer-events: none;   /* klik kartu = buka detail */
+}
+
+/* ---- Form kontak ---- */
+.contact-form input, .contact-form textarea {
+  width: 100%; background: #fff; color: #0f172a;
+  border: 1px solid #e5e7eb; border-radius: 1rem;
+  padding: 0.85rem 1.1rem; font-size: 0.95rem; font-family: inherit;
+  transition: border-color .2s, box-shadow .2s;
+}
+.contact-form input:focus, .contact-form textarea:focus {
+  outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,.18);
+}
+.contact-form textarea { resize: vertical; min-height: 130px; }
+body.dark .contact-form input, body.dark .contact-form textarea {
+  background: #17171a; color: #f4f4f5; border-color: #2a2a2e;
+}
