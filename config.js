@@ -427,14 +427,20 @@ const SITE_CONFIG = {
       title: "Telecommunication Monthly vs Annual Churn Dashboard — Power BI",
       category: "Power BI",
       icon: "fa-chart-pie",
-      image: "",
+      image: "https://drive.google.com/file/d/1v6cErG4DZL0QqFXZxczw_wUgHMewDjMM/view?usp=sharing",
       description: "Dashboard menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
       tools: "Power BI, CSV",
       metrics: "",
-      actionsTaken: [],
-      businessImpact: [],
+      actionsTaken: [Kembangkan strategi untuk mendorong pelanggan dengan skema pembayaran bulanan agar beralih ke paket berlangganan jangka panjang, melalui penawaran menarik, insentif, atau keuntungan tambahan dari langganan tersebut.],
+      businessImpact: [1\. Monthly contract memiliki tingkat churn tertinggi sebesar 23%, jauh lebih tinggi dibandingkan annual contract yang hanya sekitar 3%.
+
+2\. Semakin panjang durasi kontrak, semakin rendah tingkat churn. Kontrak 2 tahun memiliki churn terendah sebesar 0,68%.
+
+3\. Monthly contract mendominasi kontribusi churn customer dengan churn share mencapai 89%.
+
+4\. Customer yang churn memiliki rata-rata charge sebesar 4.078, atau 23% lebih tinggi dibandingkan customer yang bertahan.],
       videoUrl: "",
-      screenshots: [],
+      screenshots: [https://drive.google.com/file/d/1v6cErG4DZL0QqFXZxczw_wUgHMewDjMM/view?usp=sharing],
       docs: [],
       demos: [
         { name: "Buka File Dashboard", url: "https://drive.google.com/file/d/1IMI1_2sdafz5xRkisLutxY8vEkCawx8G/view?usp=sharing" }
