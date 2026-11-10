@@ -427,7 +427,7 @@ const SITE_CONFIG = {
       title: "Telecommunication Monthly vs Annual Churn Dashboard — Power BI",
       category: "Power BI",
       icon: "fa-chart-pie",
-      image: "https://drive.google.com/file/d/1v6cErG4DZL0QqFXZxczw_wUgHMewDjMM/view?usp=sharing",
+      image: "https://drive.google.com/file/d/1NTIC3BpcEcXtmEJNkg4tBtaddN3m4UdO/view?usp=sharing",
       description: "Dashboard menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
       tools: "Power BI, CSV",
       metrics: "Customer Contract | Churn Rate",
@@ -442,9 +442,9 @@ const SITE_CONFIG = {
       ],
       videoUrl: "",
       screenshots: [
-        { url: "https://drive.google.com/file/d/1v6cErG4DZL0QqFXZxczw_wUgHMewDjMM/view?usp=sharing", caption: "Dashboard Power BI" }
+        { url: "https://drive.google.com/file/d/1NTIC3BpcEcXtmEJNkg4tBtaddN3m4UdO/view?usp=sharing", caption: "Dashboard Power BI" }
       ],
-      docs: [],
+      docs: [[{ name: "PPT Hasil Analisa", url: "https://docs.google.com/presentation/d/1OBZ_WyoCmPMGP_sRSBUyr05VtGAfsCmu/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true" }]],
       demos: [
         { name: "Buka File Dashboard", url: "https://drive.google.com/file/d/1IMI1_2sdafz5xRkisLutxY8vEkCawx8G/view?usp=sharing" }
       ]
@@ -455,7 +455,7 @@ const SITE_CONFIG = {
       title: "Telecommunication Monthly vs Annual Churn Dashboard — Excel",
       category: "Excel",
       icon: "fa-file-excel",
-      image: "https://drive.google.com/file/d/1btnWUT_AVj2KP_ixqduzclygE9F5gxVn/view?usp=sharing",
+      image: "https://drive.google.com/file/d/1hlnEKZMycySQXpFIO-u4VBLKdIobyzQG/view?usp=sharing",
       description: "Dashboard menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
       tools: "Advanced Excel, Pivot Tables, CSV",
       metrics: "Customer Contract | Churn Rate",
@@ -467,9 +467,9 @@ const SITE_CONFIG = {
         "Customer yang churn memiliki rata-rata charge sebesar 4.078, atau 23% lebih tinggi dibandingkan customer yang bertahan."],
       videoUrl: "https://youtu.be/JeSNd2kDngU",
       screenshots: [
-        { url: "https://drive.google.com/file/d/1btnWUT_AVj2KP_ixqduzclygE9F5gxVn/view?usp=sharing", caption: "Halaman Dashboard" }
+        { url: "https://drive.google.com/file/d/1hlnEKZMycySQXpFIO-u4VBLKdIobyzQG/view?usp=sharing", caption: "Halaman Dashboard" }
       ],
-      docs: [],
+      docs: [{ name: "PPT Hasil Analisa", url: "https://docs.google.com/presentation/d/1OBZ_WyoCmPMGP_sRSBUyr05VtGAfsCmu/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true" }],
       demos: [
         { name: "Buka Excel Interaktif", url: "https://docs.google.com/spreadsheets/d/1QgbIs3cUj1Wt7fT2Fs-MhitHLMH5qYm6/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true" }
       ]
