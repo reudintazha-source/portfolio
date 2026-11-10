@@ -8,8 +8,9 @@
      2. HERO                 teks berganti, video latar, animasi bunga
      3. EXPERIENCE           riwayat kerja
      4. STATS                angka ringkas
-     5. PROJECTS             case study (tab "Case Studies")
-     6. LAB & EXPERIMENTS    eksperimen + video + PDF + demo (tab "Lab")
+     5. REAL PROJECT         proyek kerja nyata (tab "Real Project")
+     6. CASE STUDY           analisis mandiri: SQL, Power BI, Excel, App Script
+                             (tab "Case Study")
      7. CERTIFICATES         sertifikat kursus online
      8. SKILLS / WORKFLOW / FOOTER
 
@@ -74,13 +75,31 @@ const SITE_CONFIG = {
 
   /* ======================================================================
      3. EXPERIENCE
-     Satu kalimat = satu elemen array (nanti tampil sebagai baris sendiri).
+     ----------------------------------------------------------------------
+     description : satu kalimat = satu elemen array (tampil sebagai bullet).
+
+     Supaya bagian ini tidak polos, tiap pengalaman boleh punya:
+       logo   : gambar logo perusahaan (kotak kecil di samping judul).
+                Kosong = otomatis dibuat badge inisial perusahaan.
+       photos : foto kegiatan / kantor / gudang / bukti kerja (boleh banyak).
+                Format: [{ url: "...", caption: "keterangan singkat" }]
+                caption boleh dihapus. Klik foto = diperbesar.
+                Kosong ([]) = tidak ada galeri foto.
+
+     Link foto/logo boleh link Drive biasa (.../file/d/ID/view) — otomatis
+     diubah jadi gambar. Paling stabil: taruh di folder "images/" di repo,
+     contoh: "images/spx-gudang.jpg".
      ====================================================================== */
   experience: [
     {
       role: "Inventory Analyst",
       company: "SPX Express",
       period: "April 2026 — July 2026",
+      logo: "",
+      photos: [
+        // { url: "images/spx-1.jpg", caption: "Monitoring pergerakan aset" },
+        // { url: "images/spx-2.jpg", caption: "Dashboard tracking di tim" },
+      ],
       description: [
         "Managed IT asset movements across 3,000+ operational sites, coordinating with logistics vendors and warehouse head to monitor operational performance, resolve shipment discrepancies, and support efficient asset availability.",
         "Processed and verified 50+ daily asset movements, identifying shipment discrepancies and supporting timely operational resolution.",
@@ -92,6 +111,10 @@ const SITE_CONFIG = {
       role: "Intern Support Distribution Development",
       company: "PT Garudafood Putra Putri Jaya Tbk",
       period: "July 2025 — January 2026",
+      logo: "",
+      photos: [
+        // { url: "images/garudafood-1.jpg", caption: "Presentasi KPI dashboard" },
+      ],
       description: [
         "Maintained and enhanced KPI dashboards for divisional management and 4 regional heads, enabling consistent monitoring of Sales Achievement, Distribution Coverage, Billing Rate, and Target Realization.",
         "Built automated incentive calculation templates with Advanced Excel, Pivot Tables, and OLAP for 2,000+ sales employees across 5 incentive schemes, significantly improving reporting efficiency and payout accuracy.",
@@ -115,7 +138,7 @@ const SITE_CONFIG = {
 
 
   /* ======================================================================
-     5. PROJECTS (tab "Case Studies")
+     5. REAL PROJECT (tab "Real Project")
      ----------------------------------------------------------------------
      Template satu project (salin lalu isi):
 
@@ -284,92 +307,158 @@ const SITE_CONFIG = {
 
 
   /* ======================================================================
-     6. LAB & EXPERIMENTS (tab "Lab", galeri 3D)
+     6. CASE STUDY (tab "Case Study") — analisis mandiri
      ----------------------------------------------------------------------
-     Template satu eksperimen (salin lalu isi):
+     Kartu di halaman depan tampil seperti kartu Real Project (gambar,
+     kategori, judul, metrik, tools). Klik kartu -> jendela detail berisi
+     video, screenshot, presentasi/PDF yang langsung terbuka di halaman,
+     dan tombol demo.
+
+     Template satu case study (salin lalu isi). SEMUA field selain title
+     bersifat opsional — yang kosong ("" atau []) TIDAK tampil sama sekali.
 
        {
          title: "",
-         category: "",                 // label kecil, mis. "SQL"
-         icon: "fa-database",          // ikon Font Awesome
+         category: "",                // label kecil, mis. "SQL", "Power BI"
+         icon: "fa-database",         // ikon cadangan kalau "image" kosong
+         image: "",                   // gambar sampul (screenshot dashboard terbaik)
          description: "",
-         tools: "Tool 1, Tool 2",      // dipisah koma -> jadi chip
+         tools: "Tool 1, Tool 2",     // dipisah koma
+         metrics: "Angka 1 | Angka 2",// dipisah tanda |
+         actionsTaken:   ["bullet 1", "bullet 2"],
+         businessImpact: ["bullet 1", "bullet 2"],
 
-         // ---- SEMUA DI BAWAH INI OPSIONAL (kosong = tidak tampil) ----
-         videoUrl: "",                 // video pengerjaan (lihat format di bawah)
-         pdfs: [],                     // 1-2 PDF pendukung
-         demoUrl: "",                  // file / link demo yang bisa dibuka
-         demoLabel: ""                 // teks tombol demo (default "Buka Demo / Repo")
+         videoUrl: "",                // video pengerjaan / walkthrough
+         screenshots: [],             // galeri gambar, klik = diperbesar
+         docs: [],                    // PPT / PDF -> langsung terbuka di halaman
+         demos: []                    // tombol demo, BOLEH LEBIH DARI SATU
        },
 
      videoUrl yang didukung:
        - YouTube (watch / youtu.be / shorts)  -> paling disarankan, set "Unlisted"
-       - Google Drive  .../file/d/FILE_ID/view...
+       - Google Drive  .../file/d/FILE_ID/view...   (Anyone with the link)
        - Loom          https://www.loom.com/share/...
-       - File langsung "video/sql-demo.mp4"   (maks 100 MB di GitHub)
+       - File langsung "video/sql-demo.mp4"  (maks 100 MB di GitHub)
 
-     pdfs, contoh:
-       pdfs: [
-         { name: "Kumpulan Query SQL", url: "https://drive.google.com/file/d/FILE_ID/view?usp=sharing" },
-         { name: "Penjelasan Hasil",   url: "pdf/hasil.pdf" }
+     screenshots, contoh:
+       screenshots: [
+         { url: "images/churn-1.png", caption: "Halaman Overview" },
+         { url: "images/churn-2.png", caption: "Halaman Detail Kontrak" }
        ],
 
-     demoUrl, contoh:
-       demoUrl: "files/sales-demo.xlsx",     // file di repo
-       demoUrl: "https://github.com/akun/repo-sql",
+     docs  (presentasi / PDF yang bisa dibuka langsung oleh pengunjung)
+       Boleh LEBIH DARI SATU; pengunjung memilih lewat tombol kecil.
+       Link Drive (PDF, PPT/PPTX, XLSX) otomatis ditampilkan lewat viewer.
+       docs: [
+         { name: "Slide Presentasi", type: "ppt", url: "https://drive.google.com/file/d/ID/view?usp=sharing" },
+         { name: "Laporan Lengkap",  type: "pdf", url: "https://drive.google.com/file/d/ID/view?usp=sharing" }
+       ],
+       type: pdf | ppt | sheet (menentukan ikon saja).
+
+     demos (tombol yang membuka tab baru — BOLEH BANYAK)
+       Cocok untuk file Excel / Google Sheets (pengunjung bisa utak-atik
+       langsung), repo GitHub, Looker Studio, Apps Script web app, dsb.
+       demos: [
+         { name: "Buka Excel Interaktif", url: "https://docs.google.com/spreadsheets/d/ID/edit?usp=sharing" },
+         { name: "Versi Looker Studio",   url: "https://lookerstudio.google.com/reporting/ID" },
+         { name: "Download .pbix",        url: "https://drive.google.com/file/d/ID/view?usp=sharing" }
+       ]
+       Tombol pertama tampil menonjol, sisanya gaya sekunder.
+       Tips Excel: upload ke Google Drive, buka dengan Google Sheets, lalu
+       Share -> "Anyone with the link" (Viewer) supaya orang tidak mengubah
+       file aslimu.
+
+     ----------------------------------------------------------------------
+     REKOMENDASI UNTUK POWER BI VERSI GRATIS
+     Power BI gratis tidak bisa "Publish to web", jadi dashboard tidak bisa
+     dibuka interaktif di website. Kombinasi terbaik untuk tetap memamerkannya:
+       1. Screenshot tiap halaman report (Win + Shift + S) -> "screenshots",
+          pilih yang terbaik jadi "image" (sampul kartu).
+       2. Rekam layar 1-3 menit saat kamu klik slicer/filter/drill-down
+          (Xbox Game Bar: Win + G, atau OBS) -> upload YouTube Unlisted ->
+          "videoUrl". Ini yang paling mirip demo interaktif.
+       3. Export PDF: di Power BI Desktop, File -> Export -> Export to PDF
+          -> taruh di Drive -> "docs". Pengunjung bisa scroll tiap halaman.
+       4. Slide storytelling (PPT/PDF): halaman dashboard + insight +
+          rekomendasi bisnis -> "docs". Rekruter suka bagian ini.
+       5. File .pbix di Drive -> "demos" ("Download .pbix") untuk yang punya
+          Power BI Desktop (gratis).
+       6. Versi Looker Studio dari dashboard yang sama: link report-nya
+          ditempel di "docs" akan tampil INTERAKTIF langsung di halaman
+          (Looker Studio: Share -> Anyone with the link -> Viewer).
      ====================================================================== */
   skillLab: [
 
-    // ---------- Lab 1 ----------
+    // ---------- Case Study 1 ----------
     {
       title: "SQL Sales Query Playground",
       category: "SQL",
       icon: "fa-database",
+      image: "",
       description: "Kumpulan query SQL (window functions, CTE, join bertingkat) untuk menjawab pertanyaan bisnis seperti top customer per region dan tren penjualan bulanan.",
       tools: "PostgreSQL, CTE, Window Functions",
+      metrics: "",
+      actionsTaken: [],
+      businessImpact: [],
       videoUrl: "",
-      pdfs: [],
-      demoUrl: "",
-      demoLabel: ""
+      screenshots: [],
+      docs: [],
+      demos: []
     },
 
-    // ---------- Lab 2 ----------
+    // ---------- Case Study 2 ----------
     {
-      title: "Telecomunication Monthly vs Annualy Churn Dashboard",
-      category: "Visualisasi",
+      title: "Telecommunication Monthly vs Annual Churn Dashboard — Power BI",
+      category: "Power BI",
       icon: "fa-chart-pie",
-      description: "Dashboard Menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
-      tools: "Power BI, Csv",
+      image: "",
+      description: "Dashboard menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
+      tools: "Power BI, CSV",
+      metrics: "",
+      actionsTaken: [],
+      businessImpact: [],
       videoUrl: "",
-      pdfs: [],
-      demoUrl: "https://drive.google.com/file/d/1IMI1_2sdafz5xRkisLutxY8vEkCawx8G/view?usp=sharing",
-      demoLabel: ""
+      screenshots: [],
+      docs: [],
+      demos: [
+        { name: "Buka File Dashboard", url: "https://drive.google.com/file/d/1IMI1_2sdafz5xRkisLutxY8vEkCawx8G/view?usp=sharing" }
+      ]
     },
 
-    // ---------- Lab 3 ----------
+    // ---------- Case Study 3 ----------
     {
-      title: "Telecomunication Monthly vs Annualy Churn Dashboard",
+      title: "Telecommunication Monthly vs Annual Churn Dashboard — Excel",
       category: "Excel",
       icon: "fa-file-excel",
-      description: "Dashboard Menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
-      tools: "Advanced Excel, Pivot Tables, Csv",
+      image: "",
+      description: "Dashboard menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
+      tools: "Advanced Excel, Pivot Tables, CSV",
+      metrics: "",
+      actionsTaken: [],
+      businessImpact: [],
       videoUrl: "",
-      pdfs: [],
-      demoUrl: "https://docs.google.com/spreadsheets/d/1DROvsHS1Kj56gOho3KvCfK_5JL0o5g5s/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true",
-      demoLabel: ""
+      screenshots: [],
+      docs: [],
+      demos: [
+        { name: "Buka Excel Interaktif", url: "https://docs.google.com/spreadsheets/d/1DROvsHS1Kj56gOho3KvCfK_5JL0o5g5s/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true" }
+      ]
     },
 
-    // ---------- Lab 4 ----------
+    // ---------- Case Study 4 ----------
     {
       title: "Automated Reporting Bot",
       category: "App Script",
       icon: "fa-code",
+      image: "",
       description: "Google Apps Script yang menyusun & mengirim ringkasan laporan mingguan otomatis ke email tim setiap Senin pagi.",
       tools: "Google Apps Script, Gmail API, Google Sheets",
+      metrics: "",
+      actionsTaken: [],
+      businessImpact: [],
       videoUrl: "",
-      pdfs: [],
-      demoUrl: "",
-      demoLabel: ""
+      screenshots: [],
+      docs: [],
+      demos: []
     }
   ],
 
