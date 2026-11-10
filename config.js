@@ -430,7 +430,7 @@ const SITE_CONFIG = {
       image: "https://drive.google.com/file/d/1v6cErG4DZL0QqFXZxczw_wUgHMewDjMM/view?usp=sharing",
       description: "Dashboard menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
       tools: "Power BI, CSV",
-      metrics: "",
+      metrics: "Customer Contract,Churn Rate",
       actionsTaken: [
         "Kembangkan strategi untuk mendorong pelanggan dengan skema pembayaran bulanan agar beralih ke paket berlangganan jangka panjang, melalui penawaran menarik, insentif, atau keuntungan tambahan dari langganan tersebut."
       ],
@@ -458,14 +458,18 @@ const SITE_CONFIG = {
       image: "",
       description: "Dashboard menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
       tools: "Advanced Excel, Pivot Tables, CSV",
-      metrics: "",
-      actionsTaken: [],
-      businessImpact: [],
+      metrics: "Customer Contract,Churn Rate",
+      actionsTaken: ["Kembangkan strategi untuk mendorong pelanggan dengan skema pembayaran bulanan agar beralih ke paket berlangganan jangka panjang, melalui penawaran menarik, insentif, atau keuntungan tambahan dari langganan tersebut.",
+                    "Lakukan analisis lebih mendalam untuk memahami alasan di balik keputusan pelanggan untuk berhenti berlangganan—terutama di kalangan pelanggan dengan kontrak jangka panjang untuk mengidentifikasi potensi masalah dan meningkatkan retensi pelanggan."],
+      businessImpact: [Monthly contract memiliki tingkat churn tertinggi sebesar 23%, jauh lebih tinggi dibandingkan annual contract yang hanya sekitar 3%.",
+        "Semakin panjang durasi kontrak, semakin rendah tingkat churn. Kontrak 2 tahun memiliki churn terendah sebesar 0,68%.",
+        "Monthly contract mendominasi kontribusi churn customer dengan churn share mencapai 89%.",
+        "Customer yang churn memiliki rata-rata charge sebesar 4.078, atau 23% lebih tinggi dibandingkan customer yang bertahan."],
       videoUrl: "",
       screenshots: [],
       docs: [],
       demos: [
-        { name: "Buka Excel Interaktif", url: "https://docs.google.com/spreadsheets/d/1DROvsHS1Kj56gOho3KvCfK_5JL0o5g5s/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true" }
+        { name: "Buka Excel Interaktif", url: "https://docs.google.com/spreadsheets/d/1QgbIs3cUj1Wt7fT2Fs-MhitHLMH5qYm6/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true" }
       ]
     },
 
