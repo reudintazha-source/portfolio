@@ -430,7 +430,7 @@ const SITE_CONFIG = {
       image: "https://drive.google.com/file/d/1v6cErG4DZL0QqFXZxczw_wUgHMewDjMM/view?usp=sharing",
       description: "Dashboard menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
       tools: "Power BI, CSV",
-      metrics: "Customer Contract,Churn Rate",
+      metrics: "Customer Contract | Churn Rate",
       actionsTaken: [
         "Kembangkan strategi untuk mendorong pelanggan dengan skema pembayaran bulanan agar beralih ke paket berlangganan jangka panjang, melalui penawaran menarik, insentif, atau keuntungan tambahan dari langganan tersebut."
       ],
@@ -455,17 +455,19 @@ const SITE_CONFIG = {
       title: "Telecommunication Monthly vs Annual Churn Dashboard — Excel",
       category: "Excel",
       icon: "fa-file-excel",
-      image: "",
+      image:screenshots: [
+  { url: "https://drive.google.com/file/d/1btnWUT_AVj2KP_ixqduzclygE9F5gxVn/view?usp=sharing", caption: "Halaman Dashboard" }
+],
       description: "Dashboard menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
       tools: "Advanced Excel, Pivot Tables, CSV",
-      metrics: "Customer Contract,Churn Rate",
+      metrics: "Customer Contract | Churn Rate",
       actionsTaken: ["Kembangkan strategi untuk mendorong pelanggan dengan skema pembayaran bulanan agar beralih ke paket berlangganan jangka panjang, melalui penawaran menarik, insentif, atau keuntungan tambahan dari langganan tersebut.",
                     "Lakukan analisis lebih mendalam untuk memahami alasan di balik keputusan pelanggan untuk berhenti berlangganan—terutama di kalangan pelanggan dengan kontrak jangka panjang untuk mengidentifikasi potensi masalah dan meningkatkan retensi pelanggan."],
-      businessImpact: [Monthly contract memiliki tingkat churn tertinggi sebesar 23%, jauh lebih tinggi dibandingkan annual contract yang hanya sekitar 3%.",
+      businessImpact: ["Monthly contract memiliki tingkat churn tertinggi sebesar 23%, jauh lebih tinggi dibandingkan annual contract yang hanya sekitar 3%.",
         "Semakin panjang durasi kontrak, semakin rendah tingkat churn. Kontrak 2 tahun memiliki churn terendah sebesar 0,68%.",
         "Monthly contract mendominasi kontribusi churn customer dengan churn share mencapai 89%.",
         "Customer yang churn memiliki rata-rata charge sebesar 4.078, atau 23% lebih tinggi dibandingkan customer yang bertahan."],
-      videoUrl: "",
+      videoUrl: "https://youtu.be/JeSNd2kDngU",
       screenshots: [],
       docs: [],
       demos: [
