@@ -471,7 +471,7 @@ const SITE_CONFIG = {
       ],
       docs: [{ name: "PPT Hasil Analisa", url: "https://docs.google.com/presentation/d/1OBZ_WyoCmPMGP_sRSBUyr05VtGAfsCmu/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true" }],
       demos: [
-        { name: "Buka Excel Interaktif", url: "https://docs.google.com/spreadsheets/d/1QgbIs3cUj1Wt7fT2Fs-MhitHLMH5qYm6/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true" }
+        { name: "Buka Excel Interaktif", url: "https://docs.google.com/spreadsheets/d/1bnQ6nTza-yzcsy7uxsZcFh6pzT5_I8DU/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true" }
       ]
     },
 
