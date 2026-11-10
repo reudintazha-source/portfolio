@@ -724,10 +724,19 @@ document.addEventListener('DOMContentLoaded', () => {
       demos.push({ name: item.demoLabel && item.demoLabel.trim() !== '' ? item.demoLabel : 'Buka Demo / Repo', url: item.demoUrl });
     }
     const docs = [...validLinks(item.docs), ...validLinks(item.pdfs)];
+    // Demo yang bisa ditampilkan langsung (Google Sheets/Slides/Docs, Looker Studio)
+    // ikut masuk ke viewer di modal, jadi pengunjung bisa mencoba tanpa pindah tab.
+    const liveRe = /docs\.google\.com\/(spreadsheets|presentation|document)|(lookerstudio|datastudio)\.google\.com\/reporting/;
+    const seen = new Set(docs.map(d => d.url));
+    const viewer = [...docs, ...demos.filter(d => liveRe.test(d.url) && !seen.has(d.url))];
+    // Isi kartu depan: previewUrl (manual) -> dokumen pertama -> demo live pertama.
+    const previewSrc = toEmbedUrl(item.previewUrl) || (viewer[0] ? toEmbedUrl(viewer[0].url) : '');
     return {
       ...item,
       demos,
       docs,
+      viewer,
+      previewSrc,
       shots: normPhotos(item.screenshots),
       hasVideo: !!(item.videoUrl && item.videoUrl.trim() !== '')
     };
@@ -762,12 +771,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <p class="text-xs text-gray-400 mt-2">Klik gambar untuk memperbesar.</p>
         </div>` : '';
-      const docsHtml = item.docs.length ? `
+      const docsHtml = item.viewer.length ? `
         <div class="mb-6" data-doc-viewer>
           <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Presentasi & Dokumen</p>
-          ${item.docs.length > 1 ? `
+          ${item.viewer.length > 1 ? `
             <div class="flex flex-wrap gap-2 mb-3">
-              ${item.docs.map((d, i) => `<button type="button" class="attachment-chip" data-doc-idx="${i}"><i class="fa-solid ${docIcon(d)}"></i> ${d.name || 'Dokumen ' + (i + 1)}</button>`).join('')}
+              ${item.viewer.map((d, i) => `<button type="button" class="attachment-chip" data-doc-idx="${i}"><i class="fa-solid ${docIcon(d)}"></i> ${d.name || 'Dokumen ' + (i + 1)}</button>`).join('')}
             </div>` : ''}
           <div class="rounded-2xl overflow-hidden border border-gray-200 bg-gray-50">
             <iframe data-doc-frame class="w-full h-[440px] md:h-[520px]" loading="lazy" title="Dokumen ${esc(item.title)}" allowfullscreen></iframe>
@@ -812,7 +821,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const openLink = viewer.querySelector('[data-doc-open]');
         const chips = [...viewer.querySelectorAll('[data-doc-idx]')];
         const show = (i) => {
-          const d = item.docs[i];
+          const d = item.viewer[i];
           const embed = toEmbedUrl(d.url);
           chips.forEach((c, ci) => c.classList.toggle('is-active', ci === i));
           openLink.href = d.url;
@@ -862,7 +871,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .map(t => `<span class="text-xs bg-white text-gray-600 px-3 py-1 rounded-full border border-gray-200">${t.trim()}</span>`).join('');
       card.innerHTML = `
         <div class="relative rounded-2xl overflow-hidden aspect-video bg-gray-100 group">
-          ${hasImage
+          ${item.previewSrc
+            ? `<div class="cs-preview"><iframe src="${esc(item.previewSrc)}" loading="lazy" tabindex="-1" scrolling="no" title="Preview ${esc(item.title)}"></iframe></div>`
+            : hasImage
             ? `<img src="${esc(imgUrl(item.image))}" alt="${esc(item.title)}" loading="lazy" ${IMG_ONERROR} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">`
             : `<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-50 to-indigo-100 text-indigo-400 text-6xl group-hover:scale-105 transition-transform duration-500"><i class="fa-solid ${item.icon || 'fa-chart-simple'}"></i></div>`}
           ${badges ? `<div class="cs-badges">${badges}</div>` : ''}
@@ -891,6 +902,58 @@ document.addEventListener('DOMContentLoaded', () => {
       csContainer.appendChild(card);
     });
     AOS.refresh();
+  }
+
+  /* ============ FORM KONTAK (terkirim langsung ke email) ============ */
+  // Memakai layanan gratis FormSubmit (formsubmit.co): pesan dikirim ke
+  // email di config.js. Pertama kali ada pesan masuk, FormSubmit mengirim
+  // email konfirmasi ke kamu — klik "Activate" sekali, setelahnya otomatis.
+  const contactWrap = document.getElementById('contact-form-wrap');
+  const contactForm = document.getElementById('contact-form');
+  const cf = cfg.contactForm || {};
+  const cfTo = (cf.to && cf.to.trim() !== '') ? cf.to.trim() : cfg.email;
+  if (contactWrap && contactForm) {
+    if (cf.enabled === false || !cfTo) {
+      contactWrap.remove();
+    } else {
+      const statusEl = document.getElementById('contact-status');
+      const btn = contactForm.querySelector('button[type="submit"]');
+      const setStatus = (msg, ok) => {
+        statusEl.textContent = msg;
+        statusEl.className = 'text-sm mt-4 ' + (ok ? 'text-emerald-600' : 'text-red-500');
+      };
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fd = new FormData(contactForm);
+        if (fd.get('_honey')) return;                       // bot: abaikan
+        btn.disabled = true;
+        const label = btn.innerHTML;
+        btn.textContent = 'Mengirim...';
+        try {
+          const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(cfTo)}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              name: fd.get('name'),
+              email: fd.get('email'),
+              message: fd.get('message'),
+              _subject: cf.subject || 'Pesan baru dari portofolio',
+              _template: 'table',
+              _captcha: 'false'
+            })
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok || data.success === 'false' || data.success === false) throw new Error(data.message || 'gagal');
+          contactForm.reset();
+          setStatus('Terima kasih! Pesanmu sudah terkirim — aku akan segera membalas.', true);
+        } catch (err) {
+          setStatus('Pesan belum terkirim. Coba lagi, atau kirim langsung ke ' + cfTo + '.', false);
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = label;
+        }
+      });
+    }
   }
 
   /* ============ MASKOT KUCING — IKUT ARAH KURSOR ============ */
