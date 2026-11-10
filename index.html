@@ -335,6 +335,22 @@
             <div class="pt-6">
                 <a href="mailto:reudintazha@gmail.com" class="js-email text-xl md:text-2xl text-slate-900 font-medium hover:underline">reudintazha@gmail.com</a>
             </div>
+            <!-- FORM KONTAK: pesan langsung terkirim ke email (lihat contactForm di config.js) -->
+            <div id="contact-form-wrap" class="max-w-xl mx-auto text-left pt-4">
+                <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 text-center">Atau kirim pesan langsung</p>
+                <form id="contact-form" class="contact-form space-y-4" novalidate>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <input type="text" name="name" required maxlength="80" placeholder="Nama kamu" aria-label="Nama">
+                        <input type="email" name="email" required maxlength="120" placeholder="Email kamu" aria-label="Email">
+                    </div>
+                    <textarea name="message" required rows="5" maxlength="2000" placeholder="Tulis pesanmu di sini..." aria-label="Pesan"></textarea>
+                    <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
+                    <button type="submit" class="btn-premium w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold text-sm">
+                        <i class="fa-solid fa-paper-plane"></i> Kirim Pesan
+                    </button>
+                    <p id="contact-status" class="text-sm mt-4 text-center" role="status" aria-live="polite"></p>
+                </form>
+            </div>
             <div class="flex justify-center gap-8 pt-8 text-gray-500">
                 <a href="#" target="_blank" class="js-linkedin hover:text-black transition-colors text-xl"><i class="fa-brands fa-linkedin"></i></a>
                 <a href="mailto:reudintazha@gmail.com" class="js-email hover:text-black transition-colors text-xl"><i class="fa-solid fa-envelope"></i></a>
