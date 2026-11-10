@@ -44,6 +44,19 @@ const SITE_CONFIG = {
   email: "reudintazha@gmail.com",
   linkedin: "https://linkedin.com/in/reudinta-zesha/",
 
+  // Form kontak di bagian bawah: pesan terkirim langsung ke email.
+  //   enabled : false = form disembunyikan
+  //   to      : kosongkan = pakai "email" di atas
+  //   subject : judul email yang kamu terima
+  // CATATAN: layanan gratis FormSubmit. Saat pesan PERTAMA masuk, kamu
+  // dapat email konfirmasi dari FormSubmit — klik "Activate Form" sekali,
+  // setelah itu semua pesan masuk otomatis ke inbox (cek juga folder Spam).
+  contactForm: {
+    enabled: true,
+    to: "",
+    subject: "Pesan baru dari portofolio"
+  },
+
   // Link CV untuk tombol "Download CV". Kosong = tombol disembunyikan.
   cvUrl: "",
 
@@ -321,7 +334,10 @@ const SITE_CONFIG = {
          title: "",
          category: "",                // label kecil, mis. "SQL", "Power BI"
          icon: "fa-database",         // ikon cadangan kalau "image" kosong
-         image: "",                   // gambar sampul (screenshot dashboard terbaik)
+         image: "",                   // gambar sampul (dipakai kalau tidak ada preview live)
+         previewUrl: "",              // opsional: link yang tampil LANGSUNG di kartu depan
+                                      // (kosong = otomatis dari docs / demo Google Sheets,
+                                      //  Slides, Looker Studio pertama)
          description: "",
          tools: "Tool 1, Tool 2",     // dipisah koma
          metrics: "Angka 1 | Angka 2",// dipisah tanda |
