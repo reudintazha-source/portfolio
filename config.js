@@ -455,9 +455,7 @@ const SITE_CONFIG = {
       title: "Telecommunication Monthly vs Annual Churn Dashboard — Excel",
       category: "Excel",
       icon: "fa-file-excel",
-      image:screenshots: [
-  { url: "https://drive.google.com/file/d/1btnWUT_AVj2KP_ixqduzclygE9F5gxVn/view?usp=sharing", caption: "Halaman Dashboard" }
-],
+      image: "https://drive.google.com/file/d/1btnWUT_AVj2KP_ixqduzclygE9F5gxVn/view?usp=sharing",
       description: "Dashboard menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
       tools: "Advanced Excel, Pivot Tables, CSV",
       metrics: "Customer Contract | Churn Rate",
@@ -468,7 +466,9 @@ const SITE_CONFIG = {
         "Monthly contract mendominasi kontribusi churn customer dengan churn share mencapai 89%.",
         "Customer yang churn memiliki rata-rata charge sebesar 4.078, atau 23% lebih tinggi dibandingkan customer yang bertahan."],
       videoUrl: "https://youtu.be/JeSNd2kDngU",
-      screenshots: [],
+      screenshots: [
+        { url: "https://drive.google.com/file/d/1btnWUT_AVj2KP_ixqduzclygE9F5gxVn/view?usp=sharing", caption: "Halaman Dashboard" }
+      ],
       docs: [],
       demos: [
         { name: "Buka Excel Interaktif", url: "https://docs.google.com/spreadsheets/d/1QgbIs3cUj1Wt7fT2Fs-MhitHLMH5qYm6/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true" }
