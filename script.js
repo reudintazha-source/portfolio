@@ -3,6 +3,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const cfg = SITE_CONFIG;
 
+  /* ============ HELPER: GAMBAR, EMBED, LIGHTBOX ============ */
+  const esc = (v) => String(v == null ? '' : v).replace(/"/g, '&quot;');
+
+  // Link Google Drive biasa (.../file/d/ID/view) otomatis diubah jadi link
+  // gambar langsung, jadi kamu cukup tempel link share-nya saja.
+  const imgUrl = (raw) => {
+    const u = (raw || '').trim();
+    const m = u.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || u.match(/drive\.google\.com\/open\?id=([\w-]+)/);
+    return m ? `https://lh3.googleusercontent.com/d/${m[1]}` : u;
+  };
+  const IMG_ONERROR = `onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 225%22><rect width=%22400%22 height=%22225%22 fill=%22%23e5e7eb%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%239ca3af%22>Preview belum tersedia</text></svg>';"`;
+
+  // Daftar foto boleh berisi teks link, atau objek { url, caption }.
+  // Entri kosong dibuang supaya tidak muncul kotak rusak.
+  const normPhotos = (list) => (list || [])
+    .map(p => typeof p === 'string' ? { url: p, caption: '' } : (p || {}))
+    .filter(p => p.url && p.url.trim() !== '')
+    .map(p => ({ url: imgUrl(p.url), caption: p.caption || '' }));
+
+  // Ubah link biasa jadi link yang bisa ditampilkan di dalam halaman (iframe).
+  // Mengembalikan '' kalau tidak bisa di-embed (pengunjung tetap dapat tombol "buka di tab baru").
+  const toEmbedUrl = (raw) => {
+    const url = (raw || '').trim();
+    if (!url) return '';
+    let m;
+    if ((m = url.match(/drive\.google\.com\/file\/d\/([\w-]+)/)) || (m = url.match(/drive\.google\.com\/open\?id=([\w-]+)/))) {
+      return `https://drive.google.com/file/d/${m[1]}/preview`;   // PDF, PPT, XLSX, gambar di Drive
+    }
+    if ((m = url.match(/docs\.google\.com\/(spreadsheets|document)\/d\/([\w-]+)/))) {
+      return `https://docs.google.com/${m[1]}/d/${m[2]}/preview`;
+    }
+    if ((m = url.match(/docs\.google\.com\/presentation\/d\/([\w-]+)/))) {
+      return `https://docs.google.com/presentation/d/${m[1]}/embed`;
+    }
+    if (/(lookerstudio|datastudio)\.google\.com\/reporting\//.test(url) && !/\/embed\//.test(url)) {
+      return url.replace('/reporting/', '/embed/reporting/');       // Looker Studio interaktif
+    }
+    if (/^https?:\/\/.+\.(pptx?|xlsx?|docx?)(\?.*)?$/i.test(url)) {
+      return `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`;
+    }
+    if (/\.pdf(\?.*)?(#.*)?$/i.test(url)) return url;              // PDF di repo / hosting sendiri
+    if (/^https?:\/\//i.test(url)) return url;                      // embed lain (Looker, Power BI web, dsb.)
+    return '';
+  };
+
+  // Lightbox sederhana: klik gambar apa pun yang punya atribut data-lightbox
+  const lightbox = document.createElement('div');
+  lightbox.className = 'lightbox';
+  lightbox.innerHTML = '<button type="button" class="lightbox-close" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button><img alt=""><p class="lightbox-caption"></p>';
+  document.body.appendChild(lightbox);
+  const lbImg = lightbox.querySelector('img');
+  const lbCap = lightbox.querySelector('.lightbox-caption');
+  const closeLightbox = () => { lightbox.classList.remove('is-open'); lbImg.removeAttribute('src'); };
+  lightbox.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest && e.target.closest('[data-lightbox]');
+    if (!t) return;
+    lbImg.src = t.dataset.lightbox;
+    lbCap.textContent = t.dataset.caption || '';
+    lightbox.classList.add('is-open');
+  });
+
   /* ============ RENDER KONTEN DARI CONFIG ============ */
   document.querySelectorAll('.js-name').forEach(el => el.textContent = cfg.name);
   document.querySelectorAll('.js-email').forEach(el => { el.textContent = cfg.email; el.href = `mailto:${cfg.email}`; });
@@ -42,14 +105,37 @@ document.addEventListener('DOMContentLoaded', () => {
             <li class="flex gap-2 text-gray-600 leading-relaxed" style="animation-delay:${0.3 + li * 0.12}s"><span class="text-indigo-500 mt-1">•</span><span>${line.trim()}</span></li>
           `).join('')}</ul>`
         : `<p class="text-gray-600 leading-relaxed">${exp.description}</p>`;
+      // Logo opsional; kalau kosong dipakai badge inisial supaya tidak polos.
+      const initials = (exp.company || '').split(/\s+/)
+        .filter(w => /^[A-Za-z]/.test(w) && !/^(PT|CV|Tbk)\.?$/i.test(w))
+        .slice(0, 2).map(w => w[0]).join('').toUpperCase();
+      const logoHtml = exp.logo && exp.logo.trim() !== ''
+        ? `<img src="${esc(imgUrl(exp.logo))}" alt="${esc(exp.company)}" class="w-12 h-12 rounded-2xl object-cover border border-gray-200 bg-white shrink-0" onerror="this.style.display='none'">`
+        : `<div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 font-serif font-bold text-lg flex items-center justify-center shrink-0">${initials}</div>`;
+      // Foto kegiatan / kantor / bukti kerja — hanya tampil kalau diisi.
+      const photos = normPhotos(exp.photos);
+      const photosHtml = photos.length ? `
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-5">
+          ${photos.map(p => `
+            <figure>
+              <img class="exp-photo" src="${esc(p.url)}" alt="${esc(p.caption || exp.company)}" loading="lazy" data-lightbox="${esc(p.url)}" data-caption="${esc(p.caption)}" onerror="this.closest('figure').style.display='none'">
+              ${p.caption ? `<figcaption class="exp-figcaption">${p.caption}</figcaption>` : ''}
+            </figure>`).join('')}
+        </div>` : '';
       return `
       <div class="exp-item relative pl-10 pb-10">
         ${i < cfg.experience.length - 1 ? '<span class="exp-line absolute left-[-1px] top-4 bottom-0 w-[2px] bg-gray-200 ml-2"></span>' : ''}
         <span class="exp-dot absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-indigo-600 border-4 border-white shadow ml-2"></span>
-        <p class="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-1">${exp.period}</p>
-        <h3 class="text-xl font-bold text-slate-900">${exp.role}</h3>
-        <p class="text-gray-500 font-medium mb-2">${exp.company}</p>
+        <div class="flex items-center gap-4 mb-3">
+          ${logoHtml}
+          <div>
+            <p class="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-1">${exp.period}</p>
+            <h3 class="text-xl font-bold text-slate-900">${exp.role}</h3>
+            <p class="text-gray-500 font-medium">${exp.company}</p>
+          </div>
+        </div>
         ${descHtml}
+        ${photosHtml}
       </div>
     `;
     }).join('');
@@ -619,50 +705,137 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>`;
   };
 
-  /* ============ SKILL LAB — 3D COVERFLOW GALLERY ============ */
-  const coverflowTrack = document.getElementById('coverflow-track');
-  const coverflowDots = document.getElementById('coverflow-dots');
-  const coverflowPrev = document.getElementById('coverflow-prev');
-  const coverflowNext = document.getElementById('coverflow-next');
+  /* ============ CASE STUDY (data dari cfg.skillLab) ============ */
+  // Kartu depan dibuat mirip kartu Real Project (gambar, kategori, judul,
+  // metrik, tools). Isi lengkapnya muncul di modal: video, screenshot,
+  // presentasi/PDF yang bisa langsung dibuka, dan tombol demo (boleh banyak).
+  const csContainer = document.getElementById('casestudy-container');
   const labModal = document.getElementById('lab-modal');
   const labModalBody = document.getElementById('lab-modal-body');
 
-  if (coverflowTrack && cfg.skillLab && cfg.skillLab.length) {
-    const items = cfg.skillLab;
-    let active = 0;
-    let cardEls = [];
+  const validLinks = (list) => (list || [])
+    .filter(x => x && typeof x.url === 'string' && x.url.trim() !== '');
+
+  // Gabungkan field lama (demoUrl, pdfs) dengan field baru (demos, docs)
+  // supaya config lama tetap jalan.
+  const normalizeCase = (item) => {
+    const demos = validLinks(item.demos);
+    if (item.demoUrl && item.demoUrl.trim() !== '') {
+      demos.push({ name: item.demoLabel && item.demoLabel.trim() !== '' ? item.demoLabel : 'Buka Demo / Repo', url: item.demoUrl });
+    }
+    const docs = [...validLinks(item.docs), ...validLinks(item.pdfs)];
+    return {
+      ...item,
+      demos,
+      docs,
+      shots: normPhotos(item.screenshots),
+      hasVideo: !!(item.videoUrl && item.videoUrl.trim() !== '')
+    };
+  };
+
+  const docIcon = (d) => {
+    const u = (d.url || '').toLowerCase();
+    if (d.type === 'ppt' || /\.pptx?(\?|$)|presentation/.test(u)) return 'fa-file-powerpoint';
+    if (d.type === 'sheet' || /\.xlsx?(\?|$)|spreadsheets/.test(u)) return 'fa-file-excel';
+    if (/lookerstudio|datastudio|powerbi/.test(u)) return 'fa-chart-pie';
+    return 'fa-file-pdf';
+  };
+
+  if (csContainer && cfg.skillLab && cfg.skillLab.length) {
+    const cases = cfg.skillLab.filter(i => i && i.title && i.title.trim() !== '').map(normalizeCase);
 
     const openLabModal = (item) => {
       if (!labModal || !labModalBody) return;
-      const hasDemo = item.demoUrl && item.demoUrl.trim() !== '';
-      labModalBody.innerHTML = `
-        <div class="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-2xl mb-5">
-          <i class="fa-solid ${item.icon || 'fa-chart-simple'}"></i>
-        </div>
-        <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">${item.category}</span>
-        <h3 class="font-serif text-3xl font-bold text-slate-900 mt-4 mb-3">${item.title}</h3>
-        <p class="text-gray-600 leading-relaxed mb-4">${item.description}</p>
-        <div class="flex flex-wrap gap-2 mb-6">
-          ${item.tools.split(',').map(t => `<span class="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full border border-gray-200">${t.trim()}</span>`).join('')}
-        </div>
-        ${labVideoHtml(item.videoUrl, item.title)}
-        ${attachmentsHtml((item.pdfs || []).map(p => ({ type: 'pdf', ...p })), 'Dokumen Pendukung')}
-        ${hasDemo ? `
-          <a href="${item.demoUrl}" target="_blank" rel="noopener" class="btn-premium inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm">
-            ${item.demoLabel && item.demoLabel.trim() !== '' ? item.demoLabel : 'Buka Demo / Repo'}
-            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+      const toolsHtml = (item.tools || '').split(',').filter(t => t.trim() !== '')
+        .map(t => `<span class="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full border border-gray-200">${t.trim()}</span>`).join('');
+      const metricsHtml = item.metrics && item.metrics.trim() !== ''
+        ? `<div class="flex flex-wrap gap-2 mb-6">${item.metrics.split('|').map(m => `<span class="text-xs font-semibold bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">${m.trim()}</span>`).join('')}</div>`
+        : '';
+      const coverHtml = item.image && item.image.trim() !== ''
+        ? `<img src="${esc(imgUrl(item.image))}" loading="lazy" ${IMG_ONERROR} class="w-full aspect-video object-cover rounded-2xl mb-6" alt="${esc(item.title)}">`
+        : '';
+      const shotsHtml = item.shots.length ? `
+        <div class="mb-6">
+          <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Tampilan Dashboard</p>
+          <div class="shot-grid">
+            ${item.shots.map(p => `<img src="${esc(p.url)}" alt="${esc(p.caption || item.title)}" loading="lazy" data-lightbox="${esc(p.url)}" data-caption="${esc(p.caption)}" onerror="this.style.display='none'">`).join('')}
+          </div>
+          <p class="text-xs text-gray-400 mt-2">Klik gambar untuk memperbesar.</p>
+        </div>` : '';
+      const docsHtml = item.docs.length ? `
+        <div class="mb-6" data-doc-viewer>
+          <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Presentasi & Dokumen</p>
+          ${item.docs.length > 1 ? `
+            <div class="flex flex-wrap gap-2 mb-3">
+              ${item.docs.map((d, i) => `<button type="button" class="attachment-chip" data-doc-idx="${i}"><i class="fa-solid ${docIcon(d)}"></i> ${d.name || 'Dokumen ' + (i + 1)}</button>`).join('')}
+            </div>` : ''}
+          <div class="rounded-2xl overflow-hidden border border-gray-200 bg-gray-50">
+            <iframe data-doc-frame class="w-full h-[440px] md:h-[520px]" loading="lazy" title="Dokumen ${esc(item.title)}" allowfullscreen></iframe>
+            <p data-doc-note class="hidden text-sm text-gray-500 p-6 text-center">Pratinjau tidak tersedia untuk file ini — gunakan tombol di bawah untuk membukanya.</p>
+          </div>
+          <a data-doc-open target="_blank" rel="noopener" class="attachment-chip mt-3">
+            <i class="fa-solid fa-up-right-from-square"></i> Buka layar penuh di tab baru
           </a>
-        ` : ''}
+        </div>` : '';
+      const demosHtml = item.demos.length ? `
+        <div class="mb-2">
+          <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Demo</p>
+          <div class="flex flex-wrap gap-3">
+            ${item.demos.map((d, i) => `
+              <a href="${esc(d.url)}" target="_blank" rel="noopener" class="${i === 0 ? 'btn-premium' : 'btn-secondary'} inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm">
+                <i class="fa-solid ${docIcon(d)}"></i> ${d.name || 'Buka Demo'}
+                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+              </a>`).join('')}
+          </div>
+        </div>` : '';
+
+      labModalBody.innerHTML = `
+        ${coverHtml}
+        <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">${item.category || ''}</span>
+        <h3 class="font-serif text-3xl font-bold text-slate-900 mt-4 mb-3">${item.title}</h3>
+        <p class="text-gray-600 leading-relaxed mb-6">${item.description || ''}</p>
+        ${bulletListHtml('Action Taken', item.actionsTaken, 'text-indigo-500')}
+        ${bulletListHtml('Business Impact', item.businessImpact, 'text-emerald-500')}
+        ${metricsHtml}
+        ${toolsHtml ? `<div class="flex flex-wrap gap-2 mb-6">${toolsHtml}</div>` : ''}
+        ${labVideoHtml(item.videoUrl, item.title)}
+        ${shotsHtml}
+        ${docsHtml}
+        ${demosHtml}
       `;
+
+      // Viewer presentasi/PDF: ganti dokumen lewat chip, tampilkan di iframe
+      const viewer = labModalBody.querySelector('[data-doc-viewer]');
+      if (viewer) {
+        const frame = viewer.querySelector('[data-doc-frame]');
+        const note = viewer.querySelector('[data-doc-note]');
+        const openLink = viewer.querySelector('[data-doc-open]');
+        const chips = [...viewer.querySelectorAll('[data-doc-idx]')];
+        const show = (i) => {
+          const d = item.docs[i];
+          const embed = toEmbedUrl(d.url);
+          chips.forEach((c, ci) => c.classList.toggle('is-active', ci === i));
+          openLink.href = d.url;
+          if (embed) {
+            frame.classList.remove('hidden'); note.classList.add('hidden'); frame.src = embed;
+          } else {
+            frame.classList.add('hidden'); frame.src = 'about:blank'; note.classList.remove('hidden');
+          }
+        };
+        chips.forEach(c => c.addEventListener('click', () => show(Number(c.dataset.docIdx))));
+        show(0);
+      }
+
+      labModal.querySelector('.modal-box').scrollTop = 0;
       labModal.classList.remove('hidden-modal');
       document.body.style.overflow = 'hidden';
     };
+
     const closeLabModal = () => {
       if (!labModal) return;
       labModal.classList.add('hidden-modal');
       document.body.style.overflow = '';
-      // Hentikan video yang sedang diputar supaya suaranya tidak lanjut
-      // berbunyi setelah modal ditutup.
+      // Hentikan video/dokumen supaya suaranya tidak lanjut setelah modal ditutup.
       if (labModalBody) {
         labModalBody.querySelectorAll('video').forEach(v => v.pause());
         labModalBody.querySelectorAll('iframe').forEach(f => { f.src = 'about:blank'; });
@@ -671,148 +844,53 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('lab-modal-close')?.addEventListener('click', closeLabModal);
     labModal?.addEventListener('click', (e) => { if (e.target === labModal) closeLabModal(); });
 
-    // Semua kartu ditaruh di dalam "stage" supaya stage-nya bisa digeser
-    // mengikuti kursor tanpa mengganggu transform 3D milik tiap kartu.
-    let coverflowStage = null;
-
-    const buildCards = () => {
-      coverflowTrack.innerHTML = '';
-      coverflowStage = document.createElement('div');
-      coverflowStage.id = 'coverflow-stage';
-      coverflowTrack.appendChild(coverflowStage);
-      cardEls = items.map((item, i) => {
-        const card = document.createElement('div');
-        card.className = 'coverflow-card';
-        card.innerHTML = `
-          <div class="coverflow-card-inner">
-            <div>
-              <div class="coverflow-icon mb-4"><i class="fa-solid ${item.icon || 'fa-chart-simple'}"></i></div>
-              <span class="coverflow-tag">${item.category}${item.videoUrl && item.videoUrl.trim() !== '' ? ' &nbsp;<i class="fa-solid fa-circle-play" title="Ada video pengerjaan"></i>' : ''}</span>
-              <h3 class="mt-2">${item.title}</h3>
-            </div>
-            <div class="space-y-3">
-              <p>${item.description}</p>
-              <div class="coverflow-chips">
-                ${item.tools.split(',').map(t => `<span>${t.trim()}</span>`).join('')}
-              </div>
-            </div>
+    // Kartu depan — gaya sama dengan kartu Real Project
+    cases.forEach((item) => {
+      const card = document.createElement('div');
+      card.className = 'bg-[#F8F9FA] border border-gray-200/60 rounded-[2rem] overflow-hidden p-6 space-y-6 tilt-card cursor-pointer';
+      card.setAttribute('data-aos', 'fade-up');
+      const hasImage = item.image && item.image.trim() !== '';
+      const badges = [
+        item.demos.length ? '<span class="cs-badge is-live"><i class="fa-solid fa-bolt"></i> Live Demo</span>' : '',
+        item.hasVideo ? '<span class="cs-badge"><i class="fa-solid fa-circle-play"></i> Video</span>' : '',
+        item.docs.length ? '<span class="cs-badge"><i class="fa-solid fa-file-lines"></i> PDF / PPT</span>' : ''
+      ].join('');
+      const metricsHtml = item.metrics && item.metrics.trim() !== ''
+        ? `<div class="flex flex-wrap gap-2 pt-1">${item.metrics.split('|').map(m => `<span class="text-xs font-semibold bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">${m.trim()}</span>`).join('')}</div>`
+        : '';
+      const toolsHtml = (item.tools || '').split(',').filter(t => t.trim() !== '')
+        .map(t => `<span class="text-xs bg-white text-gray-600 px-3 py-1 rounded-full border border-gray-200">${t.trim()}</span>`).join('');
+      card.innerHTML = `
+        <div class="relative rounded-2xl overflow-hidden aspect-video bg-gray-100 group">
+          ${hasImage
+            ? `<img src="${esc(imgUrl(item.image))}" alt="${esc(item.title)}" loading="lazy" ${IMG_ONERROR} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">`
+            : `<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-50 to-indigo-100 text-indigo-400 text-6xl group-hover:scale-105 transition-transform duration-500"><i class="fa-solid ${item.icon || 'fa-chart-simple'}"></i></div>`}
+          ${badges ? `<div class="cs-badges">${badges}</div>` : ''}
+          <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <span class="bg-white/90 text-black px-5 py-2.5 rounded-full text-xs font-semibold shadow-lg backdrop-blur-sm">View Case Study</span>
           </div>
-        `;
-        card.addEventListener('click', () => {
-          if (i === active) {
-            openLabModal(item);
-          } else {
-            active = i;
-            render();
-          }
-        });
-        coverflowStage.appendChild(card);
-        return card;
+        </div>
+        <div class="space-y-4">
+          <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">${item.category || ''}</span>
+          <h3 class="font-serif text-3xl font-bold text-slate-900">${item.title}</h3>
+          <p class="text-gray-500 text-sm leading-relaxed line-clamp-3">${item.description || ''}</p>
+          ${metricsHtml}
+          ${toolsHtml ? `<div class="pt-4 border-t border-gray-200 flex flex-wrap gap-2 items-center"><span class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Tools:</span>${toolsHtml}</div>` : ''}
+        </div>
+      `;
+      card.addEventListener('click', () => openLabModal(item));
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        card.style.transform = `perspective(600px) rotateX(${-y / 25}deg) rotateY(${x / 25}deg) translateY(-4px)`;
       });
-    };
-
-    const buildDots = () => {
-      if (!coverflowDots) return;
-      coverflowDots.innerHTML = '';
-      items.forEach((_, i) => {
-        const dot = document.createElement('button');
-        dot.type = 'button';
-        dot.className = 'coverflow-dot';
-        dot.setAttribute('aria-label', `Lihat item ${i + 1}`);
-        dot.addEventListener('click', () => { active = i; render(); });
-        coverflowDots.appendChild(dot);
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(600px) rotateX(0) rotateY(0) translateY(0)';
       });
-    };
-
-    const render = () => {
-      cardEls.forEach((card, i) => {
-        const offset = i - active;
-        const abs = Math.abs(offset);
-        const dir = offset === 0 ? 0 : (offset > 0 ? 1 : -1);
-        if (abs > 3) {
-          card.style.opacity = '0';
-          card.style.transform = `translateX(${offset * 60}px) scale(0.4)`;
-          card.style.zIndex = '0';
-          card.style.pointerEvents = 'none';
-        } else {
-          card.style.opacity = String(Math.max(1 - abs * 0.3, 0));
-          card.style.transform = `translateX(${offset * 130}px) translateZ(${-abs * 90}px) rotateY(${dir * -38}deg) scale(${1 - abs * 0.12})`;
-          card.style.zIndex = String(10 - abs);
-          card.style.pointerEvents = 'auto';
-        }
-        card.classList.toggle('is-active', i === active);
-      });
-      if (coverflowDots) {
-        [...coverflowDots.children].forEach((dot, i) => dot.classList.toggle('active', i === active));
-      }
-    };
-
-    const goPrev = () => { active = (active - 1 + items.length) % items.length; render(); };
-    const goNext = () => { active = (active + 1) % items.length; render(); };
-    coverflowPrev?.addEventListener('click', goPrev);
-    coverflowNext?.addEventListener('click', goNext);
-
-    // Dukungan swipe di layar sentuh
-    let touchStartX = 0;
-    coverflowTrack.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
-    coverflowTrack.addEventListener('touchend', (e) => {
-      const dx = e.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(dx) > 40) { dx > 0 ? goPrev() : goNext(); }
-    }, { passive: true });
-
-    // Dukungan panah keyboard saat section terlihat
-    window.addEventListener('keydown', (e) => {
-      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-      const rect = coverflowTrack.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight && rect.bottom > 0;
-      if (!inView) return;
-      e.key === 'ArrowLeft' ? goPrev() : goNext();
+      csContainer.appendChild(card);
     });
-
-    buildCards();
-    buildDots();
-    render();
-
-    /* ---- Skill Lab bergeser mengikuti kursor ---- */
-    // Saat kursor bergerak di atas section Lab, seluruh galeri ikut bergeser
-    // & memiringkan sedikit (parallax), jadi terasa hidup dan "3D beneran".
-    const labSection = document.getElementById('panel-lab');
-    // matchMedia dijaga: kalau tidak tersedia, jangan sampai error-nya
-    // menghentikan sisa script (animasi kucing dsb ada setelah blok ini).
-    const prefersReducedMotion = typeof window.matchMedia === 'function'
-      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      : false;
-    if (labSection && !prefersReducedMotion) {
-      let labTicking = false;
-      let labEvt = null;
-
-      const updateLabDrift = () => {
-        labTicking = false;
-        if (!labEvt || !coverflowStage) return;
-        const rect = labSection.getBoundingClientRect();
-        // rasio -1 (kiri/atas) sampai 1 (kanan/bawah)
-        const rx = ((labEvt.clientX - rect.left) / rect.width - 0.5) * 2;
-        const ry = ((labEvt.clientY - rect.top) / rect.height - 0.5) * 2;
-        const shiftX = Math.max(-1, Math.min(1, rx)) * 42;
-        const rotY = Math.max(-1, Math.min(1, rx)) * 7;
-        const rotX = Math.max(-1, Math.min(1, ry)) * -5;
-        coverflowStage.style.transform =
-          `translateX(${shiftX}px) rotateY(${rotY}deg) rotateX(${rotX}deg)`;
-      };
-
-      labSection.addEventListener('mousemove', (e) => {
-        labEvt = e;
-        if (!labTicking) {
-          labTicking = true;
-          requestAnimationFrame(updateLabDrift);
-        }
-      });
-
-      // Balik ke posisi netral saat kursor keluar dari section
-      labSection.addEventListener('mouseleave', () => {
-        if (coverflowStage) coverflowStage.style.transform = 'translateX(0) rotateY(0deg) rotateX(0deg)';
-      });
-    }
+    AOS.refresh();
   }
 
   /* ============ MASKOT KUCING — IKUT ARAH KURSOR ============ */
