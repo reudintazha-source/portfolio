@@ -537,3 +537,43 @@ body.dark .coverflow-dot { background: rgba(255,255,255,0.25); }
 .attachment-chip i {
   color: #6366f1;
 }
+
+/* ============================================================
+   CASE STUDY: badge kartu, viewer dokumen, galeri, lightbox
+   ============================================================ */
+.cs-badges {
+  position: absolute; top: 0.75rem; right: 0.75rem;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem;
+}
+.cs-badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  background: rgba(15, 23, 42, 0.82); color: #fff;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 0.3rem 0.65rem; border-radius: 999px; backdrop-filter: blur(4px);
+}
+.cs-badge.is-live { background: #10b981; }
+.attachment-chip.is-active { background: #4f46e5; border-color: #4f46e5; color: #fff; }
+.attachment-chip.is-active i { color: #fff; }
+button.attachment-chip { cursor: pointer; }
+
+.shot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem; }
+.shot-grid img, .exp-photo {
+  width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 0.9rem;
+  border: 1px solid #e5e7eb; cursor: zoom-in; transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.shot-grid img:hover, .exp-photo:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.12); }
+.exp-figcaption { font-size: 0.7rem; color: #6b7280; margin-top: 0.35rem; }
+
+.lightbox {
+  position: fixed; inset: 0; z-index: 300; display: none; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0.75rem; padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.88); cursor: zoom-out;
+}
+.lightbox.is-open { display: flex; }
+.lightbox img { max-width: 94vw; max-height: 82vh; border-radius: 0.75rem; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+.lightbox-caption { color: #e5e7eb; font-size: 0.85rem; text-align: center; }
+.lightbox-close {
+  position: absolute; top: 1rem; right: 1rem; width: 2.5rem; height: 2.5rem; border-radius: 999px;
+  background: rgba(255,255,255,0.15); color: #fff; display: flex; align-items: center; justify-content: center;
+}
+body.dark .shot-grid img, body.dark .exp-photo { border-color: rgba(255,255,255,0.12); }
