@@ -285,6 +285,8 @@
         <div id="panel-lab" class="work-panel" role="tabpanel">
             <div class="max-w-7xl mx-auto px-6">
                 <p class="text-gray-500 mb-10 max-w-2xl">Analisis dan dashboard mandiri — klik card untuk melihat demo, video pengerjaan, serta presentasi / PDF-nya.</p>
+                <div id="casestudy-repo" class="flex flex-wrap items-center gap-3 mb-4"></div>
+                <div id="casestudy-filters" class="flex flex-wrap gap-2 mb-8"></div>
                 <div id="casestudy-container" class="grid grid-cols-1 md:grid-cols-2 gap-10"></div>
             </div>
         </div>
@@ -396,6 +398,24 @@
     </div>
 
     <!-- SCRIPTS -->
+    <!-- PENDETEKSI ERROR: buka website dengan menambah ?debug di akhir alamat
+         (contoh: namakamu.github.io/portofolio/?debug) -> kalau config.js atau
+         script.js ada yang salah, muncul bar merah berisi pesan + nomor baris. -->
+    <script>
+        if (/[?&]debug/.test(location.search)) {
+            window.addEventListener('error', function (e) {
+                var bar = document.getElementById('debug-bar');
+                if (!bar) {
+                    bar = document.createElement('div');
+                    bar.id = 'debug-bar';
+                    bar.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#b91c1c;color:#fff;font:13px/1.5 monospace;padding:10px 14px;white-space:pre-wrap;max-height:40vh;overflow:auto';
+                    (document.body || document.documentElement).appendChild(bar);
+                }
+                var file = (e.filename || '').split('/').pop();
+                bar.textContent += 'ERROR di ' + (file || '?') + ' baris ' + e.lineno + ': ' + e.message + '\n';
+            });
+        }
+    </script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="config.js"></script>
     <script src="script.js"></script>
