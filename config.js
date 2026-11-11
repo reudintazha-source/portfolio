@@ -333,6 +333,8 @@ const SITE_CONFIG = {
        {
          title: "",
          category: "",                // label kecil, mis. "SQL", "Power BI"
+         group: "",                   // kelompok filter (lihat caseStudyGroups di bawah);
+                                      // kosong = pakai nilai category
          icon: "fa-database",         // ikon cadangan kalau "image" kosong
          image: "",                   // gambar sampul (dipakai kalau tidak ada preview live)
          previewUrl: "",              // opsional: link yang tampil LANGSUNG di kartu depan
@@ -371,6 +373,25 @@ const SITE_CONFIG = {
        ],
        type: pdf | ppt | sheet (menentukan ikon saja).
 
+     FILE DI GITHUB (cara paling stabil, tanpa Google Drive)
+       Taruh file di repo, lalu tulis path-nya saja (tanpa https://):
+         docs: [
+           { name: "Slide Presentasi", type: "pdf",   url: "docs/churn-slide.pdf" },
+           { name: "Dashboard Excel",  type: "sheet", url: "files/churn-dashboard.xlsx" }
+         ],
+       - PDF  -> tampil langsung di halaman (paling cepat & paling aman).
+       - PPTX / XLSX / DOCX -> tampil lewat Microsoft Office Online Viewer.
+         Hanya jalan setelah website ONLINE (GitHub Pages), bukan dari file
+         di komputer. Batas ukuran viewer: PPTX maks ~10 MB, XLSX maks ~5 MB.
+       - Selalu muncul tombol "Download file" untuk pengunjung.
+       - SARAN: ubah PPT jadi PDF (File -> Export -> PDF) lalu pakai PDF-nya.
+         Kamu tetap bisa menyediakan file Excel aslinya sebagai tombol di "demos".
+       - Nama file: huruf kecil, tanpa spasi (pakai tanda -), dan tulisan di
+         config harus SAMA PERSIS (GitHub membedakan huruf besar/kecil).
+       Struktur folder repo yang disarankan:
+         index.html  script.js  style.css  config.js
+         images/  docs/  files/  video/
+
      demos (tombol yang membuka tab baru — BOLEH BANYAK)
        Cocok untuk file Excel / Google Sheets (pengunjung bisa utak-atik
        langsung), repo GitHub, Looker Studio, Apps Script web app, dsb.
@@ -403,12 +424,26 @@ const SITE_CONFIG = {
           ditempel di "docs" akan tampil INTERAKTIF langsung di halaman
           (Looker Studio: Share -> Anyone with the link -> Viewer).
      ====================================================================== */
+  // Urutan tombol filter di tab Case Study. Nama harus sama persis dengan
+  // field "group" di tiap case study. Kelompok yang belum punya isi otomatis
+  // tidak ditampilkan; kalau cuma ada satu kelompok, tombol filter hilang.
+  // Tombol di atas daftar Case Study yang mengarah ke repo berisi file asli
+  // (dataset, .pbix, .xlsx, .pptx). Kosongkan url untuk menyembunyikannya.
+  caseStudyRepo: {
+    url: "https://github.com/reudintazha-source/data-analytics-portfolio",
+    label: "Lihat semua file & dataset di GitHub",
+    note: "Bisa dilihat langsung atau di-download"
+  },
+
+  caseStudyGroups: ["Excel", "Power BI & Looker", "App Script", "SQL"],
+
   skillLab: [
 
     // ---------- Case Study 1 ----------
     {
       title: "SQL Sales Query Playground",
       category: "SQL",
+      group: "SQL",
       icon: "fa-database",
       image: "",
       description: "Kumpulan query SQL (window functions, CTE, join bertingkat) untuk menjawab pertanyaan bisnis seperti top customer per region dan tren penjualan bulanan.",
@@ -426,8 +461,9 @@ const SITE_CONFIG = {
     {
       title: "Telecommunication Monthly vs Annual Churn Dashboard — Power BI",
       category: "Power BI",
+      group: "Power BI & Looker",
       icon: "fa-chart-pie",
-      image: "https://drive.google.com/file/d/1NTIC3BpcEcXtmEJNkg4tBtaddN3m4UdO/view?usp=sharing",
+      image: "https://drive.google.com/file/d/1v6cErG4DZL0QqFXZxczw_wUgHMewDjMM/view?usp=sharing",
       description: "Dashboard menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
       tools: "Power BI, CSV",
       metrics: "Customer Contract | Churn Rate",
@@ -442,11 +478,14 @@ const SITE_CONFIG = {
       ],
       videoUrl: "",
       screenshots: [
-        { url: "https://drive.google.com/file/d/1NTIC3BpcEcXtmEJNkg4tBtaddN3m4UdO/view?usp=sharing", caption: "Dashboard Power BI" }
+        { url: "https://drive.google.com/file/d/1v6cErG4DZL0QqFXZxczw_wUgHMewDjMM/view?usp=sharing", caption: "Dashboard Power BI" }
       ],
-      docs: [[{ name: "PPT Hasil Analisa", url: "https://docs.google.com/presentation/d/1OBZ_WyoCmPMGP_sRSBUyr05VtGAfsCmu/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true" }]],
+      docs: [
+        { name: "Dashboard Power BI (PDF)", type: "pdf", url: "https://github.com/reudintazha-source/data-analytics-portfolio/blob/main/Telco%20Monthly%20Vs%20Annualy.pdf" }
+      ],
       demos: [
-        { name: "Buka File Dashboard", url: "https://drive.google.com/file/d/1IMI1_2sdafz5xRkisLutxY8vEkCawx8G/view?usp=sharing" }
+        { name: "Download file .pbix", url: "https://github.com/reudintazha-source/data-analytics-portfolio/raw/main/Telco%20Monthly%20Vs%20Annualy.pbix" },
+        { name: "Lihat di GitHub", url: "https://github.com/reudintazha-source/data-analytics-portfolio" }
       ]
     },
 
@@ -454,8 +493,9 @@ const SITE_CONFIG = {
     {
       title: "Telecommunication Monthly vs Annual Churn Dashboard — Excel",
       category: "Excel",
+      group: "Excel",
       icon: "fa-file-excel",
-      image: "https://drive.google.com/file/d/1hlnEKZMycySQXpFIO-u4VBLKdIobyzQG/view?usp=sharing",
+      image: "https://drive.google.com/file/d/1btnWUT_AVj2KP_ixqduzclygE9F5gxVn/view?usp=sharing",
       description: "Dashboard menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
       tools: "Advanced Excel, Pivot Tables, CSV",
       metrics: "Customer Contract | Churn Rate",
@@ -467,11 +507,14 @@ const SITE_CONFIG = {
         "Customer yang churn memiliki rata-rata charge sebesar 4.078, atau 23% lebih tinggi dibandingkan customer yang bertahan."],
       videoUrl: "https://youtu.be/JeSNd2kDngU",
       screenshots: [
-        { url: "https://drive.google.com/file/d/1hlnEKZMycySQXpFIO-u4VBLKdIobyzQG/view?usp=sharing", caption: "Halaman Dashboard" }
+        { url: "https://drive.google.com/file/d/1btnWUT_AVj2KP_ixqduzclygE9F5gxVn/view?usp=sharing", caption: "Halaman Dashboard" }
       ],
-      docs: [{ name: "PPT Hasil Analisa", url: "https://docs.google.com/presentation/d/1OBZ_WyoCmPMGP_sRSBUyr05VtGAfsCmu/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true" }],
+      docs: [
+        { name: "Slide Presentasi", type: "ppt", url: "https://github.com/reudintazha-source/data-analytics-portfolio/blob/main/Contract%20Type%20vs%20Customer%20Churn.pptx" },
+        { name: "Dashboard Excel", type: "sheet", url: "https://github.com/reudintazha-source/data-analytics-portfolio/blob/main/Book1Telco%20dashboar%20practice.xlsx" }
+      ],
       demos: [
-        { name: "Buka Excel Interaktif", url: "https://docs.google.com/spreadsheets/d/1bnQ6nTza-yzcsy7uxsZcFh6pzT5_I8DU/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true" }
+        { name: "Lihat di GitHub", url: "https://github.com/reudintazha-source/data-analytics-portfolio" }
       ]
     },
 
@@ -479,6 +522,7 @@ const SITE_CONFIG = {
     {
       title: "Automated Reporting Bot",
       category: "App Script",
+      group: "App Script",
       icon: "fa-code",
       image: "",
       description: "Google Apps Script yang menyusun & mengirim ringkasan laporan mingguan otomatis ke email tim setiap Senin pagi.",
