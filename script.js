@@ -40,13 +40,33 @@ document.addEventListener('DOMContentLoaded', () => {
     if (/(lookerstudio|datastudio)\.google\.com\/reporting\//.test(url) && !/\/embed\//.test(url)) {
       return url.replace('/reporting/', '/embed/reporting/');       // Looker Studio interaktif
     }
-    if (/^https?:\/\/.+\.(pptx?|xlsx?|docx?)(\?.*)?$/i.test(url)) {
-      return `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`;
-    }
-    if (/\.pdf(\?.*)?(#.*)?$/i.test(url)) return url;              // PDF di repo / hosting sendiri
-    if (/^https?:\/\//i.test(url)) return url;                      // embed lain (Looker, Power BI web, dsb.)
-    return '';
+    return embedFile(url);
   };
+
+  // ---- File yang disimpan di repo GitHub kamu (PDF, PPTX, XLSX, DOCX) ----
+  // Contoh isi config:  "docs/laporan.pdf"  atau  "files/churn.xlsx"
+  //  - PDF            : ditampilkan langsung oleh browser (tanpa layanan pihak ketiga).
+  //  - PPTX/XLSX/DOCX : ditampilkan lewat Microsoft Office Online Viewer. File harus
+  //                     bisa diakses publik, jadi hanya jalan setelah website online
+  //                     (GitHub Pages), bukan saat dibuka dari komputer sendiri.
+  const FILE_RE = /\.(pdf|pptx?|xlsx?|docx?)(\?[^#]*)?(#.*)?$/i;
+  const OFFICE_RE = /\.(pptx?|xlsx?|docx?)(\?[^#]*)?(#.*)?$/i;
+  const absUrl = (u) => { try { return new URL(u, document.baseURI).href; } catch (e) { return u; } };
+  const githubRaw = (u) => u.replace(/^https?:\/\/github\.com\/([^/]+)\/([^/]+)\/(?:blob|raw)\/(.+)$/i, 'https://raw.githubusercontent.com/$1/$2/$3');
+  const embedFile = (raw) => {
+    let url = githubRaw(raw);
+    if (!FILE_RE.test(url)) return /^https?:\/\//i.test(url) ? url : '';   // embed lain (Looker, Power BI web, dsb.)
+    const full = absUrl(url);
+    if (OFFICE_RE.test(url)) {
+      return `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(full)}`;
+    }
+    // PDF: link relatif / satu situs = langsung; PDF dari repo GitHub lain = lewat viewer PDF.js
+    if (/^https?:\/\/raw\.githubusercontent\.com\//i.test(full)) {
+      return `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(full)}`;
+    }
+    return full;
+  };
+
 
   // Lightbox sederhana: klik gambar apa pun yang punya atribut data-lightbox
   const lightbox = document.createElement('div');
@@ -728,7 +748,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ikut masuk ke viewer di modal, jadi pengunjung bisa mencoba tanpa pindah tab.
     const liveRe = /docs\.google\.com\/(spreadsheets|presentation|document)|(lookerstudio|datastudio)\.google\.com\/reporting/;
     const seen = new Set(docs.map(d => d.url));
-    const viewer = [...docs, ...demos.filter(d => liveRe.test(d.url) && !seen.has(d.url))];
+    const viewer = [...docs, ...demos.filter(d => (liveRe.test(d.url) || FILE_RE.test(d.url)) && !seen.has(d.url))];
     // Isi kartu depan: previewUrl (manual) -> dokumen pertama -> demo live pertama.
     const previewSrc = toEmbedUrl(item.previewUrl) || (viewer[0] ? toEmbedUrl(viewer[0].url) : '');
     return {
@@ -737,6 +757,7 @@ document.addEventListener('DOMContentLoaded', () => {
       docs,
       viewer,
       previewSrc,
+      group: (item.group && item.group.trim() !== '') ? item.group.trim() : ((item.category || '').trim() || 'Lainnya'),
       shots: normPhotos(item.screenshots),
       hasVideo: !!(item.videoUrl && item.videoUrl.trim() !== '')
     };
@@ -782,9 +803,14 @@ document.addEventListener('DOMContentLoaded', () => {
             <iframe data-doc-frame class="w-full h-[440px] md:h-[520px]" loading="lazy" title="Dokumen ${esc(item.title)}" allowfullscreen></iframe>
             <p data-doc-note class="hidden text-sm text-gray-500 p-6 text-center">Pratinjau tidak tersedia untuk file ini — gunakan tombol di bawah untuk membukanya.</p>
           </div>
-          <a data-doc-open target="_blank" rel="noopener" class="attachment-chip mt-3">
-            <i class="fa-solid fa-up-right-from-square"></i> Buka layar penuh di tab baru
-          </a>
+          <div class="flex flex-wrap gap-2 mt-3">
+            <a data-doc-open target="_blank" rel="noopener" class="attachment-chip">
+              <i class="fa-solid fa-up-right-from-square"></i> Buka layar penuh di tab baru
+            </a>
+            <a data-doc-download download class="attachment-chip hidden">
+              <i class="fa-solid fa-download"></i> Download file
+            </a>
+          </div>
         </div>` : '';
       const demosHtml = item.demos.length ? `
         <div class="mb-2">
@@ -819,12 +845,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const frame = viewer.querySelector('[data-doc-frame]');
         const note = viewer.querySelector('[data-doc-note]');
         const openLink = viewer.querySelector('[data-doc-open]');
+        const dlLink = viewer.querySelector('[data-doc-download]');
         const chips = [...viewer.querySelectorAll('[data-doc-idx]')];
         const show = (i) => {
           const d = item.viewer[i];
           const embed = toEmbedUrl(d.url);
           chips.forEach((c, ci) => c.classList.toggle('is-active', ci === i));
           openLink.href = d.url;
+          dlLink.href = githubRaw(d.url);
+          dlLink.classList.toggle('hidden', !FILE_RE.test(d.url));
           if (embed) {
             frame.classList.remove('hidden'); note.classList.add('hidden'); frame.src = embed;
           } else {
@@ -858,6 +887,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = document.createElement('div');
       card.className = 'bg-[#F8F9FA] border border-gray-200/60 rounded-[2rem] overflow-hidden p-6 space-y-6 tilt-card cursor-pointer';
       card.setAttribute('data-aos', 'fade-up');
+      card.dataset.group = item.group;
       const hasImage = item.image && item.image.trim() !== '';
       const badges = [
         item.demos.length ? '<span class="cs-badge is-live"><i class="fa-solid fa-bolt"></i> Live Demo</span>' : '',
@@ -901,6 +931,46 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       csContainer.appendChild(card);
     });
+
+    // Ajakan ke repo GitHub berisi file asli (dataset, .pbix, .xlsx, .pptx)
+    const repoWrap = document.getElementById('casestudy-repo');
+    const repo = cfg.caseStudyRepo || {};
+    if (repoWrap) {
+      if (repo.url && repo.url.trim() !== '') {
+        repoWrap.innerHTML = `
+          <a href="${esc(repo.url)}" target="_blank" rel="noopener" class="attachment-chip">
+            <i class="fa-brands fa-github"></i> ${repo.label || 'Lihat semua file & dataset di GitHub'}
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-60"></i>
+          </a>
+          ${repo.note ? `<span class="text-xs text-gray-400">${repo.note}</span>` : ''}`;
+      } else {
+        repoWrap.remove();
+      }
+    }
+
+    // Filter per kelompok tools (Excel, Power BI & Looker, App Script, SQL, ...).
+    // Urutan tombol mengikuti cfg.caseStudyGroups; kelompok tanpa isi tidak ditampilkan.
+    const filterWrap = document.getElementById('casestudy-filters');
+    if (filterWrap) {
+      const used = [...new Set(cases.map(c => c.group))];
+      const order = (cfg.caseStudyGroups || []).filter(g => used.includes(g));
+      const groups = [...order, ...used.filter(g => !order.includes(g))];
+      if (groups.length > 1) {
+        const cards = [...csContainer.children];
+        const apply = (g) => {
+          filterWrap.querySelectorAll('[data-filter]').forEach(b => b.classList.toggle('is-active', b.dataset.filter === g));
+          cards.forEach(c => c.classList.toggle('hidden', g !== '*' && c.dataset.group !== g));
+          AOS.refresh();
+        };
+        const count = (g) => cases.filter(c => c.group === g).length;
+        filterWrap.innerHTML =
+          `<button type="button" class="attachment-chip is-active" data-filter="*">Semua <span class="opacity-60">${cases.length}</span></button>` +
+          groups.map(g => `<button type="button" class="attachment-chip" data-filter="${esc(g)}">${g} <span class="opacity-60">${count(g)}</span></button>`).join('');
+        filterWrap.querySelectorAll('[data-filter]').forEach(b => b.addEventListener('click', () => apply(b.dataset.filter)));
+      } else {
+        filterWrap.remove();
+      }
+    }
     AOS.refresh();
   }
 
