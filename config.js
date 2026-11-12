@@ -161,7 +161,7 @@ const SITE_CONFIG = {
       logo: "",
       photos: [
          { url: "https://drive.google.com/file/d/1XIFsoX1sg306kl8F32c7veNOXDkQfdp7/view?usp=sharing", caption: "Pembuatan Tempat sampah  Desbin" },
-        { url: "https://drive.google.com/file/d/1bvEf1QuX3xvqskb5ssJ0pqO7rqhPV3xa/view?usp=drive_link", caption: "Foto Bersama Desbin Desa Sukanegara" },
+        { url: "https://drive.google.com/file/d/1bvEf1QuX3xvqskb5ssJ0pqO7rqhPV3xa/view?usp=drive_link", caption: "Foto Bersama Desbin Desa Sukanegara" }
               ],
       description: [
         "Led 21 members across 5 divisions and monitored KPIs for 10+ annual student-organization programs.",
