@@ -116,10 +116,14 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  // Experience (timeline, gampang ditambah dari config.js)
-  const experienceContainer = document.getElementById('experience-container');
-  if (experienceContainer && cfg.experience) {
-    experienceContainer.innerHTML = cfg.experience.map((exp, i) => {
+  // Timeline pengalaman (dipakai untuk Experience kerja DAN Organisasi, semua dari config.js)
+  const renderTimeline = (container, list) => {
+    if (!container || !list || !list.length) return false;
+    list = list.filter(x => x && (x.role || x.company || x.organization));
+    if (!list.length) return false;
+    container.innerHTML = list.map((exp, i) => {
+      exp.company = exp.company || exp.organization || '';
+      exp.description = exp.description || '';
       const descHtml = exp.description.includes('\n')
         ? `<ul class="space-y-2 mt-2">${exp.description.split('\n').filter(l => l.trim() !== '').map((line, li) => `
             <li class="flex gap-2 text-gray-600 leading-relaxed" style="animation-delay:${0.3 + li * 0.12}s"><span class="text-indigo-500 mt-1">•</span><span>${line.trim()}</span></li>
@@ -144,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>` : '';
       return `
       <div class="exp-item relative pl-10 pb-10">
-        ${i < cfg.experience.length - 1 ? '<span class="exp-line absolute left-[-1px] top-4 bottom-0 w-[2px] bg-gray-200 ml-2"></span>' : ''}
+        ${i < list.length - 1 ? '<span class="exp-line absolute left-[-1px] top-4 bottom-0 w-[2px] bg-gray-200 ml-2"></span>' : ''}
         <span class="exp-dot absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-indigo-600 border-4 border-white shadow ml-2"></span>
         <div class="flex items-center gap-4 mb-3">
           ${logoHtml}
@@ -169,7 +173,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }, { threshold: 0.2 });
-    document.querySelectorAll('#experience-container .exp-item').forEach(item => expObserver.observe(item));
+    container.querySelectorAll('.exp-item').forEach(item => expObserver.observe(item));
+    return true;
+  };
+
+  renderTimeline(document.getElementById('experience-container'), cfg.experience);
+
+  // Pengalaman organisasi: blok ini otomatis tersembunyi kalau cfg.organizations kosong
+  const orgBlock = document.getElementById('organization-block');
+  if (orgBlock) {
+    if (renderTimeline(document.getElementById('organization-container'), cfg.organizations)) {
+      orgBlock.classList.remove('hidden');
+    }
   }
 
   // Stats
