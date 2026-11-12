@@ -6,7 +6,7 @@
    DAFTAR ISI (cari dengan Ctrl+F pada judul bagian):
      1. IDENTITAS            nama, role, email, CV
      2. HERO                 teks berganti, video latar, animasi bunga
-     3. EXPERIENCE           riwayat kerja
+     3. EXPERIENCE           riwayat kerja + organisasi
      4. STATS                angka ringkas
      5. REAL PROJECT         proyek kerja nyata (tab "Real Project")
      6. CASE STUDY           analisis mandiri: SQL, Power BI, Excel, App Script
@@ -87,7 +87,7 @@ const SITE_CONFIG = {
 
 
   /* ======================================================================
-     3. EXPERIENCE
+     3. EXPERIENCE (pengalaman kerja)
      ----------------------------------------------------------------------
      description : satu kalimat = satu elemen array (tampil sebagai bullet).
 
@@ -133,6 +133,40 @@ const SITE_CONFIG = {
         "Built automated incentive calculation templates with Advanced Excel, Pivot Tables, and OLAP for 2,000+ sales employees across 5 incentive schemes, significantly improving reporting efficiency and payout accuracy.",
         "Conducted QGIS-based geospatial analysis of regional sales coverage outside Java, supporting territory expansion and distribution planning initiatives.",
         "Generated weekly and monthly sales performance reports at both individual and regional levels to support operational decision-making."
+      ].join("\n")
+    }
+  ],
+
+
+  /* ======================================================================
+     3b. ORGANIZATIONS (pengalaman organisasi)
+     ----------------------------------------------------------------------
+     Tampil di bawah Experience sebagai bagian "Leadership & organizations".
+     Formatnya sama dengan Experience. Array kosong = bagian ini tidak tampil.
+
+       role        : jabatan
+       company     : nama organisasi (boleh ditulis "organization" juga)
+       period      : masa jabatan
+       logo        : logo organisasi (opsional)
+       photos      : foto yang mewakili (opsional), [{ url, caption }]
+       description : jobdes, satu kalimat = satu bullet
+
+     Foto: taruh di folder "images/" (paling stabil) lalu tulis path-nya.
+     ====================================================================== */
+  organizations: [
+    {
+      role: "Chairman",
+      company: "Industrial Engineering Student Organization, Al Azhar University",
+      period: "May 2023 — Mar 2024",
+      logo: "",
+      photos: [
+         { url: "https://drive.google.com/file/d/1XIFsoX1sg306kl8F32c7veNOXDkQfdp7/view?usp=sharing", caption: "Pembuatan Tempat sampah  Desbin" },
+        { url: "https://drive.google.com/file/d/1bvEf1QuX3xvqskb5ssJ0pqO7rqhPV3xa/view?usp=drive_link", caption: "Foto Bersama Desbin Desa Sukanegara" },
+              ],
+      description: [
+        "Led 21 members across 5 divisions and monitored KPIs for 10+ annual student-organization programs.",
+        "Analyzed member feedback using Customer Satisfaction Index and Importance-Performance Analysis to identify improvement actions.",
+        "Managed budgets, allocated resources, and presented program updates to faculty and university leaders."
       ].join("\n")
     }
   ],
