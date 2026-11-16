@@ -6,7 +6,7 @@
    DAFTAR ISI (cari dengan Ctrl+F pada judul bagian):
      1. IDENTITAS            nama, role, email, CV
      2. HERO                 teks berganti, video latar, animasi bunga
-     3. EXPERIENCE           riwayat kerja + organisasi
+     3. EXPERIENCE           riwayat kerja, ACADEMIC (pendidikan), organisasi
      4. STATS                angka ringkas
      5. REAL PROJECT         proyek kerja nyata (tab "Real Project")
      6. CASE STUDY           analisis mandiri: SQL, Power BI, Excel, App Script
@@ -116,10 +116,8 @@ const SITE_CONFIG = {
       description: [
         "Managed IT asset movements across 3,000+ operational sites, coordinating with logistics vendors and warehouse head to monitor operational performance, resolve shipment discrepancies, and support efficient asset availability.",
         "Verified 50+ daily asset movements, ensuring quantities, asset types, and physical conditions matched submitted requests.",
-        "Conducted root cause analysis on delivery discrepancies and coordinated resolutions with vendors, warehouse teams, and 
-internal stakeholders.",
-        "Tracked end-to-end request fulfillment across 3,000+ sites, from request submission and repair coordination to final asset 
-delivery."
+        "Conducted root cause analysis on delivery discrepancies and coordinated resolutions with vendors, warehouse teams, and internal stakeholders.",
+        "Tracked end-to-end request fulfillment across 3,000+ sites, from request submission and repair coordination to final asset delivery."
       ].join("\n")
     },
     {
@@ -135,6 +133,53 @@ delivery."
         "Built automated incentive calculation templates with Advanced Excel, Pivot Tables, and OLAP for 2,000+ sales employees across 5 incentive schemes, significantly improving reporting efficiency and payout accuracy.",
         "Conducted QGIS-based geospatial analysis of regional sales coverage outside Java, supporting territory expansion and distribution planning initiatives.",
         "Generated weekly and monthly sales performance reports at both individual and regional levels to support operational decision-making."
+      ].join("\n")
+    }
+  ],
+
+
+  /* ======================================================================
+     3a. ACADEMICS (pendidikan & pertukaran pelajar)
+     ----------------------------------------------------------------------
+     Tampil di bawah Experience, di atas Organization, sebagai bagian
+     "Education & exchange". Formatnya sama dengan Experience.
+     Array kosong = bagian ini tidak tampil.
+
+       role        : gelar / program (boleh ditulis "degree" juga)
+       company     : kampus (boleh ditulis "institution" juga)
+       period      : masa studi
+       logo        : logo kampus (opsional)
+       photos      : foto yang mewakili (opsional), [{ url, caption }]
+       description : satu kalimat = satu bullet
+
+     Real Project akademik otomatis tersambung ke sini lewat field "madeAt"
+     (lihat bagian 5), jadi muncul sebagai chip "Project dari sini".
+     ====================================================================== */
+  academics: [
+    {
+      role: "Bachelor of Industrial Engineering",
+      company: "Al Azhar University Indonesia",
+      period: "2021 — 2025",
+      logo: "",
+      photos: [
+        // { url: "images/kampus-1.jpg", caption: "Presentasi SEMNASTEK 2025" },
+      ],
+      description: [
+        "GPA: 3.55/4.00 | Relevant coursework: Operations Research, Industrial Statistics, Supply Chain Management, Lean Manufacturing.",
+        "Presented research at SEMNASTEK 2025; applied Green Value Stream Mapping and reported approximately 44% higher waste-recycling rate.",
+        "Roles: Practicum Assistant – Technical Drawing & Information System Design Analysis."
+      ].join("\n")
+    },
+    {
+      role: "Exchange Program",
+      company: "Telkom University, Bandung",
+      period: "Sep 2024 — Jan 2025",
+      logo: "",
+      photos: [
+        // { url: "images/telkom-1.jpg", caption: "Tim proyek aplikasi web" },
+      ],
+      description: [
+        "Led a 4-member team building a Laravel and MySQL web application with CRUD features and user authentication."
       ].join("\n")
     }
   ],
@@ -199,6 +244,8 @@ delivery."
          image: "",                      // lihat aturan link gambar di atas
          demoUrl: "",                    // kosong = tombol demo tidak tampil
          metrics: "Angka 1 | Angka 2",   // dipisah tanda |
+         madeAt: "SPX Express",          // project ini dibuat di mana (opsional, lihat di bawah)
+         madeAtPeriod: "",               // opsional; kosong = ikut periode di Experience/Academic
          actionsTaken:   ["bullet 1", "bullet 2"],   // "Action Taken"
          businessImpact: ["bullet 1", "bullet 2"],   // "Business Impact"
          attachments: [                  // lampiran PDF/dokumen (opsional)
@@ -208,12 +255,24 @@ delivery."
 
      type lampiran: pdf, doc, sheet, image, ppt, zip.
      Lampiran dengan url "" otomatis tidak ditampilkan.
+
+     MENYAMBUNGKAN PROJECT KE EXPERIENCE / ACADEMIC
+       madeAt = nama tempat project dibuat. Cukup sebagian nama, tidak perlu
+       persis, tapi harus ada di "company" pada Experience / Academic / Organization.
+       Contoh: madeAt: "SPX Express"   atau   madeAt: "Al Azhar University".
+       Hasilnya:
+         - kartu & detail project memuat lencana "Dibuat di SPX Express · April 2026 — July 2026"
+           (diklik = meluncur ke pengalaman itu di bagian Experience);
+         - di bagian Experience / Academic muncul chip "Project dari sini"
+           yang kalau diklik membuka detail project.
+       Dikosongkan = tidak ada lencana dan tidak ada chip.
      ====================================================================== */
   fallbackProjects: [
 
     // ---------- Project 1 ----------
     {
       title: "IT Asset Tracking Dashboard",
+      madeAt: "SPX Express",
       category: "Automation",
       description: "A centralized digital ecosystem built to track IT assets in motion, enabling real-time status updates and ensuring zero shipment anomalies fall through the cracks.",
       tools: "Google Apps Script, Google Sheets, JavaScript",
@@ -239,6 +298,7 @@ delivery."
     // ---------- Project 2 ----------
     {
       title: "IT Asset Request & Return Form",
+      madeAt: "SPX Express",
       category: "Web App",
       description: "Developed a web-based request management system using Google Apps Script and Google Workspace to streamline IT asset repair and return submissions across facilities. The system replaces manual request forms with a standardized, validated, and trackable workflow.",
       tools: "Google Apps Script, HTML, CSS",
@@ -263,6 +323,7 @@ delivery."
     // ---------- Project 3 ----------
     {
       title: "Summary Tracker",
+      madeAt: "SPX Express",
       category: "Automation Report",
       description: "An automated cross-functional monitoring tool generated to report overall asset performance instantly—without anyone needing to touch a spreadsheet manually.",
       tools: "Google Apps Script, HTML, CSS",
@@ -284,6 +345,7 @@ delivery."
     // ---------- Project 4 ----------
     {
       title: "Summary Performance Salesman",
+      madeAt: "Garudafood",
       category: "Spreadsheet Report",
       description: "An advanced sales monitoring matrix designed to automate complex incentive calculation frameworks and operational business rules, providing clear regional performance evaluation visibility.",
       tools: "Spreadsheet",
@@ -308,6 +370,7 @@ delivery."
     // ---------- Project 5 ----------
     {
       title: "Digital Promotion System for Culinary SME (Dapur Siteteh)",
+      madeAt: "Al Azhar University",
       category: "Academic Project",
       description: "Applied Machine Learning algorithms to identify high-value customer segments and generate data-driven promotional strategies using historical SME transaction data, enabling optimized bundling and customer acquisition.",
       tools: "Python, K-Means Clustering, Market Basket Analysis (Apriori, FP-Growth), Excel",
@@ -332,6 +395,7 @@ delivery."
     // ---------- Project 6 ----------
     {
       title: "Tofu Wastewater Optimization via Green VSM",
+      madeAt: "Al Azhar University",
       category: "Academic Project",
       description: "Applied Green Value Stream Mapping (Green VSM) and Mass Balance Analysis to support the integration of Nata de Soya production processes. Evaluated strategic alternatives using the TOWS Matrix and Supply Chain Mapping to identify operational improvements and sustainability opportunities.",
       tools: "Green Value Stream Mapping (GVSM), Mass Balance Analysis, Supply Chain Mapping, TOWS Analysis",
