@@ -106,7 +106,7 @@ const SITE_CONFIG = {
   experience: [
     {
       role: "Inventory Analyst",
-      company: "SPX Express",
+      company: "PT Nusantara Express Kilat (SPX Express)",
       period: "April 2026 — July 2026",
       logo: "",
       photos: [
@@ -115,9 +115,11 @@ const SITE_CONFIG = {
       ],
       description: [
         "Managed IT asset movements across 3,000+ operational sites, coordinating with logistics vendors and warehouse head to monitor operational performance, resolve shipment discrepancies, and support efficient asset availability.",
-        "Processed and verified 50+ daily asset movements, identifying shipment discrepancies and supporting timely operational resolution.",
-        "Developed a web-based IT asset request system using Google Apps Script and Google Sheets, streamlining asset allocation workflows and reducing duplicate records.",
-        "Developed an operational dashboard to monitor 500+ IT asset movements, improving asset visibility and supporting operational performance monitoring."
+        "Verified 50+ daily asset movements, ensuring quantities, asset types, and physical conditions matched submitted requests.",
+        "Conducted root cause analysis on delivery discrepancies and coordinated resolutions with vendors, warehouse teams, and 
+internal stakeholders.",
+        "Tracked end-to-end request fulfillment across 3,000+ sites, from request submission and repair coordination to final asset 
+delivery."
       ].join("\n")
     },
     {
