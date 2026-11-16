@@ -116,19 +116,70 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  // Timeline pengalaman (dipakai untuk Experience kerja DAN Organisasi, semua dari config.js)
-  const renderTimeline = (container, list) => {
+  // ---- Peta konteks: Experience / Academic / Organization ----
+  // Dipakai untuk menyambungkan Real Project ("madeAt" di config.js) ke
+  // pengalaman tempat project itu dibuat, dan sebaliknya.
+  const contexts = [];
+  [['exp', 'experience', cfg.experience], ['acad', 'academic', cfg.academics], ['org', 'organization', cfg.organizations]]
+    .forEach(([prefix, kind, list]) => (list || []).forEach((x, i) => {
+      if (!x) return;
+      contexts.push({
+        id: `${prefix}-${i}`, kind,
+        name: x.company || x.organization || x.institution || '',
+        period: x.period || ''
+      });
+    }));
+  const findCtx = (madeAt) => {
+    const q = (madeAt || '').trim().toLowerCase();
+    if (!q) return null;
+    return contexts.find(c => c.name && c.name.toLowerCase().includes(q))
+        || contexts.find(c => c.name && q.includes(c.name.toLowerCase()))
+        || null;
+  };
+  const ctxIcon = { experience: 'fa-briefcase', academic: 'fa-graduation-cap', organization: 'fa-people-group' };
+  // Lencana "Dibuat di ... · periode" (link ke timeline kalau konteksnya ketemu)
+  const ctxBadgeHtml = (p) => {
+    const name = (p.madeAt || '').trim();
+    if (!name) return '';
+    const ctx = findCtx(name);
+    const period = (p.madeAtPeriod && p.madeAtPeriod.trim() !== '') ? p.madeAtPeriod : (ctx ? ctx.period : '');
+    const inner = `<i class="fa-solid ${ctx ? ctxIcon[ctx.kind] : 'fa-location-dot'}"></i><span>Dibuat di ${name}${period ? ` <span class="ctx-period">· ${period}</span>` : ''}</span>${ctx ? '<i class="fa-solid fa-arrow-down text-[10px] opacity-60"></i>' : ''}`;
+    return ctx
+      ? `<a href="#ctx-${ctx.id}" data-ctx-link="${ctx.id}" class="ctx-badge" title="Lihat pengalamannya">${inner}</a>`
+      : `<span class="ctx-badge">${inner}</span>`;
+  };
+  const gotoCtx = (id) => {
+    if (typeof closeModal === 'function') closeModal();
+    const el = document.getElementById('ctx-' + id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.classList.remove('ctx-flash'); void el.offsetWidth; el.classList.add('ctx-flash');
+  };
+  const bindCtxLinks = (root) => root.querySelectorAll('[data-ctx-link]').forEach(a =>
+    a.addEventListener('click', (ev) => { ev.preventDefault(); ev.stopPropagation(); gotoCtx(a.dataset.ctxLink); }));
+  // Chip project di timeline -> buka detail project
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-open-project]');
+    if (btn && typeof openModal === 'function') openModal(cfg.fallbackProjects[Number(btn.dataset.openProject)]);
+  });
+
+  // Timeline (dipakai untuk Experience kerja, Academic, dan Organization — semua dari config.js)
+  const renderTimeline = (container, list, prefix = 'exp') => {
     if (!container || !list || !list.length) return false;
-    list = list.filter(x => x && (x.role || x.company || x.organization));
-    if (!list.length) return false;
+    const valid = (x) => x && (x.role || x.degree || x.company || x.organization || x.institution);
+    if (!list.some(valid)) return false;
     container.innerHTML = list.map((exp, i) => {
-      exp.company = exp.company || exp.organization || '';
+      if (!valid(exp)) return '';
+      exp = { ...exp };
+      exp.role = exp.role || exp.degree || '';
+      exp.company = exp.company || exp.organization || exp.institution || '';
       exp.description = exp.description || '';
-      const descHtml = exp.description.includes('\n')
+      const ctxId = `${prefix}-${i}`;
+      const descHtml = exp.description.trim() !== ''
         ? `<ul class="space-y-2 mt-2">${exp.description.split('\n').filter(l => l.trim() !== '').map((line, li) => `
             <li class="flex gap-2 text-gray-600 leading-relaxed" style="animation-delay:${0.3 + li * 0.12}s"><span class="text-indigo-500 mt-1">•</span><span>${line.trim()}</span></li>
           `).join('')}</ul>`
-        : `<p class="text-gray-600 leading-relaxed">${exp.description}</p>`;
+        : '';
       // Logo opsional; kalau kosong dipakai badge inisial supaya tidak polos.
       const initials = (exp.company || '').split(/\s+/)
         .filter(w => /^[A-Za-z]/.test(w) && !/^(PT|CV|Tbk)\.?$/i.test(w))
@@ -146,8 +197,17 @@ document.addEventListener('DOMContentLoaded', () => {
               ${p.caption ? `<figcaption class="exp-figcaption">${p.caption}</figcaption>` : ''}
             </figure>`).join('')}
         </div>` : '';
+      // Project yang dibuat di sini (otomatis dari "madeAt" tiap Real Project)
+      const related = (cfg.fallbackProjects || [])
+        .map((p, pi) => ({ p, pi }))
+        .filter(({ p }) => { const c = findCtx(p.madeAt); return c && c.id === ctxId; });
+      const relatedHtml = related.length ? `
+        <div class="mt-5 flex flex-wrap items-center gap-2">
+          <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Project dari sini</span>
+          ${related.map(({ p, pi }) => `<button type="button" class="attachment-chip" data-open-project="${pi}"><i class="fa-solid fa-folder-open"></i> ${p.title}</button>`).join('')}
+        </div>` : '';
       return `
-      <div class="exp-item relative pl-10 pb-10">
+      <div id="ctx-${ctxId}" class="exp-item relative pl-10 pb-10">
         ${i < list.length - 1 ? '<span class="exp-line absolute left-[-1px] top-4 bottom-0 w-[2px] bg-gray-200 ml-2"></span>' : ''}
         <span class="exp-dot absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-indigo-600 border-4 border-white shadow ml-2"></span>
         <div class="flex items-center gap-4 mb-3">
@@ -160,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         ${descHtml}
         ${photosHtml}
+        ${relatedHtml}
       </div>
     `;
     }).join('');
@@ -177,12 +238,18 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   };
 
-  renderTimeline(document.getElementById('experience-container'), cfg.experience);
+  renderTimeline(document.getElementById('experience-container'), cfg.experience, 'exp');
+
+  // Akademik: blok ini otomatis tersembunyi kalau cfg.academics kosong
+  const acadBlock = document.getElementById('academic-block');
+  if (acadBlock && renderTimeline(document.getElementById('academic-container'), cfg.academics, 'acad')) {
+    acadBlock.classList.remove('hidden');
+  }
 
   // Pengalaman organisasi: blok ini otomatis tersembunyi kalau cfg.organizations kosong
   const orgBlock = document.getElementById('organization-block');
   if (orgBlock) {
-    if (renderTimeline(document.getElementById('organization-container'), cfg.organizations)) {
+    if (renderTimeline(document.getElementById('organization-container'), cfg.organizations, 'org')) {
       orgBlock.classList.remove('hidden');
     }
   }
@@ -535,7 +602,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const impactHtml = bulletListHtml('Business Impact', project.businessImpact, 'text-emerald-500');
     modalBody.innerHTML = `
       <img src="${project.image}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 225%22><rect width=%22400%22 height=%22225%22 fill=%22%23e5e7eb%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%239ca3af%22>Preview belum tersedia</text></svg>';" class="w-full aspect-video object-cover rounded-2xl mb-6" alt="${project.title}">
-      <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">${project.category}</span>
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">${project.category}</span>
+        ${ctxBadgeHtml(project)}
+      </div>
       <h3 class="font-serif text-3xl font-bold text-slate-900 mt-4 mb-3">${project.title}</h3>
       <p class="text-gray-600 leading-relaxed mb-6">${project.description}</p>
       ${actionsHtml}
@@ -559,6 +629,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       ` : ''}
     `;
+    bindCtxLinks(modalBody);
     modal.classList.remove('hidden-modal');
     document.body.style.overflow = 'hidden';
   };
@@ -597,7 +668,10 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
         <div class="space-y-4">
-          <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">${p.category}</span>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-full">${p.category}</span>
+            ${ctxBadgeHtml(p)}
+          </div>
           <h3 class="font-serif text-3xl font-bold text-slate-900">${p.title}</h3>
           <p class="text-gray-500 text-sm leading-relaxed line-clamp-3">${p.description}</p>
           ${metricsHtml}
@@ -607,6 +681,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       `;
+      bindCtxLinks(card);
       card.addEventListener('click', () => openModal(p));
       container.appendChild(card);
     });
