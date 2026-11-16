@@ -225,8 +225,8 @@ const SITE_CONFIG = {
       ],
       businessImpact: [
         "Tracked 500+ IT assets with full end-to-end visibility",
-        "Reduced pending shipment status backlog by 58%",
-        "Gave warehouse and logistics teams enhanced real-time visibility into asset movement"
+        "Enabled faster identification and follow-up of requests pending for over 30 days.",
+        "Improved monitoring of outstanding requests, helping teams prioritize and resolve long-pending asset issues."
       ],
       attachments: [
         { name: "Flowchart Proses Tracking",  type: "pdf", url: "" },
