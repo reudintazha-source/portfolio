@@ -610,7 +610,7 @@ const SITE_CONFIG = {
         { url: "https://drive.google.com/file/d/1btnWUT_AVj2KP_ixqduzclygE9F5gxVn/view?usp=sharing", caption: "Halaman Dashboard" }
       ],
       docs: [
-        { name: "Slide Presentasi", type: "ppt", url: "https://github.com/reudintazha-source/data-analytics-portfolio/blob/main/Contract%20Type%20vs%20Customer%20Churn.pptx" },
+        { name: "Slide Presentasi", type: "ppt", url: "https://docs.google.com/presentation/d/1llw-1gj8OIlINl7yMx62Fr-55KaLJ1ym/edit?usp=sharing&ouid=104429577954838799593&rtpof=true&sd=true" },
         { name: "Dashboard Excel", type: "sheet", url: "https://github.com/reudintazha-source/data-analytics-portfolio/blob/main/Book1Telco%20dashboar%20practice.xlsx" }
       ],
       demos: [
