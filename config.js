@@ -12,7 +12,7 @@
      6. CASE STUDY           analisis mandiri: SQL, Power BI, Excel, App Script
                              (tab "Case Study")
      7. CERTIFICATES         sertifikat kursus online
-     8. SKILLS / WORKFLOW / FOOTER
+     8. SKILLS (tools + kompetensi) / WORKFLOW / FOOTER
 
    ATURAN EMAS
    - Teks selalu di dalam tanda kutip "seperti ini".
@@ -599,7 +599,7 @@ const SITE_CONFIG = {
       image: "https://drive.google.com/file/d/1btnWUT_AVj2KP_ixqduzclygE9F5gxVn/view?usp=sharing",
       description: "Dashboard menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
       tools: "Advanced Excel, Pivot Tables, CSV",
-      metrics: "42.71% Monthly Churn Rate | 6.76% Annual Churn Rate |23.50% Monthly Churn Share | Average Charge Customer Churn 23% Higher Then Non Churn",
+      metrics: "42.71% Monthly Churn Rate | 6.76% Annual Churn Rate |23.50% Monthly Churn Share | Average Charge Customer Churn 23% Higher Than Non Churn",
       actionsTaken: ["Kembangkan strategi untuk mendorong pelanggan dengan skema pembayaran bulanan agar beralih ke paket berlangganan jangka panjang, melalui penawaran menarik, insentif, atau keuntungan tambahan dari langganan tersebut.",
                     "Lakukan analisis lebih mendalam untuk memahami alasan di balik keputusan pelanggan untuk berhenti berlangganan—terutama di kalangan pelanggan dengan kontrak jangka panjang untuk mengidentifikasi potensi masalah dan meningkatkan retensi pelanggan."],
       businessImpact: ["Monthly contract memiliki tingkat churn tertinggi sebesar 23%, jauh lebih tinggi dibandingkan annual contract yang hanya sekitar 3%.",
@@ -621,27 +621,9 @@ const SITE_CONFIG = {
 
     // ---------- Case Study 4 ----------
     {
-      title: "Automated Reporting Bot",
-      category: "App Script",
-      group: "App Script",
-      icon: "fa-code",
-      image: "",
-      description: "Google Apps Script yang menyusun & mengirim ringkasan laporan mingguan otomatis ke email tim setiap Senin pagi.",
-      tools: "Google Apps Script, Gmail API, Google Sheets",
-      metrics: "",
-      actionsTaken: [],
-      businessImpact: [],
-      videoUrl: "",
-      screenshots: [],
-      docs: [],
-      demos: []
-    }
-  ],
-// ---------- Case Study 4 ----------
-    {
       title: "Dynamic Operational Profitability & Marketing Efficiency Dashboard",
   category: "Excel",
-  group: "BI & Spreadsheet",
+  group: "Excel",
   icon: "fa-table",
   image: "",
   previewUrl: "",
@@ -662,6 +644,24 @@ const SITE_CONFIG = {
       screenshots: [ { url: "https://drive.google.com/file/d/1OjClq4LJuqxMp7dmRymKMCYHe5jgvfAQ/view?usp=sharing", caption: "Halaman Dashboard" }],
       docs: [],
       demos: [{ name: "Lihat di GitHub", url: "https://github.com/reudintazha-source/Porto-Case-Analysist-Profitable-Marketing" }]
+    },
+
+    // ---------- Case Study 5 ----------
+    {
+      title: "Automated Reporting Bot",
+      category: "App Script",
+      group: "App Script",
+      icon: "fa-code",
+      image: "",
+      description: "Google Apps Script yang menyusun & mengirim ringkasan laporan mingguan otomatis ke email tim setiap Senin pagi.",
+      tools: "Google Apps Script, Gmail API, Google Sheets",
+      metrics: "",
+      actionsTaken: [],
+      businessImpact: [],
+      videoUrl: "",
+      screenshots: [],
+      docs: [],
+      demos: []
     }
   ],
 
@@ -704,15 +704,73 @@ const SITE_CONFIG = {
   /* ======================================================================
      8. SKILLS · WORKFLOW · FOOTER
      ====================================================================== */
+  /* ---- 8a. TOOLS (chip dengan logo) --------------------------------------
+     Satu baris = satu tool.
+       name : nama tool
+       logo : nama logo bawaan (googlesheets, googleappsscript, excel, powerbi,
+              looker, qgis, sql, pivot, python, laravel, github, gmail, mysql)
+              ATAU link gambar sendiri ("https://.../logo.png" / "images/logo.svg")
+              Kosongkan "" bila tidak ada -> otomatis pakai icon.
+       icon : ikon cadangan (Font Awesome) bila logo kosong / gagal dimuat.
+     ------------------------------------------------------------------------ */
   skills: [
-    { name: "Google Apps Script",  icon: "fa-code" },
-    { name: "Google Sheets",       icon: "fa-table" },
-    { name: "Excel",               icon: "fa-file-excel" },
-    { name: "SQL",                 icon: "fa-database" },
-    { name: "QGIS",                icon: "fa-map-location-dot" },
-    { name: "Power BI",            icon: "fa-chart-pie" },
-    { name: "Looker Studio",       icon: "fa-chart-column" },
-    { name: "Pivot Tables & OLAP", icon: "fa-layer-group" }
+    { name: "Google Apps Script",  logo: "googleappsscript", icon: "fa-code" },
+    { name: "Google Sheets",       logo: "googlesheets",     icon: "fa-table" },
+    { name: "Excel",               logo: "excel",            icon: "fa-file-excel" },
+    { name: "SQL",                 logo: "sql",              icon: "fa-database" },
+    { name: "QGIS",                logo: "qgis",             icon: "fa-map-location-dot" },
+    { name: "Power BI",            logo: "powerbi",          icon: "fa-chart-pie" },
+    { name: "Looker Studio",       logo: "looker",           icon: "fa-chart-column" },
+    { name: "Pivot Tables & OLAP", logo: "pivot",            icon: "fa-layer-group" }
+  ],
+
+  /* ---- 8b. SKILLS / KOMPETENSI (dikelompokkan, tanpa logo) ----------------
+     Satu kelompok = satu kartu. Kelompok dengan items kosong [] tidak tampil.
+     Tambah item: tulis "Nama skill", di dalam [ ] dan pisahkan dengan koma.
+     ------------------------------------------------------------------------ */
+  skillGroups: [
+    {
+      title: "Data Analysis",
+      icon: "fa-magnifying-glass-chart",
+      items: [
+        "Data Cleaning",
+        "Root Cause Analysis",
+        "KPI Analysis",
+        "Trend Analysis",
+        "Incentive Analysis",
+        "Data Monitoring"
+      ]
+    },
+    {
+      title: "BI & Data Visualization",
+      icon: "fa-chart-pie",
+      items: [
+        "Power BI",
+        "Dashboard Development",
+        "KPI Reporting",
+        "Looker Studio",          // tambahan dari saya (ada di Case Study) - hapus jika tidak mau
+        "Excel Dashboard"         // tambahan dari saya (ada di Case Study)
+      ]
+    },
+    {
+      title: "Automation & Systems",   // tambahan dari saya, berdasarkan Apps Script & proyek Laravel
+      icon: "fa-gears",
+      items: [
+        "Google Apps Script Automation",
+        "Reporting Automation",
+        "Web App (Laravel & MySQL)"
+      ]
+    },
+    {
+      title: "Supply Chain & Operations",   // tambahan dari saya, berdasarkan Experience & Academic
+      icon: "fa-truck-fast",
+      items: [
+        "Operations Monitoring",
+        "Lean Manufacturing",
+        "Value Stream Mapping",
+        "Operations Research"
+      ]
+    }
   ],
 
   workflow: [
