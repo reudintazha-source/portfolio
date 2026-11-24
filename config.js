@@ -659,9 +659,9 @@ const SITE_CONFIG = {
     "Menyediakan satu tampilan terpusat untuk memantau kesehatan margin dan efektivitas promosi sebelum mengambil keputusan operasional lanjutan."
   ],
       videoUrl: "",
-      screenshots: [],
+      screenshots: [ { url: "https://drive.google.com/file/d/1OjClq4LJuqxMp7dmRymKMCYHe5jgvfAQ/view?usp=sharing", caption: "Halaman Dashboard" }],
       docs: [],
-      demos: []
+      demos: [{ name: "Lihat di GitHub", url: "https://github.com/reudintazha-source/Porto-Case-Analysist-Profitable-Marketing" }]
     }
   ],
 
