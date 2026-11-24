@@ -116,8 +116,8 @@ const SITE_CONFIG = {
       description: [
         "Managed IT asset movements across 3,000+ operational sites, coordinating with logistics vendors and warehouse head to monitor operational performance, resolve shipment discrepancies, and support efficient asset availability.",
         "Verified 50+ daily asset movements, ensuring quantities, asset types, and physical conditions matched submitted requests.",
-        "Conducted root cause analysis on delivery discrepancies and coordinated resolutions with vendors, warehouse teams, and internal stakeholders.",
-        "Tracked end-to-end request fulfillment across 3,000+ sites, from request submission and repair coordination to final asset delivery."
+        "Conducted root cause analysis on asset delivery discrepancies and coordinated issue resolution with vendors, warehouse teams, and internal stakeholders.",
+        "Tracked end-to-end request fulfillment across 3,000+ sites, from request submission and repair coordination to final asset delivery, while maintaining operational monitoring and reporting."
       ].join("\n")
     },
     {
@@ -130,9 +130,9 @@ const SITE_CONFIG = {
       ],
       description: [
         "Maintained and enhanced KPI dashboards for divisional management and 4 regional heads, enabling consistent monitoring of Sales Achievement, Distribution Coverage, Billing Rate, and Target Realization.",
-        "Built automated incentive calculation templates with Advanced Excel, Pivot Tables, and OLAP for 2,000+ sales employees across 5 incentive schemes, significantly improving reporting efficiency and payout accuracy.",
-        "Conducted QGIS-based geospatial analysis of regional sales coverage outside Java, supporting territory expansion and distribution planning initiatives.",
-        "Generated weekly and monthly sales performance reports at both individual and regional levels to support operational decision-making."
+        " Calculated incentives for 2,000+ sales employees across 5 schemes, achieving 100% payout accuracy.",
+        "Reconciled sales data and delivered weekly and monthly reports to support performance reviews.",
+        " Analyzed regional coverage using QGIS to assess territory productivity and support distribution expansion planning."
       ].join("\n")
     }
   ],
@@ -316,7 +316,8 @@ const SITE_CONFIG = {
         "Saved the team 50% of the time previously spent on manual processing"
       ],
       attachments: [
-        { name: "UML Sistem Web Request", type: "image", url: "https://drive.google.com/file/d/1WJ0fcVOwK0X1GxlDOahV2ZH_JUu3MJdh/view?usp=sharing" }
+        { name: "UML Sistem Web Request", type: "image", url: "https://drive.google.com/file/d/1WJ0fcVOwK0X1GxlDOahV2ZH_JUu3MJdh/view?usp=sharing" },
+         { name : "FRD Service Dammy Data",type: "PDF", url : "https://drive.google.com/file/d/1_QXUeKDDWcxLUwT0-6-lbTr_f5QV-eEa/view?usp=sharing"}
       ]
     },
 
