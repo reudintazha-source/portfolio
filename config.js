@@ -599,7 +599,7 @@ const SITE_CONFIG = {
       image: "https://drive.google.com/file/d/1btnWUT_AVj2KP_ixqduzclygE9F5gxVn/view?usp=sharing",
       description: "Dashboard menganalisis pengaruh jenis kontrak langganan (bulanan vs tahunan) terhadap tingkat churn.",
       tools: "Advanced Excel, Pivot Tables, CSV",
-      metrics: "Customer Contract | Churn Rate",
+      metrics: "42.71% Monthly Churn Rate | 6.76% Annual Churn Rate |23.50% Monthly Churn Share | Average Charge Customer Churn 23% Higher Then Non Churn",
       actionsTaken: ["Kembangkan strategi untuk mendorong pelanggan dengan skema pembayaran bulanan agar beralih ke paket berlangganan jangka panjang, melalui penawaran menarik, insentif, atau keuntungan tambahan dari langganan tersebut.",
                     "Lakukan analisis lebih mendalam untuk memahami alasan di balik keputusan pelanggan untuk berhenti berlangganan—terutama di kalangan pelanggan dengan kontrak jangka panjang untuk mengidentifikasi potensi masalah dan meningkatkan retensi pelanggan."],
       businessImpact: ["Monthly contract memiliki tingkat churn tertinggi sebesar 23%, jauh lebih tinggi dibandingkan annual contract yang hanya sekitar 3%.",
@@ -637,7 +637,33 @@ const SITE_CONFIG = {
       demos: []
     }
   ],
-
+// ---------- Case Study 4 ----------
+    {
+      title: "Dynamic Operational Profitability & Marketing Efficiency Dashboard",
+  category: "Excel",
+  group: "BI & Spreadsheet",
+  icon: "fa-table",
+  image: "",
+  previewUrl: "",
+  description: "Dashboard operasional berbasis Excel dengan filter dinamis (Channel, Brand, Year, Region, Customer Type) dan conditional formatting untuk memantau loss-making orders, margin, serta rasio marketing spend terhadap net profit lintas wilayah dan kanal penjualan.",
+  tools: "Microsoft Excel, Dynamic Filtering, Conditional Formatting, Data Analysis",
+  metrics: "4.31% Loss Rate | -$1.97M Total Loss | 40.54% Gross Margin | 5 Channel Views",
+  actionsTaken: [
+    "Membangun struktur tabel dinamis berbasis filter (Channel, Brand, Year, Region, Customer Type) untuk evaluasi performa lintas segmen secara cepat.",
+    "Menggabungkan metrik operasional order dan kerugian (Total Orders, Loss-making Orders, Loss-making Rate, Average Loss per Order) dengan metrik profitabilitas dan efisiensi pemasaran (Gross Sales, Discount Rate, Net Revenue, Gross/Net Margin, Marketing Spend, dan Cost-to-Profit Ratio).",
+    "Menerapkan pewarnaan conditional formatting (hijau, kuning, merah) guna menyoroti area berisiko tinggi seperti tingginya loss-making rate dan lonjakan cost-to-profit ratio di kanal Online."
+  ],
+  businessImpact: [
+    "Memudahkan identifikasi titik kebocoran margin dan kerugian per brand serta channel (seperti lonjakan loss-making rate di kanal Online pada brand tertentu).",
+    "Membantu pemangku kepentingan membandingkan efisiensi biaya pemasaran antar channel (Distributor, Modern Trade, Online, Wholesale) serta antar region dan negara.",
+    "Menyediakan satu tampilan terpusat untuk memantau kesehatan margin dan efektivitas promosi sebelum mengambil keputusan operasional lanjutan."
+  ],
+      videoUrl: "",
+      screenshots: [],
+      docs: [],
+      demos: []
+    }
+  ],
 
   /* ======================================================================
      7. CERTIFICATES (sertifikat kursus online)
